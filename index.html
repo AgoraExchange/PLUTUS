@@ -3,15 +3,25 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<title>PLUTUS - Casino (Blackjack + Crash + Mines + Roulette)</title>
+<meta name="theme-color" content="#06101b" />
+<meta name="color-scheme" content="dark" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="Plutus" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="apple-touch-icon" href="logo.png" />
+<link rel="icon" href="logo.png" />
+<title>PLUTUS - The Leading Off Shore Social Casino. </title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0f1423; --bg-2:#0c1220;
-    --surface:#101826; --surface-2:#0c1526; --border:rgba(255,255,255,.08);
-    --text:#e8f1ff; --muted:#9db2c9;
-    --mint:#16f2a5; --cyan:#2ee7ff; --blue:#6b76ff; --gold:#f5d76e;
+    --bg:#07111d; --bg-2:#030913;
+    --surface:#0b1725; --surface-2:#081321; --border:rgba(108,224,226,.13);
+    --text:#e4f5f7; --muted:#82a8b4;
+    --mint:#21c7bd; --cyan:#5edee0; --blue:#1d5f7a; --gold:#b9a66d;
+    --aqua-glow:rgba(94,222,224,.18); --metal:#8fb7bd;
     --win:#7cff6b; --lose:#ff5c5c;
     --felt-grad:linear-gradient(145deg,#0d2a29 0%,#0e493f 55%,#0b2f2c 100%);
     --shadow:0 10px 30px rgba(0,0,0,.45);
@@ -23,9 +33,9 @@
     margin:0;color:var(--text);
     font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial;
     background:
-      radial-gradient(1200px 800px at 12% -10%, #0d2036 0%, rgba(13,32,54,0) 60%),
-      radial-gradient(1200px 800px at 110% 0%, #091a31 0%, rgba(9,26,49,0) 60%),
-      linear-gradient(180deg, var(--bg-2), var(--bg));
+      radial-gradient(1100px 780px at 10% -12%, rgba(19,86,111,.34) 0%, rgba(19,86,111,0) 58%),
+      radial-gradient(1000px 720px at 108% -4%, rgba(33,199,189,.16) 0%, rgba(33,199,189,0) 62%),
+      linear-gradient(180deg, var(--bg-2), #06101b 52%, var(--bg));
     -webkit-tap-highlight-color: transparent;
   }
   button,input{font:inherit;font-size:16px;touch-action:manipulation}
@@ -42,21 +52,23 @@
   .brand{display:flex;align-items:center;gap:12px}
   .logo{
     font-weight:900;letter-spacing:.12em;
-    background:linear-gradient(90deg,var(--cyan),var(--mint));
+    background:linear-gradient(90deg,#6fe6e3,var(--mint));
     -webkit-background-clip:text;background-clip:text;color:transparent;
     font-size:20px
   }
   .navtabs{display:flex;gap:8px}
-  .tab{padding:8px 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);
+  .tab{padding:8px 12px;border:1px solid var(--border);border-radius:10px;background:linear-gradient(180deg,#0d1b2b,#081321);
     color:#cfe2ff;font-weight:700;opacity:.8;cursor:pointer;transition:opacity .15s, box-shadow .15s, border-color .15s;}
-  .tab.active{opacity:1;border-color:rgba(255,255,255,.18);box-shadow:0 0 0 2px rgba(46,231,255,.12)}
+  .tab.active{opacity:1;border-color:rgba(94,222,224,.36);box-shadow:0 0 0 2px var(--aqua-glow),inset 0 0 18px rgba(33,199,189,.08)}
   .tab.disabled{opacity:.35;cursor:not-allowed}
   .right{display:flex;align-items:center;gap:12px}
   .pill{display:flex;align-items:center;gap:10px;background:var(--surface-2);
     border:1px solid var(--border);border-radius:12px;padding:8px 12px}
+  .balance-pill{cursor:pointer;user-select:none;transition:border-color .15s,box-shadow .15s,background .15s}
+  .balance-pill:hover,.balance-pill:focus-visible{border-color:rgba(94,222,224,.34);box-shadow:0 0 0 3px var(--aqua-glow);outline:none}
   .balance{font-weight:800;color:var(--gold)}
   .add{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;cursor:pointer;
-    background:linear-gradient(90deg,var(--cyan),var(--mint));color:#02181e;font-weight:900;box-shadow:0 8px 18px rgba(46,231,255,.25)}
+    background:linear-gradient(135deg,#9bd7d5,#168f89);color:#02181e;font-weight:900;box-shadow:0 8px 18px rgba(94,222,224,.2)}
   .profile-wrap{position:relative}
   .profile{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.02);border:1px solid var(--border);min-width:0;color:#cfe2ff;cursor:pointer}
   .pfp{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#ff416c,#ff4b2b);background-size:cover;background-position:center;border:1px solid rgba(255,255,255,.18);flex:0 0 auto}
@@ -66,17 +78,26 @@
   .menu-item{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px;border:none;border-radius:9px;background:transparent;color:#cfe2ff;font-weight:800;text-align:left;cursor:pointer}
   .menu-item:hover{background:rgba(255,255,255,.06)}
   .menu-note{padding:8px 10px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:4px}
+  .support-link{color:#dffbfc;font-weight:900;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px;cursor:pointer}
+  .notice{position:fixed;left:50%;top:calc(18px + env(safe-area-inset-top,0px));z-index:500;transform:translate(-50%,-16px);opacity:0;pointer-events:none;padding:12px 16px;border:1px solid rgba(94,222,224,.26);border-radius:999px;background:rgba(6,16,27,.94);box-shadow:0 18px 44px rgba(0,0,0,.46),0 0 28px rgba(94,222,224,.12);color:#dffbfc;font-weight:900;transition:opacity .18s ease,transform .18s ease}
+  .notice.show{opacity:1;transform:translate(-50%,0)}
+  .setting-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.025)}
+  .setting-row strong{display:block}.setting-row small{display:block;color:var(--muted);margin-top:2px}
+  .switch{position:relative;width:58px;height:32px;border:1px solid rgba(94,222,224,.22);border-radius:999px;background:#07111d;cursor:pointer;box-shadow:inset 0 0 14px rgba(0,0,0,.28)}
+  .switch::after{content:"";position:absolute;left:4px;top:4px;width:22px;height:22px;border-radius:50%;background:#617f89;transition:transform .16s ease,background .16s ease,box-shadow .16s ease}
+  .switch.on{background:linear-gradient(135deg,#0e3d4a,#0d746f)}
+  .switch.on::after{transform:translateX(26px);background:#b8f0ee;box-shadow:0 0 16px rgba(94,222,224,.42)}
 
   /* VIEWS */
   .view{display:none}.view.show{display:block}
 
   /* Splash */
-  #splash{position:fixed;inset:0;display:grid;place-items:center;background:#0b0f1c;z-index:100}
-  .s-card{ text-align:center;padding:28px 26px;border:1px solid var(--border);border-radius:16px;background:rgba(255,255,255,.02);box-shadow:0 20px 80px rgba(0,0,0,.6)}
-  .s-logo{font-size:44px;font-weight:900;letter-spacing:.18em;margin-bottom:6px}
+  #splash{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 26%,rgba(33,199,189,.11),transparent 36%),linear-gradient(180deg,#02070d,#06101b);z-index:100}
+  .s-card{ text-align:center;padding:28px 26px;border:1px solid var(--border);border-radius:16px;background:rgba(5,14,24,.68);box-shadow:0 24px 90px rgba(0,0,0,.68),0 0 42px rgba(33,199,189,.08)}
+  .s-logo{display:block;width:min(280px,72vw);height:auto;margin:0 auto 8px;filter:drop-shadow(0 18px 36px rgba(0,0,0,.55)) drop-shadow(0 0 20px rgba(33,199,189,.18))}
   .s-tag{color:var(--muted)}
   .spinner{width:240px;height:8px;border-radius:999px;margin:16px auto 0;overflow:hidden;background:rgba(255,255,255,.08)}
-  .spinner>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--mint))}
+  .spinner>i{display:block;height:100%;width:0;background:linear-gradient(90deg,#1d5f7a,#5edee0,#21c7bd)}
 
   /* Lobby cards */
   .hero{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:12px 0 18px}
@@ -93,12 +114,12 @@
   .game-card .cta{margin-top:8px}
   .tag{font-size:12px;color:#a9c3dc}
   .live-count{margin-top:10px;display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#cfe2ff;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:999px;padding:5px 9px}
-  .live-dot{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px rgba(22,242,165,.8)}
-  .ribbon{position:absolute;right:10px;top:10px;font-size:12px;padding:4px 10px;border-radius:999px;background:linear-gradient(90deg,var(--cyan),var(--mint));color:#022027;font-weight:900}
+  .live-dot{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px rgba(94,222,224,.55)}
+  .ribbon{position:absolute;right:10px;top:10px;font-size:12px;padding:4px 10px;border-radius:999px;background:linear-gradient(135deg,#9bd7d5,#168f89);color:#021418;font-weight:900}
   .coming{opacity:.5;pointer-events:none}
   .bgfx{position:absolute;inset:auto -30% -40% -30%;height:140%;background:
-        radial-gradient(60% 60% at 50% 40%, rgba(22,242,165,.12), transparent 60%),
-        radial-gradient(60% 60% at 60% 70%, rgba(46,231,255,.10), transparent 70%);pointer-events:none;z-index:0}
+        radial-gradient(60% 60% at 50% 40%, rgba(33,199,189,.12), transparent 60%),
+        radial-gradient(60% 60% at 60% 70%, rgba(94,222,224,.08), transparent 70%);pointer-events:none;z-index:0}
   .lobby-band{margin-top:18px}
   .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 10px}
   .section-head h2{font-size:15px;letter-spacing:.06em;text-transform:uppercase;margin:0;color:#dcecff}
@@ -116,8 +137,8 @@
   @media (max-width:900px){ .game-strip{grid-template-columns:1fr} }
   @media (max-width:640px){ .live-row{grid-template-columns:1fr .8fr .8fr}.live-row .live-user{display:none} }
 
-  .btn{appearance:none;border:none;border-radius:12px;padding:10px 14px;font-weight:800;cursor:pointer;color:#012027;
-    background:linear-gradient(90deg,var(--cyan),var(--mint));box-shadow:0 8px 18px rgba(46,231,255,.25);transition:transform .05s,opacity .2s,filter .2s}
+  .btn{appearance:none;border:none;border-radius:12px;padding:10px 14px;font-weight:800;cursor:pointer;color:#021418;
+    background:linear-gradient(135deg,#b0cbc9,#5edee0 45%,#168f89);box-shadow:0 10px 22px rgba(94,222,224,.16),inset 0 1px 0 rgba(255,255,255,.32);transition:transform .05s,opacity .2s,filter .2s}
   .btn.ghost{background:transparent;color:#cfe2ff;border:1px solid var(--border);box-shadow:none}
   .btn:disabled{opacity:.5;cursor:not-allowed;filter:grayscale(.3)}
 
@@ -153,21 +174,21 @@
   .control-result.loss{color:#ffe6e6;border-color:rgba(255,92,92,.45);box-shadow:inset 0 0 18px rgba(255,92,92,.12)}
   .control-result.push{color:#ffeebe;border-color:rgba(245,215,110,.4);box-shadow:inset 0 0 18px rgba(245,215,110,.12)}
   .actions{ display:flex;gap:10px;flex-wrap:wrap; position:relative; z-index:2 }
-  .action.hit{ background:linear-gradient(90deg,#9dff90,#27e86c) }
-  .action.stand{ background:linear-gradient(90deg,#b3c0ff,#6b76ff) }
-  .action.double{ background:linear-gradient(90deg,#ffd56a,#ff9f1c) }
+  .action.hit{ background:linear-gradient(135deg,#a8d7d2,#21c7bd) }
+  .action.stand{ background:linear-gradient(135deg,#8fb7bd,#1d5f7a);color:#031018 }
+  .action.double{ background:linear-gradient(135deg,#d2c48d,#8f7a3a);color:#06101b }
 
   .betting{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;align-items:center}
   @media (max-width:800px){ .betting{grid-template-columns:1fr} }
   .bet-input{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   .num{min-width:140px;text-align:center;font-size:28px;font-weight:800;color:var(--gold);background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:8px 12px}
   .chip-row{display:flex;gap:10px;flex-wrap:wrap}
-  .chip{position:relative;width:48px;height:48px;border-radius:50%;border:3px solid #fff;box-shadow:0 10px 14px rgba(0,0,0,.35);cursor:pointer;background:linear-gradient(180deg,#87eafe,#0086ff)}
-  .chip[data-v="50"]{ background:linear-gradient(180deg,#b3ffab,#12fff7) }
-  .chip[data-v="100"]{ background:linear-gradient(180deg,#ffd56a,#ff9f1c) }
-  .chip[data-v="250"]{ background:linear-gradient(180deg,#e0b3ff,#8a2be2) }
-  .chip[data-v="500"]{ background:linear-gradient(180deg,#ff9ac2,#ff2e63) }
-  .chip span{position:absolute;inset:0;display:grid;place-content:center;font-weight:900;color:#00101a;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+  .chip{position:relative;width:48px;height:48px;border-radius:50%;border:3px solid #8fb7bd;box-shadow:0 10px 14px rgba(0,0,0,.35),0 0 18px rgba(94,222,224,.12);cursor:pointer;background:linear-gradient(180deg,#9bd7d5,#1d5f7a)}
+  .chip[data-v="50"]{ background:linear-gradient(180deg,#6edbd2,#0c746f) }
+  .chip[data-v="100"]{ background:linear-gradient(180deg,#d2c48d,#715f2d) }
+  .chip[data-v="250"]{ background:linear-gradient(180deg,#8fb7bd,#123a50) }
+  .chip[data-v="500"]{ background:linear-gradient(180deg,#5edee0,#053d46) }
+  .chip span{position:absolute;inset:0;display:grid;place-content:center;font-weight:900;color:#021014;text-shadow:0 1px 0 rgba(255,255,255,.36)}
 
   .timer{position:relative;height:14px;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden;border:1px solid rgba(255,255,255,.12)}
   .timer>.bar{position:absolute;inset:0 0 0 auto;width:0%;background:linear-gradient(90deg,#ff9f1c,#ff5c5c)}
@@ -175,7 +196,7 @@
 
   .decision-wrap{margin-top:10px;display:none}
   .decision{position:relative;height:12px;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden;border:1px solid rgba(255,255,255,.12)}
-  .decision>.bar{position:absolute;left:0;top:0;height:100%;width:0;background:linear-gradient(90deg,#6b76ff,#2ee7ff)}
+  .decision>.bar{position:absolute;left:0;top:0;height:100%;width:0;background:linear-gradient(90deg,#1d5f7a,#5edee0)}
   .decision-label{margin-top:6px;font-size:12px;color:#cfe2ff;text-align:right;min-height:16px}
 
   .glow-win{ box-shadow:0 0 0 2px rgba(124,255,107,.35), 0 0 28px rgba(124,255,107,.25) }
@@ -194,16 +215,16 @@
   .xbtn:hover{background:rgba(255,255,255,.06)}
   .grid-2{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0 8px}
   .pick{background:linear-gradient(180deg,#0f1929,#0b1422); border:1px solid var(--border); border-radius:12px; padding:10px 12px; text-align:center; cursor:pointer; font-weight:800; color:#cfe2ff; box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);}
-  .pick.active{outline:2px solid rgba(46,231,255,.25); background:linear-gradient(180deg,#102337,#0b1729)}
+  .pick.active{outline:2px solid rgba(94,222,224,.28); background:linear-gradient(180deg,#102b37,#071825)}
   .custom-row{display:flex; gap:10px; margin:8px 0 12px}
   .input{flex:1; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:var(--surface-2); color:var(--text); outline:none;}
   .buyrow{display:flex; align-items:center; justify-content:center; gap:10px; margin-top:4px; flex-wrap:wrap}
-  .check{display:none; place-items:center; width:28px; height:28px; border-radius:50%; background:linear-gradient(90deg,var(--mint),var(--cyan)); color:#021a1e; font-weight:900;}
+  .check{display:none; place-items:center; width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,var(--mint),var(--cyan)); color:#021a1e; font-weight:900;}
   .check.big{width:36px;height:36px}
   .msg{color:#cfe2ff}
   .progress{display:none;height:8px; border-radius:999px; background:rgba(255,255,255,.08); overflow:hidden; margin:10px 0}
   .modal.processing .progress{display:block}
-  .progress>.bar{height:100%; width:0%; background:linear-gradient(90deg,var(--cyan),var(--mint)); transition:width 300ms linear}
+  .progress>.bar{height:100%; width:0%; background:linear-gradient(90deg,#1d5f7a,#5edee0,#21c7bd); transition:width 300ms linear}
   .thank{display:none; background:rgba(0,0,0,.25); border:1px solid var(--border); padding:10px 12px; border-radius:12px; color:#afffe9; font-weight:700}
 
   /* Wallet specifics */
@@ -240,7 +261,7 @@
   .crash-status{min-height:24px; color:#cfe9ff}
   .crash-count{font-size:28px; font-weight:900; color:#f5d76e}
   canvas#crash-canvas{width:100%; height:320px; display:block; background:linear-gradient(180deg,#0c1526,#0c1422)}
-  .cashout{background:linear-gradient(90deg,#7cff6b,#16f2a5)}
+  .cashout{background:linear-gradient(135deg,#9bd7d5,#21c7bd)}
   .danger{background:linear-gradient(90deg,#ffb199,#ff0844)}
 
   /* ===== MINES ===== */
@@ -259,7 +280,7 @@
     border-radius:16px;
     border:1px solid rgba(255,255,255,.08);
     background:
-      radial-gradient(90% 90% at 30% 20%, rgba(46,231,255,.12), transparent 60%),
+      radial-gradient(90% 90% at 30% 20%, rgba(94,222,224,.12), transparent 60%),
       linear-gradient(180deg,#101b2d,#0b1422);
     color:#dff7ff;
     font-size:28px;
@@ -272,8 +293,8 @@
   .mine-tile:disabled{cursor:default;opacity:1}
   .mine-tile.safe{
     color:#052217;
-    background:linear-gradient(180deg,#9effc9,#16f2a5);
-    box-shadow:0 0 0 2px rgba(22,242,165,.18), 0 8px 18px rgba(22,242,165,.18);
+    background:linear-gradient(180deg,#9bd7d5,#21c7bd);
+    box-shadow:0 0 0 2px rgba(94,222,224,.18), 0 8px 18px rgba(94,222,224,.16);
   }
   .mine-tile.bomb{
     color:#fff5f5;
@@ -287,7 +308,7 @@
   .mini-stat{padding:12px;border-radius:12px;border:1px solid var(--border);background:var(--surface-2);text-align:center}
   .mini-stat .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
   .mini-stat .v{font-size:20px;font-weight:900;margin-top:4px}
-  .safeout{background:linear-gradient(90deg,#7cff6b,#16f2a5)}
+  .safeout{background:linear-gradient(135deg,#9bd7d5,#21c7bd)}
   .bombout{background:linear-gradient(90deg,#ff9f9f,#ff5c5c)}
 
   /* ===== ROULETTE ===== */
@@ -303,7 +324,7 @@
   .roulette-result.red{background:#b8182c}.roulette-result.black{background:#111}.roulette-result.green{background:#0c8f55}
   .roulette-bets{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
   .roulette-bet{border:1px solid var(--border);background:var(--surface-2);color:#cfe2ff;border-radius:10px;padding:10px 8px;font-weight:800;cursor:pointer}
-  .roulette-bet.active{outline:2px solid rgba(46,231,255,.25);border-color:rgba(46,231,255,.45)}
+  .roulette-bet.active{outline:2px solid rgba(94,222,224,.28);border-color:rgba(94,222,224,.44)}
   .roulette-bet.red{background:linear-gradient(180deg,#561622,#250a10)}
   .roulette-bet.black{background:linear-gradient(180deg,#1a1e25,#07090c)}
   .roulette-bet.green{background:linear-gradient(180deg,#0d4d35,#08251b)}
@@ -319,7 +340,7 @@
   .road-tile::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:3px;background:repeating-linear-gradient(180deg,#f5d76e 0 14px,transparent 14px 26px);opacity:.55}
   .road-tile .mult{position:absolute;top:8px;left:8px;font-size:12px;font-weight:900;color:var(--gold);z-index:2}
   .road-tile .mark{font-size:32px;z-index:3;filter:drop-shadow(0 6px 10px rgba(0,0,0,.5))}
-  .road-tile.active{outline:2px solid rgba(46,231,255,.35);box-shadow:0 0 24px rgba(46,231,255,.14)}
+  .road-tile.active{outline:2px solid rgba(94,222,224,.35);box-shadow:0 0 24px rgba(94,222,224,.14)}
   .road-tile.safe{background:linear-gradient(180deg,#1b5645,#0e2621)}
   .road-tile.hit{background:linear-gradient(180deg,#5b1823,#1d080d)}
   .road-tile.locked{opacity:.68}
@@ -332,16 +353,16 @@
   .dice-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:14px}
   @media (max-width:900px){ .dice-wrap{grid-template-columns:1fr} }
   .dice-board{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px;overflow:hidden}
-  .dice-stage{min-height:280px;border-radius:14px;border:1px solid var(--border);background:radial-gradient(circle at 50% 30%,rgba(46,231,255,.13),transparent 60%),linear-gradient(180deg,#0d1726,#080f1b);display:grid;place-items:center;padding:18px}
+  .dice-stage{min-height:280px;border-radius:14px;border:1px solid var(--border);background:radial-gradient(circle at 50% 30%,rgba(94,222,224,.12),transparent 60%),linear-gradient(180deg,#0d1726,#080f1b);display:grid;place-items:center;padding:18px}
   .dice-face{width:min(220px,62vw);aspect-ratio:1;border-radius:28px;background:linear-gradient(145deg,#f5fbff,#9fb7cf);color:#07111f;display:grid;place-items:center;box-shadow:0 22px 50px rgba(0,0,0,.45),inset 0 -8px 0 rgba(0,0,0,.12);font-size:48px;font-weight:900;transition:transform .55s ease}
   .dice-face.rolling{transform:rotate(14deg) scale(1.04)}
   .dice-track{width:100%;margin-top:14px}
-  .dice-range{height:14px;border-radius:999px;background:linear-gradient(90deg,#ff5c5c 0%,#ff5c5c var(--lose-end,50%),#16f2a5 var(--lose-end,50%),#16f2a5 100%);border:1px solid rgba(255,255,255,.12);position:relative}
+  .dice-range{height:14px;border-radius:999px;background:linear-gradient(90deg,#ff5c5c 0%,#ff5c5c var(--lose-end,50%),#21c7bd var(--lose-end,50%),#21c7bd 100%);border:1px solid rgba(255,255,255,.12);position:relative}
   .dice-marker{position:absolute;top:50%;left:0;width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid var(--gold);transform:translate(-50%,-50%);box-shadow:0 0 18px rgba(245,215,110,.45)}
   .dice-slider-row{display:grid;gap:8px;margin-top:12px}
-  .dice-slider{width:100%;accent-color:#16f2a5}
+  .dice-slider{width:100%;accent-color:#21c7bd}
   .dice-mode{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
-  .dice-mode button.active{background:linear-gradient(90deg,var(--cyan),var(--mint));color:#012027}
+  .dice-mode button.active{background:linear-gradient(135deg,#9bd7d5,#21c7bd);color:#021418}
   .dice-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
   .dice-status{margin-top:12px}
 
@@ -409,8 +430,8 @@
 <body>
   <!-- Splash -->
   <div id="splash">
-    <div class="s-card">
-      <div class="s-logo">PLUTUS</div>
+      <div class="s-card">
+      <img class="s-logo" src="logo.png" alt="Plutus">
       <div class="s-tag">THE GOD OF WEALTH AWAITS…</div>
       <div class="spinner"><i id="splash-fill"></i></div>
     </div>
@@ -423,12 +444,12 @@
         <div class="logo">PLUTUS</div>
         <nav class="navtabs">
           <button class="tab active" id="tab-casino">Casino</button>
-          <button class="tab disabled" title="Coming soon">Sports</button>
-          <button class="tab disabled" title="Coming soon">Promotions</button>
+          <button class="tab" id="tab-sports" title="Coming soon">Sports</button>
+          <button class="tab" id="tab-promotions" title="Coming soon">Promotions</button>
         </nav>
       </div>
       <div class="right">
-        <div class="pill">Balance: <span class="balance" id="balance">$0</span> <div class="add" id="open-shop" title="Buy chips">+</div></div>
+        <div class="pill balance-pill" id="open-shop" role="button" tabindex="0" title="Buy chips">Balance: <span class="balance" id="balance">$0</span></div>
         <div class="profile-wrap">
           <button class="profile" id="profile-button" type="button" aria-haspopup="true" aria-expanded="false">
             <div class="pfp" id="pfp"></div>
@@ -440,7 +461,7 @@
             <button class="menu-item" id="open-wallet" type="button"><span>Wallet</span><span>$</span></button>
             <button class="menu-item" id="menu-topup" type="button"><span>Top Up</span><span>+</span></button>
             <button class="menu-item" id="menu-lobby" type="button"><span>Casino Lobby</span><span>›</span></button>
-            <div class="menu-note">Play-money balance is saved locally on this device.</div>
+            <div class="menu-note">For any issues with your expierence please contact our <span class="support-link">24/7 Chat Support</span>.</div>
           </div>
         </div>
       </div>
@@ -451,7 +472,7 @@
       <div class="hero">
         <div>
           <h1>Casino</h1>
-          <small>Pick a game. Blackjack, Crash, Mines, Roulette, Chicken, and Dice are live.</small>
+          <small>Here at PLUTUS, we’re passionate about providing you with the best in online social casinos. The PLUTUS studio team takes an innovative approach to development and is committed to bringing entertainment to your gaming. </small>
         </div>
         <button class="btn ghost" id="refresh-lobby">Refresh</button>
       </div>
@@ -646,9 +667,9 @@
             <div class="betting">
               <div class="bet-input">
                 <button class="btn ghost" id="clear-bet">Clear</button>
-                <button class="btn" id="minus10" style="background:linear-gradient(90deg,#9bb3c9,#c9d7e6);color:#00121d">- $10</button>
+                <button class="btn" id="minus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">- $10</button>
                 <div class="num" id="bet-display">$0</div>
-                <button class="btn" id="plus10"  style="background:linear-gradient(90deg,#9bb3c9,#c9d7e6);color:#00121d">+ $10</button>
+                <button class="btn" id="plus10"  style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">+ $10</button>
                 <button class="btn" id="max-bet">Max</button>
               </div>
               <div>
@@ -726,9 +747,9 @@
           <div class="betting">
             <div class="bet-input">
               <button class="btn ghost" id="crash-clear">Clear</button>
-              <button class="btn" id="crash-minus10" style="background:linear-gradient(90deg,#9bb3c9,#c9d7e6);color:#00121d">- $10</button>
+              <button class="btn" id="crash-minus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">- $10</button>
               <div class="num" id="crash-bet-display">$0</div>
-              <button class="btn" id="crash-plus10" style="background:linear-gradient(90deg,#9bb3c9,#c9d7e6);color:#00121d">+ $10</button>
+              <button class="btn" id="crash-plus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">+ $10</button>
               <button class="btn" id="crash-max">Max</button>
             </div>
             <div>
@@ -807,9 +828,9 @@
           <div class="betting">
             <div class="bet-input">
               <button class="btn ghost" id="mines-clear">Clear</button>
-              <button class="btn" id="mines-minus10" style="background:linear-gradient(90deg,#9bb3c9,#c9d7e6);color:#00121d">- $10</button>
+              <button class="btn" id="mines-minus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">- $10</button>
               <div class="num" id="mines-bet-display">$0</div>
-              <button class="btn" id="mines-plus10" style="background:linear-gradient(90deg,#9bb3c9,#c9d7e6);color:#00121d">+ $10</button>
+              <button class="btn" id="mines-plus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">+ $10</button>
               <button class="btn" id="mines-max">Max</button>
             </div>
             <div>
@@ -901,9 +922,9 @@
           <div class="betting" style="margin-top:12px">
             <div class="bet-input">
               <button class="btn ghost" id="roulette-clear">Clear</button>
-              <button class="btn" id="roulette-minus10" style="background:linear-gradient(90deg,#9bb3c9,#c9d7e6);color:#00121d">- $10</button>
+              <button class="btn" id="roulette-minus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">- $10</button>
               <div class="num" id="roulette-bet-display">$0</div>
-              <button class="btn" id="roulette-plus10" style="background:linear-gradient(90deg,#9bb3c9,#c9d7e6);color:#00121d">+ $10</button>
+              <button class="btn" id="roulette-plus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">+ $10</button>
               <button class="btn" id="roulette-max">Max</button>
             </div>
             <div>
@@ -980,9 +1001,9 @@
           <div class="betting">
             <div class="bet-input">
               <button class="btn ghost" id="chicken-clear">Clear</button>
-              <button class="btn" id="chicken-minus10" style="background:linear-gradient(90deg,#9bb3c9,#c9d7e6);color:#00121d">- $10</button>
+              <button class="btn" id="chicken-minus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">- $10</button>
               <div class="num" id="chicken-bet-display">$0</div>
-              <button class="btn" id="chicken-plus10" style="background:linear-gradient(90deg,#9bb3c9,#c9d7e6);color:#00121d">+ $10</button>
+              <button class="btn" id="chicken-plus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">+ $10</button>
               <button class="btn" id="chicken-max">Max</button>
             </div>
             <div>
@@ -1070,9 +1091,9 @@
           <div class="betting" style="margin-top:12px">
             <div class="bet-input">
               <button class="btn ghost" id="dice-clear">Clear</button>
-              <button class="btn" id="dice-minus10" style="background:linear-gradient(90deg,#9bb3c9,#c9d7e6);color:#00121d">- $10</button>
+              <button class="btn" id="dice-minus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">- $10</button>
               <div class="num" id="dice-bet-display">$0</div>
-              <button class="btn" id="dice-plus10" style="background:linear-gradient(90deg,#9bb3c9,#c9d7e6);color:#00121d">+ $10</button>
+              <button class="btn" id="dice-plus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">+ $10</button>
               <button class="btn" id="dice-max">Max</button>
             </div>
             <div>
@@ -1102,7 +1123,7 @@
         <div class="modal-title">Chip Top-Up</div>
         <button class="xbtn" id="shop-close" aria-label="Close">✕</button>
       </div>
-      <div style="color:var(--muted);margin-bottom:8px">Cash in USD → casino chips.</div>
+      <div style="color:var(--muted);margin-bottom:8px">Cash in crypto → casino chips.</div>
 
       <div class="grid-2" id="preset-grid">
         <div class="pick" data-a="25">$25</div><div class="pick" data-a="50">$50</div>
@@ -1112,7 +1133,7 @@
 
       <div class="custom-row">
         <input class="input" id="custom-amount" type="number" min="1" step="1" placeholder="Custom amount (USD)">
-        <button class="btn" id="pick-custom" style="background:linear-gradient(90deg,#9bb3c9,#c9d7e6);color:#00121d">Use Custom</button>
+        <button class="btn" id="pick-custom" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">Use Custom</button>
       </div>
 
       <div class="buyrow">
@@ -1160,6 +1181,25 @@
     </div>
   </div>
 
+  <!-- PROFILE SETTINGS MODAL -->
+  <div class="backdrop" id="profile-settings">
+    <div class="modal" id="profile-settings-modal">
+      <div class="modal-header">
+        <div class="modal-title">Profile Settings</div>
+        <button class="xbtn" id="profile-settings-close" aria-label="Close">x</button>
+      </div>
+      <div class="row"><div>User</div><div id="profile-settings-user" class="pillstat">swiping.cc</div></div>
+      <div class="setting-row">
+        <div><strong>Sound on</strong><small>Button clicks and casino UI effects.</small></div>
+        <button class="switch on" id="sound-toggle" type="button" role="switch" aria-checked="true"></button>
+      </div>
+      <div class="setting-row">
+        <div><strong>Song on</strong><small>Background casino music.</small></div>
+        <button class="switch on" id="song-toggle" type="button" role="switch" aria-checked="true"></button>
+      </div>
+    </div>
+  </div>
+
   <!-- AGE GATE MODAL -->
   <div class="backdrop" id="age">
     <div class="modal" id="age-modal" role="dialog" aria-modal="true" aria-labelledby="age-title">
@@ -1169,7 +1209,7 @@
       </div>
       <div class="age-body">
         <div class="age-title">Are you 21 or older?</div>
-        <div class="age-note">You must be 21+ to access gambling-style casino content in your current state. Confirm your age to enter PLUTUS.</div>
+        <div class="age-note">You must be 21+ to access gambling/casino content in your current state. Confirm your age to enter PLUTUS.</div>
         <div class="age-actions">
           <button class="btn" id="age-yes">Yes, I’m 21+</button>
           <button class="btn ghost" id="age-no">No</button>
@@ -1180,6 +1220,7 @@
   </div>
 
   <!-- Background music -->
+  <div class="notice" id="notice" role="status" aria-live="polite"></div>
   <button class="control-float" id="control-float" type="button" aria-label="Show or hide controls">BET</button>
   <audio id="bgm" src="cantina.mp3" preload="auto" loop></audio>
 
@@ -1195,6 +1236,8 @@
 
   const LS_BAL_KEY = 'casino.balance';
   const LS_EXO_KEY = 'casino.exodus';
+  const LS_SOUND_KEY = 'casino.sound';
+  const LS_SONG_KEY = 'casino.song';
   const APP_KEY    = 'casino.appver';
   const DEFAULT_BALANCE = 1006000;
   const DEFAULT_EXODUS  = 11342053.20;
@@ -1209,6 +1252,11 @@
   const saveBalance = n => localStorage.setItem(LS_BAL_KEY, String(Math.max(0, Math.floor(n))));
   const loadExodus  = () => Math.max(0, Number(lsNum(LS_EXO_KEY, DEFAULT_EXODUS)));
   const saveExodus  = n => localStorage.setItem(LS_EXO_KEY, String(Math.max(0, Number(n))));
+  const loadFlag = (key, fallback = true) => {
+    const value = localStorage.getItem(key);
+    return value === null ? fallback : value === '1';
+  };
+  const saveFlag = (key, value) => localStorage.setItem(key, value ? '1' : '0');
   const isAgeVerified = () => ageVerified;
 
   const MINES_MULTS = [
@@ -1222,6 +1270,8 @@
     view: 'splash',
     bankroll: 1000,
     exodus: DEFAULT_EXODUS,
+    soundOn: loadFlag(LS_SOUND_KEY, true),
+    songOn: loadFlag(LS_SONG_KEY, true),
 
     /* Blackjack */
     minBet: 10,
@@ -1334,6 +1384,8 @@
   const vDice = document.getElementById('view-dice');
 
   const tabCasino = document.getElementById('tab-casino');
+  const tabSports = document.getElementById('tab-sports');
+  const tabPromotions = document.getElementById('tab-promotions');
   const playBlackjack = document.getElementById('play-blackjack');
   const playCrash = document.getElementById('play-crash');
   const playMines = document.getElementById('play-mines');
@@ -1347,6 +1399,68 @@
   const cardRoulette = document.getElementById('card-roulette');
   const cardChicken = document.getElementById('card-chicken');
   const cardDice = document.getElementById('card-dice');
+
+  const notice = document.getElementById('notice');
+  let noticeTimer = null;
+  function notify(message){
+    if (!notice || notice.classList.contains('show')) return;
+    notice.textContent = message;
+    notice.classList.add('show');
+    clearTimeout(noticeTimer);
+    noticeTimer = setTimeout(() => {
+      notice.classList.remove('show');
+      noticeTimer = null;
+    }, 1600);
+  }
+
+  let clickAudioCtx = null;
+  function getAudioCtx(){
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return null;
+    clickAudioCtx = clickAudioCtx || new AudioCtx();
+    if (clickAudioCtx.state === 'suspended') clickAudioCtx.resume();
+    return clickAudioCtx;
+  }
+  function playToneCue(steps, volume = 0.14){
+    if (!state.soundOn) return;
+    try {
+      const ctx = getAudioCtx();
+      if (!ctx) return;
+      const now = ctx.currentTime;
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(volume, now + 0.012);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + steps.at(-1).time + 0.12);
+      gain.connect(ctx.destination);
+      steps.forEach(step => {
+        const osc = ctx.createOscillator();
+        osc.type = step.type || 'sine';
+        osc.frequency.setValueAtTime(step.freq, now + step.time);
+        osc.frequency.exponentialRampToValueAtTime(step.to || step.freq * 0.86, now + step.time + step.dur);
+        osc.connect(gain);
+        osc.start(now + step.time);
+        osc.stop(now + step.time + step.dur + 0.025);
+      });
+    } catch (_) {}
+  }
+  const soundCues = {
+    ui: () => playToneCue([{freq:720,to:520,time:0,dur:.08,type:'sine'},{freq:1060,to:820,time:.015,dur:.075,type:'triangle'}], .13),
+    bet: () => playToneCue([{freq:460,to:620,time:0,dur:.055,type:'square'},{freq:760,to:680,time:.04,dur:.07,type:'triangle'}], .12),
+    float: () => playToneCue([{freq:240,to:380,time:0,dur:.09,type:'sawtooth'},{freq:920,to:1180,time:.035,dur:.11,type:'sine'}], .11),
+    enter: () => playToneCue([{freq:520,to:700,time:0,dur:.08,type:'sine'},{freq:820,to:1040,time:.075,dur:.1,type:'triangle'},{freq:1260,to:1320,time:.16,dur:.12,type:'sine'}], .15)
+  };
+  function playButtonSound(kind = 'ui'){
+    (soundCues[kind] || soundCues.ui)();
+  }
+  function soundKindFor(target){
+    if (target.closest('#control-float')) return 'float';
+    if (target.closest('[data-play-game],.chip,.pick,#bj-chips,#crash-chips,#mines-chips,#roulette-chips,#chicken-chips,#dice-chips,#deal-now,#hit,#stand,#double,#new-round,#crash-start,#crash-cashout,#mines-start,#mines-cashout,#roulette-spin,#chicken-start,#chicken-step,#chicken-cashout,#dice-roll')) return 'bet';
+    return 'ui';
+  }
+  document.addEventListener('pointerdown', (e) => {
+    const target = e.target.closest('button,.btn,.tab,.pill,.chip,.pick,.menu-item,.profile,.switch,[role="button"]');
+    if (target) playButtonSound(soundKindFor(target));
+  }, { capture:true, passive:true });
 
   const backToLobby = document.getElementById('back-to-lobby');
   const backToLobby2 = document.getElementById('back-to-lobby-2');
@@ -1436,6 +1550,9 @@
   }, { once:true });
 
   tabCasino.addEventListener('click', ()=> show('lobby'));
+  [tabSports, tabPromotions].forEach(tab => {
+    tab?.addEventListener('click', () => notify('Coming soon..'));
+  });
 
   const goBJ = () => { splash.style.display='none'; if (!isAgeVerified()) { openAgeGate(); return; } show('blackjack'); };
   const goCrash = () => { splash.style.display='none'; if (!isAgeVerified()) { openAgeGate(); return; } show('crash'); };
@@ -1542,6 +1659,12 @@
   const menuTopup = document.getElementById('menu-topup');
   const menuLobby = document.getElementById('menu-lobby');
   const menuProfile = document.getElementById('menu-profile');
+  const profileSettingsWrap = document.getElementById('profile-settings');
+  const profileSettingsModal = document.getElementById('profile-settings-modal');
+  const profileSettingsClose = document.getElementById('profile-settings-close');
+  const profileSettingsUser = document.getElementById('profile-settings-user');
+  const soundToggle = document.getElementById('sound-toggle');
+  const songToggle = document.getElementById('song-toggle');
 
   function closeProfileMenu(){
     if (!profileMenu || !profileButton) return;
@@ -1557,6 +1680,7 @@
 
   function initProfile(){
     if (usernameEl) usernameEl.textContent = PROFILE.username || 'swiping.cc';
+    if (profileSettingsUser) profileSettingsUser.textContent = PROFILE.username || 'swiping.cc';
     if (!pfpEl) return;
     const url = (PROFILE.imgurUrl || '').trim();
     if (!url) { pfpEl.style.backgroundImage = 'none'; return; }
@@ -1571,6 +1695,32 @@
     };
     img.onerror = () => { pfpEl.style.backgroundImage = 'none'; };
     img.src = url;
+  }
+
+  function syncSettingsToggles(){
+    soundToggle?.classList.toggle('on', state.soundOn);
+    soundToggle?.setAttribute('aria-checked', state.soundOn ? 'true' : 'false');
+    songToggle?.classList.toggle('on', state.songOn);
+    songToggle?.setAttribute('aria-checked', state.songOn ? 'true' : 'false');
+  }
+  function openProfileSettings(){
+    closeProfileMenu();
+    syncSettingsToggles();
+    profileSettingsWrap.style.display = 'flex';
+    requestAnimationFrame(() => profileSettingsModal.classList.add('show'));
+  }
+  function closeProfileSettings(){
+    profileSettingsModal.classList.remove('show');
+    setTimeout(() => profileSettingsWrap.style.display = 'none', 150);
+  }
+  function setSongEnabled(enabled){
+    state.songOn = enabled;
+    saveFlag(LS_SONG_KEY, enabled);
+    syncSettingsToggles();
+    if (enabled) tryStartBgm();
+    else {
+      try { bgm.pause(); } catch (_) {}
+    }
   }
 
   /* ---------- Shop Modal ---------- */
@@ -1598,6 +1748,11 @@
     shopWrap.style.display='flex'; requestAnimationFrame(()=>shopModal.classList.add('show'));
   }
   openShop.addEventListener('click', openShopModal);
+  openShop.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    e.preventDefault();
+    openShopModal();
+  });
   function closeShop(){ shopModal.classList.remove('show'); setTimeout(()=>shopWrap.style.display='none',150); }
   shopClose.addEventListener('click', closeShop);
   shopWrap.addEventListener('click', (e)=>{ if(e.target===shopWrap) closeShop(); });
@@ -1692,11 +1847,20 @@
     if (!profileMenu.contains(e.target) && !profileButton.contains(e.target)) closeProfileMenu();
   });
   menuTopup.addEventListener('click', openShopModal);
-  menuProfile.addEventListener('click', closeProfileMenu);
+  menuProfile.addEventListener('click', openProfileSettings);
   menuLobby.addEventListener('click', ()=>{
     closeProfileMenu();
     show('lobby');
   });
+  profileSettingsClose.addEventListener('click', closeProfileSettings);
+  profileSettingsWrap.addEventListener('click', (e)=>{ if(e.target===profileSettingsWrap) closeProfileSettings(); });
+  soundToggle.addEventListener('click', () => {
+    state.soundOn = !state.soundOn;
+    saveFlag(LS_SOUND_KEY, state.soundOn);
+    syncSettingsToggles();
+    if (state.soundOn) playButtonSound();
+  });
+  songToggle.addEventListener('click', () => setSongEnabled(!state.songOn));
   openWallet.addEventListener('click', openWalletModal);
   walletClose.addEventListener('click', closeWallet);
   walletWrap.addEventListener('click', (e)=>{ if(e.target===walletWrap) closeWallet(); });
@@ -1741,6 +1905,10 @@
       walletDone.style.display='block';
     }
     walletModal.classList.remove('processing');
+    await sleep(1500);
+    closeWallet();
+    walletAmt.value = '';
+    walletBar.style.width = '0%';
   });
 
   /* ======================
@@ -2592,7 +2760,7 @@
     }
 
     if (S.points.length > 1) {
-      cCtx.strokeStyle = 'rgba(46,231,255,.9)';
+      cCtx.strokeStyle = 'rgba(94,222,224,.9)';
       cCtx.lineWidth = 2 * dpr;
       cCtx.beginPath();
 
@@ -3575,6 +3743,7 @@
   }
 
   function tryStartBgm(){
+    if (!state.songOn) return;
     if (!bgm) return;
     const start = () => {
       try { bgm.pause(); } catch(_) {}
@@ -3590,12 +3759,37 @@
 
   ageYes.addEventListener('click', ()=>{
     ageVerified = true;
+    playButtonSound('enter');
     closeAgeGate();
     tryStartBgm();
     show('lobby');
   });
   ageNo.addEventListener('click', ()=>{ ageDeny.style.display='block'; });
   ageClose.addEventListener('click', ()=>{ ageDeny.style.display='block'; });
+
+  /* ---- PWA + keep awake ---- */
+  let wakeLock = null;
+  async function requestKeepAwake(){
+    if (!('wakeLock' in navigator)) return;
+    try {
+      wakeLock = await navigator.wakeLock.request('screen');
+      wakeLock.addEventListener('release', () => { wakeLock = null; });
+    } catch (_) {}
+  }
+  function initKeepAwake(){
+    requestKeepAwake();
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') requestKeepAwake();
+    });
+    ['pointerdown','touchstart','keydown'].forEach(type => {
+      window.addEventListener(type, requestKeepAwake, { passive:true });
+    });
+  }
+  function initPwa(){
+    if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
+  }
 
   /* ---- boot ---- */
   function boot(){
@@ -3605,6 +3799,7 @@
     }
 
     initProfile();
+    syncSettingsToggles();
     state.bankroll = loadBalance();
     state.exodus   = loadExodus();
 
@@ -3622,6 +3817,8 @@
     updateDiceUI();
     initControlDocks();
     initLobbyLive();
+    initKeepAwake();
+    initPwa();
   }
   boot();
 })();

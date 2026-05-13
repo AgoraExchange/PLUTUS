@@ -1,0 +1,19 @@
+{
+  "name": "Plutus Casino",
+  "short_name": "Plutus",
+  "description": "Plutus casino web app with play-money games.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#06101b",
+  "theme_color": "#06101b",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
