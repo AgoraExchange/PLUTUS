@@ -364,7 +364,49 @@
   .dice-mode{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
   .dice-mode button.active{background:linear-gradient(135deg,#9bd7d5,#21c7bd);color:#021418}
   .dice-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+  .dice-hint{margin-top:8px;color:var(--muted);font-size:12px;line-height:1.35}
   .dice-status{margin-top:12px}
+
+  /* ===== BREAD ===== */
+  .bread-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:14px}
+  @media (max-width:900px){ .bread-wrap{grid-template-columns:1fr} }
+  .bread-board{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px;overflow:hidden}
+  .bread-stage{min-height:330px;border-radius:14px;border:1px solid var(--border);background:radial-gradient(circle at 50% 34%,rgba(94,222,224,.14),transparent 58%),linear-gradient(180deg,#0b1522,#050b13);display:grid;place-items:center;padding:18px;perspective:800px}
+  .revolver-face{position:relative;width:min(270px,74vw);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 50% 50%,#06101b 0 18%,#5edee0 19% 21%,#0b1f2e 22% 39%,#8fb7bd 40% 42%,#081321 43% 64%,#15495a 65% 69%,#02070d 70%);box-shadow:0 30px 70px rgba(0,0,0,.58),0 0 44px rgba(94,222,224,.16),inset 0 0 34px rgba(0,0,0,.78);transition:transform .36s ease,filter .22s ease}
+  .revolver-face::before{content:"";position:absolute;inset:40%;border-radius:50%;background:radial-gradient(circle,#b7d7d6,#224c58 45%,#02070d 68%);box-shadow:inset 0 0 18px rgba(0,0,0,.62),0 0 18px rgba(94,222,224,.22)}
+  .revolver-face::after{content:"";position:absolute;left:50%;top:50%;width:22%;height:22%;border-radius:50%;transform:translate(-50%,-50%);background:#02070d;border:2px solid rgba(94,222,224,.42);box-shadow:inset 0 0 20px #000,0 0 16px rgba(94,222,224,.22)}
+  .revolver-face.spin{transform:rotate(var(--bread-rot,0deg)) scale(1.025)}
+  .revolver-face.hit{filter:drop-shadow(0 0 26px rgba(255,92,92,.38))}
+  .chamber{position:absolute;left:50%;top:50%;width:21%;height:21%;margin:-10.5%;border-radius:50%;background:radial-gradient(circle,#02070d 0 48%,#123342 50% 72%,#8fb7bd 74% 79%,#02070d 80%);box-shadow:inset 0 0 18px rgba(0,0,0,.9)}
+  .chamber.bullet::after{content:"";position:absolute;inset:28%;border-radius:50%;background:radial-gradient(circle,#f8ead0 0 36%,#b88737 38% 62%,#5a3510 64%);box-shadow:0 0 18px rgba(255,214,122,.38)}
+  .chamber.fired::after{background:radial-gradient(circle,#ffefe3 0 18%,#ff7b5f 22% 46%,rgba(255,92,92,.18) 48% 72%,transparent 74%);box-shadow:0 0 28px rgba(255,92,92,.65)}
+  .chamber:nth-child(1){transform:rotate(0deg) translateY(-92px)}
+  .chamber:nth-child(2){transform:rotate(60deg) translateY(-92px)}
+  .chamber:nth-child(3){transform:rotate(120deg) translateY(-92px)}
+  .chamber:nth-child(4){transform:rotate(180deg) translateY(-92px)}
+  .chamber:nth-child(5){transform:rotate(240deg) translateY(-92px)}
+  .chamber:nth-child(6){transform:rotate(300deg) translateY(-92px)}
+  .bread-muzzle{position:absolute;left:50%;top:50%;width:30%;height:30%;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,#000 0 42%,#06101b 43% 62%,#5edee0 63% 66%,#0a2734 67%);box-shadow:inset 0 0 24px #000,0 0 26px rgba(94,222,224,.18);z-index:3}
+  .bread-status{margin-top:12px}
+  .shot-flash{position:fixed;inset:0;z-index:480;pointer-events:none;background:radial-gradient(circle at 50% 45%,rgba(255,255,255,.92),rgba(255,92,92,.38) 26%,transparent 58%);opacity:0;transition:opacity .22s ease}
+  .shot-flash.show{opacity:1;transition:opacity .04s ease}
+
+  /* ===== PLINKO ===== */
+  .plinko-wrap{display:grid;grid-template-columns:1.08fr .92fr;gap:14px}
+  @media (max-width:900px){ .plinko-wrap{grid-template-columns:1fr} }
+  .plinko-board{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px;overflow:hidden}
+  .plinko-stage{position:relative;height:520px;border-radius:14px;border:1px solid var(--border);background:radial-gradient(circle at 50% 18%,rgba(94,222,224,.13),transparent 42%),linear-gradient(180deg,#0b1522,#050b13);overflow:hidden}
+  .plinko-pin{position:absolute;width:8px;height:8px;border-radius:50%;background:#9bd7d5;box-shadow:0 0 12px rgba(94,222,224,.34);transform:translate(-50%,-50%)}
+  .plinko-ball{position:absolute;width:18px;height:18px;border-radius:50%;left:50%;top:18px;transform:translate(-50%,-50%);background:radial-gradient(circle at 35% 28%,#fff,#5edee0 38%,#0e817d 72%);box-shadow:0 0 18px rgba(94,222,224,.55),0 12px 22px rgba(0,0,0,.45);z-index:4;transition:left .12s ease,top .12s ease}
+  .plinko-buckets{position:absolute;left:12px;right:12px;bottom:12px;display:grid;gap:4px}
+  .plinko-bucket{min-width:0;padding:8px 2px;border-radius:9px;border:1px solid rgba(94,222,224,.16);background:linear-gradient(180deg,#0e2330,#07111d);color:#dffbfc;text-align:center;font-size:11px;font-weight:900}
+  .plinko-bucket.hot{background:linear-gradient(180deg,#5edee0,#0d746f);color:#021418;box-shadow:0 0 18px rgba(94,222,224,.28)}
+  .plinko-bucket.hit{outline:2px solid rgba(255,255,255,.78);box-shadow:0 0 24px rgba(94,222,224,.5)}
+  .risk-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0}
+  .risk-grid button.active{background:linear-gradient(135deg,#9bd7d5,#21c7bd);color:#021418}
+  .plinko-row-control{display:grid;gap:8px;margin:10px 0}
+  .plinko-row-control input{width:100%;accent-color:#21c7bd}
+  .plinko-status{margin-top:12px}
 
   /* ===== AGE GATE ===== */
   #age.backdrop{z-index:350}
@@ -419,6 +461,8 @@
     .mines-wrap>.panel,
     .roulette-wrap>.panel{position:sticky;bottom:8px;z-index:45;box-shadow:0 -12px 34px rgba(0,0,0,.38);max-height:68vh;overflow:auto}
     .chicken-wrap>.panel{position:sticky;bottom:8px;z-index:45;box-shadow:0 -12px 34px rgba(0,0,0,.38);max-height:68vh;overflow:auto}
+    .bread-wrap>.panel{position:sticky;bottom:8px;z-index:45;box-shadow:0 -12px 34px rgba(0,0,0,.38);max-height:68vh;overflow:auto}
+    .plinko-wrap>.panel{position:sticky;bottom:8px;z-index:45;box-shadow:0 -12px 34px rgba(0,0,0,.38);max-height:68vh;overflow:auto}
     .dice-wrap>.panel{position:sticky;bottom:8px;z-index:45;box-shadow:0 -12px 34px rgba(0,0,0,.38);max-height:68vh;overflow:auto}
     .mobile-dock{transition:transform .22s ease, opacity .16s ease, max-height .22s ease, padding .22s ease, margin .22s ease;will-change:transform}
     .mobile-dock.dock-collapsed{max-height:0!important;margin-top:0!important;margin-bottom:0!important;padding-top:0!important;padding-bottom:0!important;border-width:0;transform:translateY(34px);opacity:0;overflow:hidden;pointer-events:none}
@@ -483,6 +527,24 @@
           <small>Your latest favorites</small>
         </div>
         <div class="game-strip">
+          <article class="game-card" data-game-link="bread">
+            <div class="bgfx"></div>
+            <div>
+              <div class="title">Russian Roulette</div>
+              <div class="tag">Survive pulls, build multiplier, cash out in time</div>
+              <div class="live-count"><span class="live-dot"></span><span data-live-count="bread">4,812</span> playing</div>
+            </div>
+            <div class="cta"><button class="btn" type="button" data-play-game="bread">Play</button></div>
+          </article>
+          <article class="game-card" data-game-link="plinko">
+            <div class="bgfx"></div>
+            <div>
+              <div class="title">Plinko</div>
+              <div class="tag">Drop the ball through pins and chase edge multipliers</div>
+              <div class="live-count"><span class="live-dot"></span><span data-live-count="plinko">7,344</span> playing</div>
+            </div>
+            <div class="cta"><button class="btn" type="button" data-play-game="plinko">Play</button></div>
+          </article>
           <article class="game-card" data-game-link="dice">
             <div class="bgfx"></div>
             <div>
@@ -575,6 +637,28 @@
           </div>
             <div class="live-count"><span class="live-dot"></span><span data-live-count="dice">8,421</span> playing</div>
           <div class="cta"><button class="btn" id="play-dice" type="button">Play</button></div>
+          <div class="ribbon">Live</div>
+        </article>
+
+        <article class="game-card" id="card-bread">
+          <div class="bgfx"></div>
+          <div>
+            <div class="title">Russian Roulette</div>
+            <div class="tag">Six-chamber survival game with fast-rising multipliers</div>
+          </div>
+            <div class="live-count"><span class="live-dot"></span><span data-live-count="bread">4,812</span> playing</div>
+          <div class="cta"><button class="btn" id="play-bread" type="button">Play</button></div>
+          <div class="ribbon">Live</div>
+        </article>
+
+        <article class="game-card" id="card-plinko">
+          <div class="bgfx"></div>
+          <div>
+            <div class="title">Plinko</div>
+            <div class="tag">Risk levels, 8-16 rows, edge-heavy payouts</div>
+          </div>
+            <div class="live-count"><span class="live-dot"></span><span data-live-count="plinko">7,344</span> playing</div>
+          <div class="cta"><button class="btn" id="play-plinko" type="button">Play</button></div>
           <div class="ribbon">Live</div>
         </article>
       </div>
@@ -1031,6 +1115,183 @@
       </div>
     </section>
 
+    <!-- RUSSIAN ROULETTE -->
+    <section id="view-bread" class="view" aria-label="Russian Roulette Survival Game">
+      <div class="hero">
+        <div>
+          <h1>Russian Roulette</h1>
+          <small>Pull to survive a six-chamber risk. Cash out before the round ends you.</small>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn ghost" id="back-to-lobby-7">Casino</button>
+          <button class="btn ghost" id="to-dice">Dice</button>
+        </div>
+      </div>
+
+      <div class="bread-wrap">
+        <div class="bread-board">
+          <div class="mines-top">
+            <div>
+              <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Current Multiplier</div>
+              <div class="mult-big" id="bread-mult">1.00x</div>
+            </div>
+            <div class="status bread-status" id="bread-status">Set a bet and start the round.</div>
+          </div>
+          <div class="bread-stage">
+            <div class="revolver-face" id="bread-revolver">
+              <span class="chamber" data-chamber="0"></span><span class="chamber" data-chamber="1"></span><span class="chamber" data-chamber="2"></span>
+              <span class="chamber" data-chamber="3"></span><span class="chamber" data-chamber="4"></span><span class="chamber" data-chamber="5"></span>
+              <span class="bread-muzzle"></span>
+            </div>
+          </div>
+          <div class="mini-stats">
+            <div class="mini-stat">
+              <div class="k">Pulls</div>
+              <div class="v" id="bread-pulls">0</div>
+            </div>
+            <div class="mini-stat">
+              <div class="k">Potential</div>
+              <div class="v" id="bread-potential">$0</div>
+            </div>
+            <div class="mini-stat">
+              <div class="k">Risk/Pull</div>
+              <div class="v">16.67%</div>
+            </div>
+          </div>
+          <div class="road-note">Each pull has a 1 in 6 elimination risk. Survive to raise the multiplier, or cash out while ahead.</div>
+        </div>
+
+        <div class="panel">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px">
+            <div style="font-weight:800;letter-spacing:.5px">Betting</div>
+            <div style="color:var(--muted);font-size:12px">Min $10 - Max $5,000</div>
+          </div>
+
+          <div class="control-result" id="bread-result"></div>
+
+          <div class="betting">
+            <div class="bet-input">
+              <button class="btn ghost" id="bread-clear">Clear</button>
+              <button class="btn" id="bread-minus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">- $10</button>
+              <div class="num" id="bread-bet-display">$0</div>
+              <button class="btn" id="bread-plus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">+ $10</button>
+              <button class="btn" id="bread-max">Max</button>
+            </div>
+            <div>
+              <div class="chip-row" id="bread-chips">
+                <div class="chip" data-v="10" title="+$10"><span>10</span></div>
+                <div class="chip" data-v="50" title="+$50"><span>50</span></div>
+                <div class="chip" data-v="100" title="+$100"><span>100</span></div>
+                <div class="chip" data-v="250" title="+$250"><span>250</span></div>
+                <div class="chip" data-v="500" title="+$500"><span>500</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+            <button class="btn" id="bread-start" disabled>Start Round</button>
+            <button class="btn" id="bread-pull" disabled>Pull</button>
+            <button class="btn safeout" id="bread-cashout" disabled>Cash Out</button>
+            <button class="btn ghost" id="bread-new" disabled>New Round</button>
+          </div>
+
+          <div style="margin-top:8px; color:#9db2c9; font-size:12px">
+            Multipliers climb from 1.20x and accelerate with each survived pull.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLINKO -->
+    <section id="view-plinko" class="view" aria-label="Plinko Game">
+      <div class="hero">
+        <div>
+          <h1>Plinko</h1>
+          <small>Choose risk and rows, then drop a ball through the pin pyramid.</small>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn ghost" id="back-to-lobby-8">Casino</button>
+          <button class="btn ghost" id="to-roulette-2">Roulette</button>
+        </div>
+      </div>
+
+      <div class="plinko-wrap">
+        <div class="plinko-board">
+          <div class="mines-top">
+            <div>
+              <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Risk / Rows</div>
+              <div class="mult-big" id="plinko-config">Medium / 12</div>
+            </div>
+            <div class="status plinko-status" id="plinko-status">Set a bet, choose risk, and drop.</div>
+          </div>
+          <div class="plinko-stage" id="plinko-stage">
+            <div class="plinko-buckets" id="plinko-buckets"></div>
+          </div>
+          <div class="mini-stats">
+            <div class="mini-stat">
+              <div class="k">Last Slot</div>
+              <div class="v" id="plinko-slot">-</div>
+            </div>
+            <div class="mini-stat">
+              <div class="k">Multiplier</div>
+              <div class="v" id="plinko-mult">0.00x</div>
+            </div>
+            <div class="mini-stat">
+              <div class="k">Potential Max</div>
+              <div class="v" id="plinko-max">0.00x</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px">
+            <div style="font-weight:800;letter-spacing:.5px">Betting</div>
+            <div style="color:var(--muted);font-size:12px">Min $10 - Max $5,000</div>
+          </div>
+
+          <div class="control-result" id="plinko-result"></div>
+
+          <div class="risk-grid" id="plinko-risk">
+            <button class="btn ghost" data-risk="easy" type="button">Easy</button>
+            <button class="btn active" data-risk="medium" type="button">Medium</button>
+            <button class="btn ghost" data-risk="hard" type="button">Hard</button>
+            <button class="btn ghost" data-risk="expert" type="button">Expert</button>
+          </div>
+          <div class="plinko-row-control">
+            <div class="row"><div>Rows</div><div id="plinko-rows-label" class="pillstat">12</div></div>
+            <input id="plinko-rows" type="range" min="8" max="16" step="1" value="12">
+          </div>
+
+          <div class="betting" style="margin-top:12px">
+            <div class="bet-input">
+              <button class="btn ghost" id="plinko-clear">Clear</button>
+              <button class="btn" id="plinko-minus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">- $10</button>
+              <div class="num" id="plinko-bet-display">$0</div>
+              <button class="btn" id="plinko-plus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">+ $10</button>
+              <button class="btn" id="plinko-max-bet">Max</button>
+            </div>
+            <div>
+              <div class="chip-row" id="plinko-chips">
+                <div class="chip" data-v="10" title="+$10"><span>10</span></div>
+                <div class="chip" data-v="50" title="+$50"><span>50</span></div>
+                <div class="chip" data-v="100" title="+$100"><span>100</span></div>
+                <div class="chip" data-v="250" title="+$250"><span>250</span></div>
+                <div class="chip" data-v="500" title="+$500"><span>500</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+            <button class="btn" id="plinko-drop" disabled>Drop Ball</button>
+            <button class="btn ghost" id="plinko-reset">Reset</button>
+          </div>
+          <div style="margin-top:8px; color:#9db2c9; font-size:12px">
+            More rows create more bounces. Higher risk shifts bigger multipliers to the outer buckets.
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- DICE -->
     <section id="view-dice" class="view" aria-label="Dice Game">
       <div class="hero">
@@ -1064,7 +1325,7 @@
               <div class="v" id="dice-mult">2.00x</div>
             </div>
             <div class="mini-stat">
-              <div class="k">Paid Total</div>
+              <div class="k">Expected Win</div>
               <div class="v" id="dice-potential">$0</div>
             </div>
           </div>
@@ -1084,8 +1345,9 @@
             <button class="btn ghost" id="dice-under" type="button">Roll Under</button>
           </div>
           <div class="dice-slider-row">
-            <div class="row"><div>Target</div><div id="dice-target-label" class="pillstat">50.50</div></div>
+            <div class="row"><div id="dice-target-title">Roll Over Target</div><div id="dice-target-label" class="pillstat">50.50</div></div>
             <input class="dice-slider" id="dice-target" type="range" min="2" max="98" step="0.01" value="50.5">
+            <div class="dice-hint" id="dice-hint">Higher Roll Over targets increase the multiplier and lower the win chance.</div>
           </div>
 
           <div class="betting" style="margin-top:12px">
@@ -1133,7 +1395,6 @@
 
       <div class="custom-row">
         <input class="input" id="custom-amount" type="number" min="1" step="1" placeholder="Custom amount (USD)">
-        <button class="btn" id="pick-custom" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">Use Custom</button>
       </div>
 
       <div class="buyrow">
@@ -1220,6 +1481,7 @@
   </div>
 
   <!-- Background music -->
+  <div class="shot-flash" id="shot-flash"></div>
   <div class="notice" id="notice" role="status" aria-live="polite"></div>
   <button class="control-float" id="control-float" type="button" aria-label="Show or hide controls">BET</button>
   <audio id="bgm" src="cantina.mp3" preload="auto" loop></audio>
@@ -1357,6 +1619,36 @@
       animating: false
     },
 
+    /* Bread */
+    bread: {
+      minBet: 10,
+      maxBet: 5000,
+      bet: 0,
+      phase: 'betting',
+      pulls: 0,
+      multiplier: 1.00,
+      message: 'Set a bet and start the round.',
+      resolved: false,
+      animating: false,
+      rotation: 0,
+      bulletIndex: -1,
+      activeChamber: -1
+    },
+
+    /* Plinko */
+    plinko: {
+      minBet: 10,
+      maxBet: 5000,
+      bet: 0,
+      risk: 'medium',
+      rows: 12,
+      phase: 'betting',
+      lastSlot: -1,
+      lastMult: 0,
+      message: 'Set a bet, choose risk, and drop.',
+      animating: false
+    },
+
     /* Dice */
     dice: {
       minBet: 10,
@@ -1381,6 +1673,8 @@
   const vMines = document.getElementById('view-mines');
   const vRoulette = document.getElementById('view-roulette');
   const vChicken = document.getElementById('view-chicken');
+  const vBread = document.getElementById('view-bread');
+  const vPlinko = document.getElementById('view-plinko');
   const vDice = document.getElementById('view-dice');
 
   const tabCasino = document.getElementById('tab-casino');
@@ -1391,6 +1685,8 @@
   const playMines = document.getElementById('play-mines');
   const playRoulette = document.getElementById('play-roulette');
   const playChicken = document.getElementById('play-chicken');
+  const playBread = document.getElementById('play-bread');
+  const playPlinko = document.getElementById('play-plinko');
   const playDice = document.getElementById('play-dice');
 
   const cardBlackjack = document.getElementById('card-blackjack');
@@ -1398,6 +1694,8 @@
   const cardMines = document.getElementById('card-mines');
   const cardRoulette = document.getElementById('card-roulette');
   const cardChicken = document.getElementById('card-chicken');
+  const cardBread = document.getElementById('card-bread');
+  const cardPlinko = document.getElementById('card-plinko');
   const cardDice = document.getElementById('card-dice');
 
   const notice = document.getElementById('notice');
@@ -1426,39 +1724,70 @@
     try {
       const ctx = getAudioCtx();
       if (!ctx) return;
-      const now = ctx.currentTime;
-      const gain = ctx.createGain();
-      gain.gain.setValueAtTime(0.0001, now);
-      gain.gain.exponentialRampToValueAtTime(volume, now + 0.012);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + steps.at(-1).time + 0.12);
-      gain.connect(ctx.destination);
-      steps.forEach(step => {
-        const osc = ctx.createOscillator();
-        osc.type = step.type || 'sine';
-        osc.frequency.setValueAtTime(step.freq, now + step.time);
-        osc.frequency.exponentialRampToValueAtTime(step.to || step.freq * 0.86, now + step.time + step.dur);
-        osc.connect(gain);
-        osc.start(now + step.time);
-        osc.stop(now + step.time + step.dur + 0.025);
-      });
+      const schedule = () => {
+        const now = ctx.currentTime + 0.01;
+        const gain = ctx.createGain();
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(volume, now + 0.012);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + steps.at(-1).time + 0.12);
+        gain.connect(ctx.destination);
+        steps.forEach(step => {
+          const osc = ctx.createOscillator();
+          osc.type = step.type || 'sine';
+          osc.frequency.setValueAtTime(step.freq, now + step.time);
+          osc.frequency.exponentialRampToValueAtTime(step.to || step.freq * 0.86, now + step.time + step.dur);
+          osc.connect(gain);
+          osc.start(now + step.time);
+          osc.stop(now + step.time + step.dur + 0.025);
+        });
+      };
+      if (ctx.state === 'suspended') ctx.resume().then(schedule).catch(() => {});
+      else schedule();
     } catch (_) {}
   }
   const soundCues = {
     ui: () => playToneCue([{freq:720,to:520,time:0,dur:.08,type:'sine'},{freq:1060,to:820,time:.015,dur:.075,type:'triangle'}], .13),
     bet: () => playToneCue([{freq:460,to:620,time:0,dur:.055,type:'square'},{freq:760,to:680,time:.04,dur:.07,type:'triangle'}], .12),
     float: () => playToneCue([{freq:240,to:380,time:0,dur:.09,type:'sawtooth'},{freq:920,to:1180,time:.035,dur:.11,type:'sine'}], .11),
-    enter: () => playToneCue([{freq:520,to:700,time:0,dur:.08,type:'sine'},{freq:820,to:1040,time:.075,dur:.1,type:'triangle'},{freq:1260,to:1320,time:.16,dur:.12,type:'sine'}], .15)
+    enter: () => playToneCue([{freq:520,to:700,time:0,dur:.1,type:'sine'},{freq:820,to:1080,time:.08,dur:.12,type:'triangle'},{freq:1320,to:1480,time:.18,dur:.16,type:'sine'}], .22)
   };
+  function playOutcomeSound(kind){
+    if (!state.soundOn) return;
+    if (kind === 'win') {
+      playToneCue([
+        {freq:620,to:760,time:0,dur:.09,type:'triangle'},
+        {freq:880,to:1040,time:.075,dur:.1,type:'sine'},
+        {freq:1170,to:1320,time:.16,dur:.12,type:'triangle'},
+        {freq:1560,to:1720,time:.25,dur:.14,type:'sine'}
+      ], .18);
+      setTimeout(() => playToneCue([
+        {freq:1320,to:1480,time:0,dur:.08,type:'triangle'},
+        {freq:1760,to:1920,time:.055,dur:.09,type:'sine'}
+      ], .08), 115);
+      return;
+    }
+    if (kind === 'loss') {
+      playToneCue([
+        {freq:380,to:260,time:0,dur:.075,type:'square'},
+        {freq:220,to:150,time:.055,dur:.09,type:'triangle'}
+      ], .09);
+      setTimeout(() => playToneCue([
+        {freq:310,to:210,time:0,dur:.055,type:'square'}
+      ], .055), 80);
+    }
+  }
   function playButtonSound(kind = 'ui'){
     (soundCues[kind] || soundCues.ui)();
   }
   function soundKindFor(target){
+    if (target.closest('#age-yes')) return 'enter';
     if (target.closest('#control-float')) return 'float';
-    if (target.closest('[data-play-game],.chip,.pick,#bj-chips,#crash-chips,#mines-chips,#roulette-chips,#chicken-chips,#dice-chips,#deal-now,#hit,#stand,#double,#new-round,#crash-start,#crash-cashout,#mines-start,#mines-cashout,#roulette-spin,#chicken-start,#chicken-step,#chicken-cashout,#dice-roll')) return 'bet';
+    if (target.closest('[data-play-game],.chip,.pick,#bj-chips,#crash-chips,#mines-chips,#roulette-chips,#chicken-chips,#bread-chips,#plinko-chips,#dice-chips,#deal-now,#hit,#stand,#double,#new-round,#crash-start,#crash-cashout,#mines-start,#mines-cashout,#roulette-spin,#chicken-start,#chicken-step,#chicken-cashout,#bread-start,#bread-pull,#bread-cashout,#plinko-drop,#dice-roll')) return 'bet';
     return 'ui';
   }
   document.addEventListener('pointerdown', (e) => {
     const target = e.target.closest('button,.btn,.tab,.pill,.chip,.pick,.menu-item,.profile,.switch,[role="button"]');
+    if (target?.closest('#age-yes')) return;
     if (target) playButtonSound(soundKindFor(target));
   }, { capture:true, passive:true });
 
@@ -1468,11 +1797,15 @@
   const backToLobby4 = document.getElementById('back-to-lobby-4');
   const backToLobby5 = document.getElementById('back-to-lobby-5');
   const backToLobby6 = document.getElementById('back-to-lobby-6');
+  const backToLobby7 = document.getElementById('back-to-lobby-7');
+  const backToLobby8 = document.getElementById('back-to-lobby-8');
   const toBlackjack = document.getElementById('to-blackjack');
   const toCrash = document.getElementById('to-crash');
   const toMines = document.getElementById('to-mines');
   const toRoulette = document.getElementById('to-roulette');
   const toChicken = document.getElementById('to-chicken');
+  const toDice = document.getElementById('to-dice');
+  const toRoulette2 = document.getElementById('to-roulette-2');
   const refreshLobby = document.getElementById('refresh-lobby');
 
   function cleanupCrash(){
@@ -1491,6 +1824,8 @@
     vMines.classList.toggle('show', view === 'mines');
     vRoulette.classList.toggle('show', view === 'roulette');
     vChicken.classList.toggle('show', view === 'chicken');
+    vBread.classList.toggle('show', view === 'bread');
+    vPlinko.classList.toggle('show', view === 'plinko');
     vDice.classList.toggle('show', view === 'dice');
     tabCasino.classList.toggle('active', view !== 'splash');
 
@@ -1500,9 +1835,11 @@
       resetMinesRound(true);
       resetRouletteRound(true);
       resetChickenRound(true);
+      resetBreadRound(true);
+      resetPlinkoRound(true);
       resetDiceRound(true);
     }
-    if (view === 'blackjack' || view === 'crash' || view === 'mines' || view === 'roulette' || view === 'chicken' || view === 'dice') {
+    if (view === 'blackjack' || view === 'crash' || view === 'mines' || view === 'roulette' || view === 'chicken' || view === 'bread' || view === 'plinko' || view === 'dice') {
       window.scrollTo({top:0, behavior:'smooth'});
     }
     if (view === 'crash') {
@@ -1517,6 +1854,13 @@
     }
     if (view === 'chicken') {
       updateChickenUI();
+    }
+    if (view === 'bread') {
+      updateBreadUI();
+    }
+    if (view === 'plinko') {
+      renderPlinkoBoard();
+      updatePlinkoUI();
     }
     if (view === 'dice') {
       updateDiceUI();
@@ -1559,6 +1903,8 @@
   const goMines = () => { splash.style.display='none'; if (!isAgeVerified()) { openAgeGate(); return; } show('mines'); };
   const goRoulette = () => { splash.style.display='none'; if (!isAgeVerified()) { openAgeGate(); return; } show('roulette'); };
   const goChicken = () => { splash.style.display='none'; if (!isAgeVerified()) { openAgeGate(); return; } show('chicken'); };
+  const goBread = () => { splash.style.display='none'; if (!isAgeVerified()) { openAgeGate(); return; } show('bread'); };
+  const goPlinko = () => { splash.style.display='none'; if (!isAgeVerified()) { openAgeGate(); return; } show('plinko'); };
   const goDice = () => { splash.style.display='none'; if (!isAgeVerified()) { openAgeGate(); return; } show('dice'); };
 
   playBlackjack.addEventListener('click', goBJ);
@@ -1571,6 +1917,10 @@
   cardRoulette.addEventListener('click', goRoulette);
   playChicken.addEventListener('click', goChicken);
   cardChicken.addEventListener('click', goChicken);
+  playBread.addEventListener('click', goBread);
+  cardBread.addEventListener('click', goBread);
+  playPlinko.addEventListener('click', goPlinko);
+  cardPlinko.addEventListener('click', goPlinko);
   playDice.addEventListener('click', goDice);
   cardDice.addEventListener('click', goDice);
 
@@ -1580,17 +1930,21 @@
   backToLobby4.addEventListener('click', ()=> show('lobby'));
   backToLobby5.addEventListener('click', ()=> show('lobby'));
   backToLobby6.addEventListener('click', ()=> show('lobby'));
+  backToLobby7.addEventListener('click', ()=> show('lobby'));
+  backToLobby8.addEventListener('click', ()=> show('lobby'));
   toBlackjack.addEventListener('click', goBJ);
   toCrash.addEventListener('click', goCrash);
   toMines.addEventListener('click', goMines);
   toRoulette.addEventListener('click', goRoulette);
   toChicken.addEventListener('click', goChicken);
+  toDice.addEventListener('click', goDice);
+  toRoulette2.addEventListener('click', goRoulette);
   document.querySelectorAll('[data-play-game],[data-game-link]').forEach(el => {
     el.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-play-game]');
       const game = btn ? btn.dataset.playGame : el.dataset.gameLink;
       if (!game) return;
-      const go = {blackjack:goBJ, crash:goCrash, mines:goMines, roulette:goRoulette, chicken:goChicken, dice:goDice}[game];
+      const go = {blackjack:goBJ, crash:goCrash, mines:goMines, roulette:goRoulette, chicken:goChicken, bread:goBread, plinko:goPlinko, dice:goDice}[game];
       if (go) go();
     });
   });
@@ -1614,6 +1968,8 @@
     mines: document.getElementById('mines-result'),
     roulette: document.getElementById('roulette-result-line'),
     chicken: document.getElementById('chicken-result'),
+    bread: document.getElementById('bread-result'),
+    plinko: document.getElementById('plinko-result'),
     dice: document.getElementById('dice-result')
   };
 
@@ -1627,14 +1983,18 @@
     const el = resultLines[game];
     if (!el || !message) return;
     const tone = resultTone(message);
+    const isNewResult = el.dataset.lastMessage !== message;
     el.textContent = message;
     el.className = `control-result show${tone ? ' ' + tone : ''}`;
+    if (isNewResult && (tone === 'win' || tone === 'loss')) playOutcomeSound(tone);
+    el.dataset.lastMessage = message;
   }
   function clearControlResult(game){
     const el = resultLines[game];
     if (!el) return;
     el.textContent = '';
     el.className = 'control-result';
+    delete el.dataset.lastMessage;
   }
 
   const btnMinus10 = document.getElementById('minus10');
@@ -1731,7 +2091,6 @@
   const grid       = document.getElementById('preset-grid');
   const picks      = () => Array.from(grid.querySelectorAll('.pick'));
   const customInp  = document.getElementById('custom-amount');
-  const pickCustom = document.getElementById('pick-custom');
   const buyBtn     = document.getElementById('buy-btn');
   const shopBar    = document.getElementById('shop-bar');
   const msg        = document.getElementById('shop-msg');
@@ -1758,9 +2117,11 @@
   shopWrap.addEventListener('click', (e)=>{ if(e.target===shopWrap) closeShop(); });
   grid.addEventListener('click', (e)=>{
     const el = e.target.closest('.pick'); if(!el) return;
+    customInp.value = '';
     picks().forEach(p=>p.classList.remove('active')); el.classList.add('active');
   });
-  pickCustom.addEventListener('click', ()=>{ picks().forEach(p=>p.classList.remove('active')); customInp.focus(); });
+  customInp.addEventListener('input', ()=>{ picks().forEach(p=>p.classList.remove('active')); });
+  customInp.addEventListener('focus', ()=>{ picks().forEach(p=>p.classList.remove('active')); });
   buyBtn.addEventListener('click', simulatePurchase);
 
   function selectedAmount(){
@@ -1773,21 +2134,21 @@
     const amt = selectedAmount();
     if (!amt){ msg.textContent='Select an amount or enter custom.'; return; }
     picks().forEach(p=>p.style.pointerEvents='none');
-    customInp.disabled=true; pickCustom.disabled=true; buyBtn.disabled=true;
+    customInp.disabled=true; buyBtn.disabled=true;
     shopModal.classList.add('processing');
 
     msg.textContent='Initializing purchase…'; animateShopBarTo(40, 2500); await sleep(2500);
     msg.textContent=`Processing ${fmt(amt)}…`; animateShopBarTo(55, 1000); await sleep(1000);
     msg.textContent='Crediting chips…'; animateShopBarTo(100, 2500); await sleep(2500);
 
-    state.bankroll += amt; updateUI(); updateCrashUI(); updateMinesUI(); updateRouletteUI(); updateChickenUI(); updateDiceUI(); saveBalance(state.bankroll);
+    state.bankroll += amt; updateUI(); updateCrashUI(); updateMinesUI(); updateRouletteUI(); updateChickenUI(); updateBreadUI(); updatePlinkoUI(); updateDiceUI(); saveBalance(state.bankroll);
 
     check.style.display='grid'; credited.textContent = fmt(amt); thank.style.display='block'; msg.textContent='';
     await sleep(900); closeShop();
 
     picks().forEach(p=>{p.style.pointerEvents='auto'; p.classList.remove('active');});
     shopModal.classList.remove('processing');
-    customInp.disabled=false; customInp.value=''; pickCustom.disabled=false; buyBtn.disabled=false; shopBar.style.width='0%';
+    customInp.disabled=false; customInp.value=''; buyBtn.disabled=false; shopBar.style.width='0%';
   }
   function animateShopBarTo(pct, ms){ shopBar.style.transition=`width ${ms}ms linear`; shopBar.style.width=pct+'%'; }
 
@@ -1884,7 +2245,7 @@
       state.exodus   = Math.max(0, state.exodus - amt);
       state.bankroll = Math.max(0, state.bankroll + amt);
       saveExodus(state.exodus); saveBalance(state.bankroll);
-      updateUI(); updateCrashUI(); updateMinesUI(); updateRouletteUI(); updateChickenUI(); updateDiceUI(); refreshWalletStats();
+      updateUI(); updateCrashUI(); updateMinesUI(); updateRouletteUI(); updateChickenUI(); updateBreadUI(); updatePlinkoUI(); updateDiceUI(); refreshWalletStats();
 
       walletCheck.style.display='grid';
       walletDone.textContent = `Deposit complete: ${fmt(amt)} moved from Exodus to Casino.`;
@@ -1898,7 +2259,7 @@
       state.bankroll = Math.max(0, state.bankroll - amt);
       state.exodus   = Math.max(0, state.exodus + amt);
       saveBalance(state.bankroll); saveExodus(state.exodus);
-      updateUI(); updateCrashUI(); updateMinesUI(); updateRouletteUI(); updateChickenUI(); updateDiceUI(); refreshWalletStats();
+      updateUI(); updateCrashUI(); updateMinesUI(); updateRouletteUI(); updateChickenUI(); updateBreadUI(); updatePlinkoUI(); updateDiceUI(); refreshWalletStats();
 
       walletCheck.style.display='grid';
       walletDone.textContent = `Withdrawal complete: ${fmt(amt)} deposited to your Exodus account.`;
@@ -3404,6 +3765,370 @@
   }
 
   /* ======================
+     BREAD
+     ====================== */
+  const breadMult = document.getElementById('bread-mult');
+  const breadStatus = document.getElementById('bread-status');
+  const breadPulls = document.getElementById('bread-pulls');
+  const breadPotential = document.getElementById('bread-potential');
+  const breadRevolver = document.getElementById('bread-revolver');
+  const breadBetDisplay = document.getElementById('bread-bet-display');
+  const breadMinus10 = document.getElementById('bread-minus10');
+  const breadPlus10 = document.getElementById('bread-plus10');
+  const breadMax = document.getElementById('bread-max');
+  const breadClear = document.getElementById('bread-clear');
+  const breadStart = document.getElementById('bread-start');
+  const breadPull = document.getElementById('bread-pull');
+  const breadCashout = document.getElementById('bread-cashout');
+  const breadNew = document.getElementById('bread-new');
+  const breadChambers = Array.from(document.querySelectorAll('#bread-revolver .chamber'));
+  const shotFlash = document.getElementById('shot-flash');
+  const BREAD_MULTS = [1.20, 1.42, 1.82, 2.45, 3.30, 4.65, 6.40, 8.80, 12.00];
+  const BREAD_RISK = 1 / 6;
+
+  function clearBreadChamberReveal(){
+    breadChambers.forEach(chamber => chamber.classList.remove('bullet','fired'));
+  }
+  function revealBreadBullet(index, fired = false){
+    clearBreadChamberReveal();
+    const chamber = breadChambers[index];
+    if (!chamber) return;
+    chamber.classList.add('bullet');
+    chamber.classList.toggle('fired', fired);
+  }
+  function flashShot(){
+    if (!shotFlash) return;
+    shotFlash.classList.remove('show');
+    void shotFlash.offsetWidth;
+    shotFlash.classList.add('show');
+    setTimeout(() => shotFlash.classList.remove('show'), 90);
+  }
+
+  function updateBreadUI(){
+    const S = state.bread;
+    const current = S.phase === 'playing' ? S.multiplier : 1;
+    const paid = Math.floor(S.bet * current);
+    elBalance.textContent = fmt(state.bankroll);
+    breadBetDisplay.textContent = fmt(S.bet);
+    breadMult.textContent = `${current.toFixed(2)}x`;
+    breadPulls.textContent = String(S.pulls);
+    breadPotential.textContent = fmt(paid);
+    breadStatus.textContent = S.message;
+    breadRevolver.style.setProperty('--bread-rot', `${S.rotation}deg`);
+    breadStart.disabled = !(S.phase === 'betting' && S.bet >= S.minBet && S.bet <= state.bankroll);
+    breadPull.disabled = !(S.phase === 'playing' && !S.animating);
+    breadCashout.disabled = !(S.phase === 'playing' && !S.animating && S.pulls > 0);
+    breadNew.disabled = !(S.phase === 'waiting');
+  }
+  function breadSetBet(v){
+    const S = state.bread;
+    if (S.phase !== 'betting') return;
+    const max = Math.min(S.maxBet, state.bankroll);
+    S.bet = Math.round(clamp(v, 0, max) / 10) * 10;
+    updateBreadUI();
+  }
+  function breadAdjust(d){ breadSetBet(state.bread.bet + d); }
+
+  breadMinus10.addEventListener('click', ()=> breadAdjust(-10));
+  breadPlus10.addEventListener('click', ()=> breadAdjust(10));
+  breadMax.addEventListener('click', ()=> breadSetBet(Math.min(state.bread.maxBet, state.bankroll)));
+  breadClear.addEventListener('click', ()=> breadSetBet(0));
+  breadStart.addEventListener('click', startBreadRound);
+  breadPull.addEventListener('click', pullBread);
+  breadCashout.addEventListener('click', cashoutBread);
+  breadNew.addEventListener('click', ()=> resetBreadRound(false));
+  document.querySelectorAll('#bread-chips .chip').forEach(chip=>{
+    chip.addEventListener('click', ()=> breadAdjust(parseInt(chip.dataset.v,10)));
+  });
+
+  function startBreadRound(){
+    const S = state.bread;
+    if (S.phase !== 'betting') return;
+    if (S.bet < S.minBet) { S.message = `Min bet is ${fmt(S.minBet)}.`; updateBreadUI(); return; }
+    if (S.bet > state.bankroll) { breadSetBet(Math.min(S.maxBet, state.bankroll)); S.message = 'Bet adjusted to available bankroll.'; updateBreadUI(); return; }
+    state.bankroll -= S.bet;
+    saveBalance(state.bankroll);
+    S.phase = 'playing';
+    S.pulls = 0;
+    S.multiplier = 1.00;
+    S.resolved = false;
+    S.bulletIndex = Math.floor(Math.random() * 6);
+    S.activeChamber = -1;
+    S.message = 'Round armed. Pull or cash out after a safe chamber.';
+    breadRevolver.classList.remove('hit');
+    clearBreadChamberReveal();
+    clearControlResult('bread');
+    updateBreadUI();
+  }
+  function pullBread(){
+    const S = state.bread;
+    if (S.phase !== 'playing' || S.animating) return;
+    S.animating = true;
+    S.activeChamber = Math.floor(Math.random() * 6);
+    S.rotation += 360 + S.activeChamber * 60;
+    breadRevolver.classList.remove('hit');
+    breadRevolver.classList.add('spin');
+    S.message = 'Spinning chamber...';
+    updateBreadUI();
+    setTimeout(() => {
+      const eliminated = S.activeChamber === S.bulletIndex;
+      if (eliminated) {
+        S.phase = 'waiting';
+        S.resolved = true;
+        S.animating = false;
+        S.message = `Chamber hit. You lost ${fmt(S.bet)}.`;
+        revealBreadBullet(S.bulletIndex, true);
+        flashShot();
+        breadRevolver.classList.add('hit');
+        showControlResult('bread', S.message);
+        updateBreadUI();
+        setTimeout(clearBreadChamberReveal, 720);
+        return;
+      }
+      S.pulls += 1;
+      S.multiplier = BREAD_MULTS[Math.min(S.pulls - 1, BREAD_MULTS.length - 1)];
+      S.animating = false;
+      S.message = `Safe pull. Current cash out ${fmt(Math.floor(S.bet * S.multiplier))}.`;
+      if (S.pulls >= BREAD_MULTS.length) {
+        cashoutBread(true);
+        return;
+      }
+      updateBreadUI();
+    }, 460);
+  }
+  function cashoutBread(force = false){
+    const S = state.bread;
+    if ((S.phase !== 'playing' && !force) || S.animating || S.pulls <= 0 || S.resolved) return;
+    const paid = Math.floor(S.bet * S.multiplier);
+    const profit = Math.max(0, paid - S.bet);
+    state.bankroll += paid;
+    saveBalance(state.bankroll);
+    S.phase = 'waiting';
+    S.resolved = true;
+    revealBreadBullet(S.bulletIndex, false);
+    S.message = `Cashed out after ${S.pulls} pull${S.pulls === 1 ? '' : 's'}. Bullet was in chamber ${S.bulletIndex + 1}. Profit ${fmt(profit)}. Paid ${fmt(paid)} total.`;
+    showControlResult('bread', S.message);
+    updateBreadUI();
+  }
+  function resetBreadRound(silent = false){
+    const S = state.bread;
+    S.bet = 0;
+    S.phase = 'betting';
+    S.pulls = 0;
+    S.multiplier = 1.00;
+    S.message = 'Set a bet and start the round.';
+    S.resolved = false;
+    S.animating = false;
+    S.rotation += silent ? 0 : 360;
+    S.bulletIndex = -1;
+    S.activeChamber = -1;
+    breadRevolver?.classList.remove('spin','hit');
+    if (!silent) {
+      breadRevolver?.classList.add('spin');
+      setTimeout(() => breadRevolver?.classList.remove('spin'), 360);
+    }
+    clearBreadChamberReveal();
+    clearControlResult('bread');
+    if (!silent) updateBreadUI();
+  }
+
+  /* ======================
+     PLINKO
+     ====================== */
+  const plinkoStage = document.getElementById('plinko-stage');
+  const plinkoBuckets = document.getElementById('plinko-buckets');
+  const plinkoStatus = document.getElementById('plinko-status');
+  const plinkoConfig = document.getElementById('plinko-config');
+  const plinkoSlot = document.getElementById('plinko-slot');
+  const plinkoMult = document.getElementById('plinko-mult');
+  const plinkoMax = document.getElementById('plinko-max');
+  const plinkoBetDisplay = document.getElementById('plinko-bet-display');
+  const plinkoRows = document.getElementById('plinko-rows');
+  const plinkoRowsLabel = document.getElementById('plinko-rows-label');
+  const plinkoRisk = document.getElementById('plinko-risk');
+  const plinkoMinus10 = document.getElementById('plinko-minus10');
+  const plinkoPlus10 = document.getElementById('plinko-plus10');
+  const plinkoMaxBet = document.getElementById('plinko-max-bet');
+  const plinkoClear = document.getElementById('plinko-clear');
+  const plinkoDrop = document.getElementById('plinko-drop');
+  const plinkoReset = document.getElementById('plinko-reset');
+  const PLINKO_RISK = {
+    easy: { label:'Easy', target:.965, center:.72, edgeMax:16, curve:.9 },
+    medium: { label:'Medium', target:.955, center:.48, edgeMax:110, curve:1.25 },
+    hard: { label:'Hard', target:.94, center:.28, edgeMax:420, curve:1.85 },
+    expert: { label:'Expert', target:.92, center:.20, edgeMax:1000, curve:2.65 }
+  };
+
+  function choose(n, k){
+    if (k < 0 || k > n) return 0;
+    k = Math.min(k, n - k);
+    let result = 1;
+    for (let i = 1; i <= k; i++) result = result * (n - k + i) / i;
+    return result;
+  }
+  function plinkoProbabilities(rows){
+    const denom = Math.pow(2, rows);
+    return Array.from({length:rows + 1}, (_, i) => choose(rows, i) / denom);
+  }
+  function rawPlinkoShape(rows, risk){
+    const cfg = PLINKO_RISK[risk];
+    const center = rows / 2;
+    const maxDist = Math.max(center, 1);
+    return Array.from({length:rows + 1}, (_, i) => {
+      if (i === 0 || i === rows) return 0;
+      const dist = Math.abs(i - center) / maxDist;
+      return cfg.center + Math.pow(dist, cfg.curve) * (1 + rows / 2);
+    });
+  }
+  function plinkoMultipliers(){
+    const S = state.plinko;
+    const cfg = PLINKO_RISK[S.risk];
+    const probs = plinkoProbabilities(S.rows);
+    const raw = rawPlinkoShape(S.rows, S.risk);
+    const rowScale = .28 + ((S.rows - 8) / 8) * .72;
+    const edgeMult = cfg.edgeMax * rowScale;
+    const edgeEv = (probs[0] + probs[S.rows]) * edgeMult;
+    const targetRest = Math.max(.05, cfg.target - edgeEv);
+    const rawRestEv = raw.reduce((sum, mult, i) => i === 0 || i === S.rows ? sum : sum + mult * probs[i], 0);
+    const scale = rawRestEv ? targetRest / rawRestEv : 1;
+    return raw.map((value, i) => {
+      const adjusted = i === 0 || i === S.rows ? edgeMult : value * scale;
+      return Math.max(0.01, Number(adjusted.toFixed(adjusted >= 10 ? 1 : 2)));
+    });
+  }
+  function renderPlinkoBoard(){
+    if (!plinkoStage || !plinkoBuckets) return;
+    plinkoStage.querySelectorAll('.plinko-pin').forEach(pin => pin.remove());
+    const S = state.plinko;
+    const width = plinkoStage.clientWidth || 640;
+    const top = 54;
+    const bottom = 405;
+    const rowGap = (bottom - top) / Math.max(S.rows - 1, 1);
+    for (let r = 0; r < S.rows; r++) {
+      const count = r + 1;
+      for (let c = 0; c < count; c++) {
+        const x = width / 2 + (c - r / 2) * (width / (S.rows + 2));
+        const y = top + r * rowGap;
+        const pin = document.createElement('span');
+        pin.className = 'plinko-pin';
+        pin.style.left = `${x}px`;
+        pin.style.top = `${y}px`;
+        plinkoStage.appendChild(pin);
+      }
+    }
+    const mults = plinkoMultipliers();
+    plinkoBuckets.style.gridTemplateColumns = `repeat(${mults.length},minmax(0,1fr))`;
+    plinkoBuckets.innerHTML = mults.map((m, i) => `<div class="plinko-bucket ${i === 0 || i === mults.length - 1 ? 'hot' : ''}" data-slot="${i}">${m.toFixed(m >= 10 ? 1 : 2)}x</div>`).join('');
+  }
+  function updatePlinkoUI(){
+    const S = state.plinko;
+    const mults = plinkoMultipliers();
+    elBalance.textContent = fmt(state.bankroll);
+    plinkoBetDisplay.textContent = fmt(S.bet);
+    plinkoRows.value = String(S.rows);
+    plinkoRowsLabel.textContent = String(S.rows);
+    plinkoConfig.textContent = `${PLINKO_RISK[S.risk].label} / ${S.rows}`;
+    plinkoSlot.textContent = S.lastSlot >= 0 ? String(S.lastSlot + 1) : '-';
+    plinkoMult.textContent = `${S.lastMult.toFixed(S.lastMult >= 10 ? 1 : 2)}x`;
+    plinkoMax.textContent = `${Math.max(...mults).toFixed(1)}x`;
+    plinkoStatus.textContent = `${S.message} Each drop costs ${fmt(S.bet)} and pays the bucket multiplier instantly.`;
+    plinkoDrop.disabled = !(S.bet >= S.minBet && S.bet <= state.bankroll);
+    plinkoRisk.querySelectorAll('[data-risk]').forEach(btn => {
+      const active = btn.dataset.risk === S.risk;
+      btn.classList.toggle('active', active);
+      btn.classList.toggle('ghost', !active);
+    });
+  }
+  function plinkoSetBet(v){
+    const S = state.plinko;
+    const max = Math.min(S.maxBet, state.bankroll);
+    S.bet = Math.round(clamp(v, 0, max) / 10) * 10;
+    updatePlinkoUI();
+  }
+  function plinkoAdjust(d){ plinkoSetBet(state.plinko.bet + d); }
+  function resetPlinkoRound(silent = false){
+    const S = state.plinko;
+    S.bet = 0;
+    S.phase = 'betting';
+    S.lastSlot = -1;
+    S.lastMult = 0;
+    S.message = 'Set a bet, choose risk, and drop.';
+    S.animating = false;
+    clearControlResult('plinko');
+    plinkoBuckets?.querySelectorAll('.hit').forEach(b => b.classList.remove('hit'));
+    plinkoStage?.querySelectorAll('.plinko-ball').forEach(ball => ball.remove());
+    if (!silent) updatePlinkoUI();
+  }
+  plinkoRisk.addEventListener('click', e => {
+    const btn = e.target.closest('[data-risk]');
+    if (!btn) return;
+    state.plinko.risk = btn.dataset.risk;
+    renderPlinkoBoard();
+    updatePlinkoUI();
+  });
+  plinkoRows.addEventListener('input', () => {
+    state.plinko.rows = Number(plinkoRows.value);
+    renderPlinkoBoard();
+    updatePlinkoUI();
+  });
+  plinkoMinus10.addEventListener('click', ()=> plinkoAdjust(-10));
+  plinkoPlus10.addEventListener('click', ()=> plinkoAdjust(10));
+  plinkoMaxBet.addEventListener('click', ()=> plinkoSetBet(Math.min(state.plinko.maxBet, state.bankroll)));
+  plinkoClear.addEventListener('click', ()=> plinkoSetBet(0));
+  plinkoReset.addEventListener('click', ()=> resetPlinkoRound(false));
+  document.querySelectorAll('#plinko-chips .chip').forEach(chip=>{
+    chip.addEventListener('click', ()=> plinkoAdjust(parseInt(chip.dataset.v,10)));
+  });
+  plinkoDrop.addEventListener('click', dropPlinko);
+
+  async function dropPlinko(){
+    const S = state.plinko;
+    const bet = S.bet;
+    const rows = S.rows;
+    const mults = plinkoMultipliers();
+    if (bet < S.minBet || bet > state.bankroll) return;
+    state.bankroll -= bet;
+    saveBalance(state.bankroll);
+    S.phase = 'betting';
+    S.message = 'Ball dropping...';
+    updatePlinkoUI();
+
+    const ball = document.createElement('div');
+    ball.className = 'plinko-ball';
+    plinkoStage.appendChild(ball);
+    let slot = 0;
+    const width = plinkoStage.clientWidth || 640;
+    const top = 42;
+    const bottom = 430;
+    const rowGap = (bottom - top) / Math.max(rows, 1);
+    const stepX = width / (rows + 2);
+    for (let r = 0; r < rows; r++) {
+      if (Math.random() > 0.5) slot += 1;
+      const x = width / 2 + (slot - (r + 1) / 2) * stepX;
+      const y = top + (r + 1) * rowGap;
+      ball.style.left = `${x}px`;
+      ball.style.top = `${y}px`;
+      await sleep(82);
+    }
+
+    const mult = mults[slot] || 0;
+    const paid = Math.floor(bet * mult);
+    const profit = paid - bet;
+    state.bankroll += paid;
+    saveBalance(state.bankroll);
+    S.phase = 'betting';
+    S.lastSlot = slot;
+    S.lastMult = mult;
+    S.message = profit >= 0 ? `Slot ${slot + 1}. Profit ${fmt(profit)}. Paid ${fmt(paid)} total.` : `Slot ${slot + 1}. You lost ${fmt(Math.abs(profit))}. Paid ${fmt(paid)} total.`;
+    const bucket = plinkoBuckets.querySelector(`[data-slot="${slot}"]`);
+    bucket?.classList.add('hit');
+    setTimeout(() => bucket?.classList.remove('hit'), 520);
+    playOutcomeSound(profit >= 0 ? 'win' : 'loss');
+    updatePlinkoUI();
+    setTimeout(() => ball.remove(), 650);
+  }
+
+  /* ======================
      DICE
      ====================== */
   const diceFace = document.getElementById('dice-face');
@@ -3414,7 +4139,9 @@
   const dicePotential = document.getElementById('dice-potential');
   const diceStatus = document.getElementById('dice-status');
   const diceTarget = document.getElementById('dice-target');
+  const diceTargetTitle = document.getElementById('dice-target-title');
   const diceTargetLabel = document.getElementById('dice-target-label');
+  const diceHint = document.getElementById('dice-hint');
   const diceOver = document.getElementById('dice-over');
   const diceUnder = document.getElementById('dice-under');
   const diceBetDisplay = document.getElementById('dice-bet-display');
@@ -3444,14 +4171,19 @@
     const chance = diceWinChance();
     const mult = diceMultiplier();
     const paid = Math.floor(S.bet * mult);
+    const modeLabel = S.mode === 'over' ? 'Roll Over' : 'Roll Under';
     elBalance.textContent = fmt(state.bankroll);
     diceBetDisplay.textContent = fmt(S.bet);
     diceFace.textContent = Number(S.roll).toFixed(2);
     diceTarget.value = String(S.target);
+    diceTargetTitle.textContent = `${modeLabel} Target`;
     diceTargetLabel.textContent = S.target.toFixed(2);
     diceChance.textContent = `${chance.toFixed(2)}%`;
     diceMult.textContent = `${mult.toFixed(2)}x`;
     dicePotential.textContent = fmt(paid);
+    diceHint.textContent = S.mode === 'over'
+      ? 'Higher Roll Over targets increase the multiplier and lower the win chance.'
+      : 'Lower Roll Under targets increase the multiplier and lower the win chance.';
     diceStatus.textContent = S.phase === 'waiting' ? 'Round complete.' : S.message;
     diceRoll.disabled = !(S.phase === 'betting' && !S.animating && S.bet >= S.minBet && S.bet <= state.bankroll);
     diceNew.disabled = !(S.phase === 'waiting');
@@ -3485,17 +4217,21 @@
 
   diceTarget.addEventListener('input', () => {
     if (state.dice.phase !== 'betting') return;
-    state.dice.target = Number(diceTarget.value);
+    state.dice.target = Number(Number(diceTarget.value).toFixed(2));
     updateDiceUI();
   });
   diceOver.addEventListener('click', () => {
     if (state.dice.phase !== 'betting') return;
+    if (state.dice.mode !== 'over') state.dice.target = Number((100 - state.dice.target).toFixed(2));
     state.dice.mode = 'over';
+    state.dice.roll = state.dice.target;
     updateDiceUI();
   });
   diceUnder.addEventListener('click', () => {
     if (state.dice.phase !== 'betting') return;
+    if (state.dice.mode !== 'under') state.dice.target = Number((100 - state.dice.target).toFixed(2));
     state.dice.mode = 'under';
+    state.dice.roll = state.dice.target;
     updateDiceUI();
   });
   diceMinus10.addEventListener('click', ()=> diceAdjust(-10));
@@ -3578,9 +4314,9 @@
   }
 
   /* ====== LOBBY LIVE DATA ====== */
-  const liveGames = ['Blackjack','Crash','Mines','Roulette','Chicken','Dice'];
+  const liveGames = ['Blackjack','Crash','Mines','Roulette','Chicken','Russian Roulette','Plinko','Dice'];
   const liveUsers = ['vaultedAce','minted','chipstorm','neonroll','luckybyte','cashline','orbit_77','plutusmax','bluefelt','riskmode','stacked','fastlane'];
-  const liveCounts = {blackjack:3214, crash:9118, mines:6772, roulette:2904, chicken:5706, dice:8421};
+  const liveCounts = {blackjack:3214, crash:9118, mines:6772, roulette:2904, chicken:5706, bread:4812, plinko:7344, dice:8421};
   const liveFeed = document.getElementById('live-feed');
 
   function randomLiveBet(){
@@ -3627,7 +4363,7 @@
   /* ====== MOBILE CONTROL DOCK ====== */
   const controlFloat = document.getElementById('control-float');
   const dockTargets = () => Array.from(document.querySelectorAll(
-    '#view-blackjack .controls, #view-crash .crash-wrap > .panel, #view-mines .mines-wrap > .panel, #view-roulette .roulette-wrap > .panel, #view-chicken .chicken-wrap > .panel, #view-dice .dice-wrap > .panel'
+    '#view-blackjack .controls, #view-crash .crash-wrap > .panel, #view-mines .mines-wrap > .panel, #view-roulette .roulette-wrap > .panel, #view-chicken .chicken-wrap > .panel, #view-bread .bread-wrap > .panel, #view-plinko .plinko-wrap > .panel, #view-dice .dice-wrap > .panel'
   ));
 
   function initControlDocks(){
@@ -3648,6 +4384,8 @@
       mines: '#view-mines .mines-board',
       roulette: '#view-roulette .roulette-board',
       chicken: '#view-chicken .chicken-board',
+      bread: '#view-bread .bread-board',
+      plinko: '#view-plinko .plinko-board',
       dice: '#view-dice .dice-board'
     };
     return document.querySelector(selectors[state.view] || '.view.show');
@@ -3759,13 +4497,15 @@
 
   ageYes.addEventListener('click', ()=>{
     ageVerified = true;
-    playButtonSound('enter');
     closeAgeGate();
     tryStartBgm();
     show('lobby');
   });
   ageNo.addEventListener('click', ()=>{ ageDeny.style.display='block'; });
   ageClose.addEventListener('click', ()=>{ ageDeny.style.display='block'; });
+  ageYes.addEventListener('pointerdown', () => {
+    playButtonSound('enter');
+  }, { passive:true });
 
   /* ---- PWA + keep awake ---- */
   let wakeLock = null;
@@ -3809,11 +4549,16 @@
     makeChickenRoad();
     resetMinesRound(true);
     resetChickenRound(true);
+    resetBreadRound(true);
+    resetPlinkoRound(true);
     resetDiceRound(true);
     updateCrashUI();
     updateMinesUI();
     updateRouletteUI();
     updateChickenUI();
+    updateBreadUI();
+    renderPlinkoBoard();
+    updatePlinkoUI();
     updateDiceUI();
     initControlDocks();
     initLobbyLive();
