@@ -83,6 +83,10 @@
   .notice.show{opacity:1;transform:translate(-50%,0)}
   .setting-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.025)}
   .setting-row strong{display:block}.setting-row small{display:block;color:var(--muted);margin-top:2px}
+  .volume-control{display:grid;gap:8px;flex:1;min-width:170px}
+  .volume-line{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .volume-line strong{font-size:14px}
+  .volume-control input{width:100%;accent-color:#5edee0}
   .switch{position:relative;width:58px;height:32px;border:1px solid rgba(94,222,224,.22);border-radius:999px;background:#07111d;cursor:pointer;box-shadow:inset 0 0 14px rgba(0,0,0,.28)}
   .switch::after{content:"";position:absolute;left:4px;top:4px;width:22px;height:22px;border-radius:50%;background:#617f89;transition:transform .16s ease,background .16s ease,box-shadow .16s ease}
   .switch.on{background:linear-gradient(135deg,#0e3d4a,#0d746f)}
@@ -1283,6 +1287,7 @@
 
           <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
             <button class="btn" id="plinko-drop" disabled>Drop Ball</button>
+            <button class="btn ghost" id="plinko-auto" type="button" aria-pressed="false">Auto Drop</button>
             <button class="btn ghost" id="plinko-reset">Reset</button>
           </div>
           <div style="margin-top:8px; color:#9db2c9; font-size:12px">
@@ -1458,6 +1463,12 @@
         <div><strong>Song on</strong><small>Background casino music.</small></div>
         <button class="switch on" id="song-toggle" type="button" role="switch" aria-checked="true"></button>
       </div>
+      <div class="setting-row">
+        <div class="volume-control">
+          <div class="volume-line"><strong>Song volume</strong><small id="song-volume-label">12%</small></div>
+          <input id="song-volume" type="range" min="0" max="100" step="1" value="12" aria-label="Song volume">
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1500,6 +1511,7 @@
   const LS_EXO_KEY = 'casino.exodus';
   const LS_SOUND_KEY = 'casino.sound';
   const LS_SONG_KEY = 'casino.song';
+  const LS_SONG_VOL_KEY = 'casino.songVolume';
   const APP_KEY    = 'casino.appver';
   const DEFAULT_BALANCE = 1006000;
   const DEFAULT_EXODUS  = 11342053.20;
@@ -1534,6 +1546,7 @@
     exodus: DEFAULT_EXODUS,
     soundOn: loadFlag(LS_SOUND_KEY, true),
     songOn: loadFlag(LS_SONG_KEY, true),
+    songVolume: clamp(lsNum(LS_SONG_VOL_KEY, 0.12), 0, 1),
 
     /* Blackjack */
     minBet: 10,
@@ -1646,7 +1659,9 @@
       lastSlot: -1,
       lastMult: 0,
       message: 'Set a bet, choose risk, and drop.',
-      animating: false
+      animating: false,
+      autoDropping: false,
+      autoTimer: null
     },
 
     /* Dice */
@@ -2025,6 +2040,8 @@
   const profileSettingsUser = document.getElementById('profile-settings-user');
   const soundToggle = document.getElementById('sound-toggle');
   const songToggle = document.getElementById('song-toggle');
+  const songVolume = document.getElementById('song-volume');
+  const songVolumeLabel = document.getElementById('song-volume-label');
 
   function closeProfileMenu(){
     if (!profileMenu || !profileButton) return;
@@ -2062,6 +2079,8 @@
     soundToggle?.setAttribute('aria-checked', state.soundOn ? 'true' : 'false');
     songToggle?.classList.toggle('on', state.songOn);
     songToggle?.setAttribute('aria-checked', state.songOn ? 'true' : 'false');
+    if (songVolume) songVolume.value = String(Math.round(state.songVolume * 100));
+    if (songVolumeLabel) songVolumeLabel.textContent = `${Math.round(state.songVolume * 100)}%`;
   }
   function openProfileSettings(){
     closeProfileMenu();
@@ -2080,6 +2099,14 @@
     if (enabled) tryStartBgm();
     else {
       try { bgm.pause(); } catch (_) {}
+    }
+  }
+  function setSongVolume(value){
+    state.songVolume = clamp(Number(value) / 100, 0, 1);
+    localStorage.setItem(LS_SONG_VOL_KEY, String(state.songVolume));
+    syncSettingsToggles();
+    if (bgm) {
+      try { bgm.volume = state.songOn ? state.songVolume : 0; } catch (_) {}
     }
   }
 
@@ -2222,6 +2249,7 @@
     if (state.soundOn) playButtonSound();
   });
   songToggle.addEventListener('click', () => setSongEnabled(!state.songOn));
+  songVolume.addEventListener('input', () => setSongVolume(songVolume.value));
   openWallet.addEventListener('click', openWalletModal);
   walletClose.addEventListener('click', closeWallet);
   walletWrap.addEventListener('click', (e)=>{ if(e.target===walletWrap) closeWallet(); });
@@ -3951,6 +3979,7 @@
   const plinkoMaxBet = document.getElementById('plinko-max-bet');
   const plinkoClear = document.getElementById('plinko-clear');
   const plinkoDrop = document.getElementById('plinko-drop');
+  const plinkoAuto = document.getElementById('plinko-auto');
   const plinkoReset = document.getElementById('plinko-reset');
   const PLINKO_RISK = {
     easy: { label:'Easy', target:.965, center:.72, edgeMax:16, curve:.9 },
@@ -4033,6 +4062,12 @@
     plinkoMax.textContent = `${Math.max(...mults).toFixed(1)}x`;
     plinkoStatus.textContent = `${S.message} Each drop costs ${fmt(S.bet)} and pays the bucket multiplier instantly.`;
     plinkoDrop.disabled = !(S.bet >= S.minBet && S.bet <= state.bankroll);
+    if (plinkoAuto) {
+      plinkoAuto.textContent = S.autoDropping ? 'Stop Auto' : 'Auto Drop';
+      plinkoAuto.setAttribute('aria-pressed', S.autoDropping ? 'true' : 'false');
+      plinkoAuto.classList.toggle('active', S.autoDropping);
+      plinkoAuto.classList.toggle('ghost', !S.autoDropping);
+    }
     plinkoRisk.querySelectorAll('[data-risk]').forEach(btn => {
       const active = btn.dataset.risk === S.risk;
       btn.classList.toggle('active', active);
@@ -4054,6 +4089,7 @@
     S.lastMult = 0;
     S.message = 'Set a bet, choose risk, and drop.';
     S.animating = false;
+    stopPlinkoAuto();
     clearControlResult('plinko');
     plinkoBuckets?.querySelectorAll('.hit').forEach(b => b.classList.remove('hit'));
     plinkoStage?.querySelectorAll('.plinko-ball').forEach(ball => ball.remove());
@@ -4080,6 +4116,40 @@
     chip.addEventListener('click', ()=> plinkoAdjust(parseInt(chip.dataset.v,10)));
   });
   plinkoDrop.addEventListener('click', dropPlinko);
+  plinkoAuto.addEventListener('click', togglePlinkoAuto);
+
+  function stopPlinkoAuto(message){
+    const S = state.plinko;
+    if (S.autoTimer) clearInterval(S.autoTimer);
+    S.autoTimer = null;
+    S.autoDropping = false;
+    if (message) S.message = message;
+    updatePlinkoUI();
+  }
+  function togglePlinkoAuto(){
+    const S = state.plinko;
+    if (S.autoDropping) {
+      stopPlinkoAuto('Auto drop stopped.');
+      return;
+    }
+    if (S.bet < S.minBet || S.bet > state.bankroll) {
+      S.message = 'Set an affordable bet before starting Auto Drop.';
+      updatePlinkoUI();
+      return;
+    }
+    S.autoDropping = true;
+    S.message = 'Auto Drop running. One ball drops every 0.75 seconds.';
+    updatePlinkoUI();
+    dropPlinko();
+    S.autoTimer = setInterval(() => {
+      if (!S.autoDropping) return;
+      if (S.bet < S.minBet || S.bet > state.bankroll) {
+        stopPlinkoAuto('Auto drop stopped. Balance is too low for the current bet.');
+        return;
+      }
+      dropPlinko();
+    }, 750);
+  }
 
   async function dropPlinko(){
     const S = state.plinko;
@@ -4488,7 +4558,7 @@
       bgm.currentTime = 0;
       bgm.loop = true;
       bgm.volume = 0;
-      bgm.play().then(() => fadeInAudio(bgm, 0.12, 2500)).catch(() => {});
+      bgm.play().then(() => fadeInAudio(bgm, state.songVolume, 2500)).catch(() => {});
     };
     start();
     const resume = () => { start(); window.removeEventListener('click', resume); };

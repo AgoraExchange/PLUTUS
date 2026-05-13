@@ -1,4 +1,4 @@
-const CACHE_NAME = 'plutus-casino-v4';
+const CACHE_NAME = 'plutus-casino-v5';
 const ASSETS = [
   './',
   './index.html',
