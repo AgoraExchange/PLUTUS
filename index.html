@@ -4060,7 +4060,7 @@
     plinkoSlot.textContent = S.lastSlot >= 0 ? String(S.lastSlot + 1) : '-';
     plinkoMult.textContent = `${S.lastMult.toFixed(S.lastMult >= 10 ? 1 : 2)}x`;
     plinkoMax.textContent = `${Math.max(...mults).toFixed(1)}x`;
-    plinkoStatus.textContent = `${S.message} Each drop costs ${fmt(S.bet)} and pays the bucket multiplier instantly.`;
+    plinkoStatus.textContent = `${S.message} Each drop costs ${fmt(S.bet)}.`;
     plinkoDrop.disabled = !(S.bet >= S.minBet && S.bet <= state.bankroll);
     if (plinkoAuto) {
       plinkoAuto.textContent = S.autoDropping ? 'Stop Auto' : 'Auto Drop';
