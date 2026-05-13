@@ -87,6 +87,17 @@
   .volume-line{display:flex;align-items:center;justify-content:space-between;gap:12px}
   .volume-line strong{font-size:14px}
   .volume-control input{width:100%;accent-color:#5edee0}
+  .ledger-panel{margin-top:12px;padding:12px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.025)}
+  .ledger-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+  .ledger-head strong{display:block}.ledger-head small{display:block;color:var(--muted);margin-top:2px}
+  .ledger-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+  .ledger-stat{padding:9px;border:1px solid var(--border);border-radius:10px;background:rgba(0,0,0,.18)}
+  .ledger-stat span{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;font-weight:900}
+  .ledger-stat b{display:block;margin-top:3px;color:#dffbfc}
+  .ledger-list{display:grid;gap:8px;max-height:240px;overflow:auto;padding-right:2px}
+  .ledger-entry{display:grid;grid-template-columns:1fr auto;gap:8px;padding:9px;border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(0,0,0,.2)}
+  .ledger-entry strong{display:block}.ledger-entry small{display:block;color:var(--muted);margin-top:2px}
+  .ledger-entry .net{font-weight:900;text-align:right}.ledger-entry.win .net{color:var(--win)}.ledger-entry.loss .net{color:#ff8a8a}.ledger-entry.push .net{color:#ffeebe}
   .switch{position:relative;width:58px;height:32px;border:1px solid rgba(94,222,224,.22);border-radius:999px;background:#07111d;cursor:pointer;box-shadow:inset 0 0 14px rgba(0,0,0,.28)}
   .switch::after{content:"";position:absolute;left:4px;top:4px;width:22px;height:22px;border-radius:50%;background:#617f89;transition:transform .16s ease,background .16s ease,box-shadow .16s ease}
   .switch.on{background:linear-gradient(135deg,#0e3d4a,#0d746f)}
@@ -1469,6 +1480,18 @@
           <input id="song-volume" type="range" min="0" max="100" step="1" value="12" aria-label="Song volume">
         </div>
       </div>
+      <div class="ledger-panel">
+        <div class="ledger-head">
+          <div><strong>Wager Performance Ledger</strong><small>Tracked win/loss history by game.</small></div>
+          <button class="btn ghost" id="ledger-clear" type="button">Clear</button>
+        </div>
+        <div class="ledger-summary">
+          <div class="ledger-stat"><span>Total Bet</span><b id="ledger-total-bet">$0</b></div>
+          <div class="ledger-stat"><span>Net</span><b id="ledger-net">$0</b></div>
+          <div class="ledger-stat"><span>Rounds</span><b id="ledger-rounds">0</b></div>
+        </div>
+        <div class="ledger-list" id="ledger-list"></div>
+      </div>
     </div>
   </div>
 
@@ -1512,6 +1535,7 @@
   const LS_SOUND_KEY = 'casino.sound';
   const LS_SONG_KEY = 'casino.song';
   const LS_SONG_VOL_KEY = 'casino.songVolume';
+  const LS_LEDGER_KEY = 'casino.wagerLedger';
   const APP_KEY    = 'casino.appver';
   const DEFAULT_BALANCE = 1006000;
   const DEFAULT_EXODUS  = 11342053.20;
@@ -2002,6 +2026,7 @@
     el.textContent = message;
     el.className = `control-result show${tone ? ' ' + tone : ''}`;
     if (isNewResult && (tone === 'win' || tone === 'loss')) playOutcomeSound(tone);
+    if (isNewResult && (tone === 'win' || tone === 'loss' || tone === 'push')) recordWagerResult(game, message);
     el.dataset.lastMessage = message;
   }
   function clearControlResult(game){
@@ -2042,6 +2067,11 @@
   const songToggle = document.getElementById('song-toggle');
   const songVolume = document.getElementById('song-volume');
   const songVolumeLabel = document.getElementById('song-volume-label');
+  const ledgerClear = document.getElementById('ledger-clear');
+  const ledgerTotalBet = document.getElementById('ledger-total-bet');
+  const ledgerNet = document.getElementById('ledger-net');
+  const ledgerRounds = document.getElementById('ledger-rounds');
+  const ledgerList = document.getElementById('ledger-list');
 
   function closeProfileMenu(){
     if (!profileMenu || !profileButton) return;
@@ -2085,6 +2115,7 @@
   function openProfileSettings(){
     closeProfileMenu();
     syncSettingsToggles();
+    renderWagerLedger();
     profileSettingsWrap.style.display = 'flex';
     requestAnimationFrame(() => profileSettingsModal.classList.add('show'));
   }
@@ -2108,6 +2139,95 @@
     if (bgm) {
       try { bgm.volume = state.songOn ? state.songVolume : 0; } catch (_) {}
     }
+  }
+
+  const ledgerLabels = {
+    blackjack: 'Blackjack',
+    crash: 'Crash',
+    mines: 'Mines',
+    roulette: 'Roulette',
+    chicken: 'Chicken',
+    bread: 'Russian Roulette',
+    plinko: 'Plinko',
+    dice: 'Dice'
+  };
+  const ledgerBetFor = game => ({
+    blackjack: state.bet,
+    crash: state.crash?.bet,
+    mines: state.mines?.bet,
+    roulette: state.roulette?.bet,
+    chicken: state.chicken?.bet,
+    bread: state.bread?.bet,
+    plinko: state.plinko?.bet,
+    dice: state.dice?.bet
+  }[game] || 0);
+  function loadWagerLedger(){
+    try {
+      const rows = JSON.parse(localStorage.getItem(LS_LEDGER_KEY) || '[]');
+      return Array.isArray(rows) ? rows : [];
+    } catch (_) {
+      return [];
+    }
+  }
+  function saveWagerLedger(rows){
+    localStorage.setItem(LS_LEDGER_KEY, JSON.stringify(rows.slice(0, 120)));
+  }
+  function ledgerAmount(pattern, message){
+    const match = message.match(pattern);
+    if (!match) return null;
+    return Math.round(Number(match[1].replace(/,/g, '')));
+  }
+  function recordWagerResult(game, message, detail = {}){
+    if (!message || !ledgerLabels[game]) return;
+    const bet = Math.max(0, Math.round(detail.bet ?? ledgerBetFor(game)));
+    const paid = Math.max(0, Math.round(detail.paid ?? ledgerAmount(/Paid \$([\d,]+)/i, message) ?? 0));
+    let net = detail.net;
+    if (!Number.isFinite(net)) {
+      const profit = ledgerAmount(/Profit \$([\d,]+)/i, message);
+      const lost = ledgerAmount(/(?:lost|lose) \$([\d,]+)/i, message);
+      if (profit !== null) net = profit;
+      else if (lost !== null) net = -lost;
+      else if (/push|returned/i.test(message)) net = 0;
+      else net = paid - bet;
+    }
+    const outcome = net > 0 ? 'win' : net < 0 ? 'loss' : 'push';
+    const rows = loadWagerLedger();
+    rows.unshift({
+      id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+      time: Date.now(),
+      game,
+      label: ledgerLabels[game],
+      bet,
+      paid,
+      net: Math.round(net),
+      outcome,
+      message
+    });
+    saveWagerLedger(rows);
+    renderWagerLedger();
+  }
+  function renderWagerLedger(){
+    if (!ledgerList) return;
+    const rows = loadWagerLedger();
+    const totalBet = rows.reduce((sum, row) => sum + (row.bet || 0), 0);
+    const totalNet = rows.reduce((sum, row) => sum + (row.net || 0), 0);
+    ledgerTotalBet.textContent = fmt(totalBet);
+    ledgerNet.textContent = `${totalNet >= 0 ? '+' : '-'}${fmt(Math.abs(totalNet))}`;
+    ledgerNet.style.color = totalNet >= 0 ? 'var(--win)' : '#ff8a8a';
+    ledgerRounds.textContent = String(rows.length);
+    if (!rows.length) {
+      ledgerList.innerHTML = '<div class="ledger-entry push"><div><strong>No tracked wagers yet</strong><small>Resolved bets will appear here automatically.</small></div><div class="net">$0</div></div>';
+      return;
+    }
+    ledgerList.innerHTML = rows.slice(0, 40).map(row => `
+      <div class="ledger-entry ${row.outcome}">
+        <div>
+          <strong>${row.label}</strong>
+          <small>${new Date(row.time).toLocaleTimeString([], {hour:'numeric', minute:'2-digit'})} · Bet ${fmt(row.bet || 0)} · Paid ${fmt(row.paid || 0)}</small>
+        </div>
+        <div class="net">${row.net >= 0 ? '+' : '-'}${fmt(Math.abs(row.net || 0))}</div>
+      </div>
+    `).join('');
   }
 
   /* ---------- Shop Modal ---------- */
@@ -2250,6 +2370,10 @@
   });
   songToggle.addEventListener('click', () => setSongEnabled(!state.songOn));
   songVolume.addEventListener('input', () => setSongVolume(songVolume.value));
+  ledgerClear.addEventListener('click', () => {
+    localStorage.removeItem(LS_LEDGER_KEY);
+    renderWagerLedger();
+  });
   openWallet.addEventListener('click', openWalletModal);
   walletClose.addEventListener('click', closeWallet);
   walletWrap.addEventListener('click', (e)=>{ if(e.target===walletWrap) closeWallet(); });
@@ -4194,6 +4318,7 @@
     bucket?.classList.add('hit');
     setTimeout(() => bucket?.classList.remove('hit'), 520);
     playOutcomeSound(profit >= 0 ? 'win' : 'loss');
+    recordWagerResult('plinko', S.message, { bet, paid, net: profit });
     updatePlinkoUI();
     setTimeout(() => ball.remove(), 650);
   }
