@@ -30,7 +30,7 @@
   html,body{height:100%}
   html{touch-action:manipulation;-webkit-text-size-adjust:100%}
   body{
-    margin:0;color:var(--text);
+    margin:0;color:var(--text);position:relative;overflow-x:hidden;
     font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial;
     background:
       radial-gradient(1100px 780px at 10% -12%, rgba(19,86,111,.34) 0%, rgba(19,86,111,0) 58%),
@@ -38,14 +38,41 @@
       linear-gradient(180deg, var(--bg-2), #06101b 52%, var(--bg));
     -webkit-tap-highlight-color: transparent;
   }
+  body::before,body::after{content:"";position:fixed;inset:-24%;pointer-events:none;z-index:0}
+  body::before{
+    background:
+      radial-gradient(circle at 8% 8%,rgba(94,222,224,.2),transparent 28%),
+      radial-gradient(circle at 92% 18%,rgba(245,215,110,.12),transparent 26%),
+      radial-gradient(circle at 50% 88%,rgba(33,199,189,.15),transparent 32%),
+      linear-gradient(180deg,var(--bg-2),#06101b 52%,var(--bg));
+    animation:casino-glow 18s ease-in-out infinite alternate;
+  }
+  body::after{
+    inset:-220px;opacity:.9;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='150' viewBox='0 0 180 150'%3E%3Ctext x='18' y='94' font-size='58' fill='%235edee0' fill-opacity='.105'%3E%F0%9F%8F%9B%3C/text%3E%3C/svg%3E");
+    background-size:180px 150px;
+    background-position:0 0;
+    filter:grayscale(1) drop-shadow(0 0 16px rgba(94,222,224,.14));
+    animation:casino-pillars 28s linear infinite;
+  }
+  @keyframes casino-glow{
+    0%{filter:hue-rotate(0deg) brightness(1)}
+    100%{filter:hue-rotate(12deg) brightness(1.14)}
+  }
+  @keyframes casino-pillars{
+    0%{background-position:0 0}
+    100%{background-position:360px 300px}
+  }
+  @media (prefers-reduced-motion: reduce){body::before,body::after{animation:none}}
   button,input{font:inherit;font-size:16px;touch-action:manipulation}
   a{color:inherit;text-decoration:none}
-  .wrap{max-width:1280px;margin:0 auto;padding:18px}
+  .wrap{max-width:1280px;margin:0 auto;padding:18px;position:relative;z-index:1}
 
   /* NAV */
   header.nav{
+    position:relative;z-index:280;
     display:flex;align-items:center;justify-content:space-between;
-    padding:12px 14px;margin-bottom:14px;background:rgba(255,255,255,.02);
+    padding:12px 14px;margin-bottom:14px;background:rgba(7,17,29,.68);
     border:1px solid var(--border);border-radius:14px;backdrop-filter: blur(8px);
     box-shadow:var(--shadow);
   }
@@ -73,13 +100,13 @@
   .profile{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.02);border:1px solid var(--border);min-width:0;color:#cfe2ff;cursor:pointer}
   .pfp{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#ff416c,#ff4b2b);background-size:cover;background-position:center;border:1px solid rgba(255,255,255,.18);flex:0 0 auto}
   .profile-caret{color:var(--muted);font-size:11px}
-  .profile-menu{position:absolute;right:0;top:calc(100% + 8px);display:none;min-width:190px;padding:8px;border:1px solid var(--border);border-radius:12px;background:#0c1526;box-shadow:var(--shadow);z-index:80}
+  .profile-menu{position:absolute;right:0;top:calc(100% + 8px);display:none;min-width:190px;padding:8px;border:1px solid var(--border);border-radius:12px;background:rgba(12,21,38,.98);box-shadow:var(--shadow);z-index:290}
   .profile-menu.show{display:block}
   .menu-item{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px;border:none;border-radius:9px;background:transparent;color:#cfe2ff;font-weight:800;text-align:left;cursor:pointer}
   .menu-item:hover{background:rgba(255,255,255,.06)}
   .menu-note{padding:8px 10px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:4px}
   .support-link{color:#dffbfc;font-weight:900;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px;cursor:pointer}
-  .notice{position:fixed;left:50%;top:calc(18px + env(safe-area-inset-top,0px));z-index:500;transform:translate(-50%,-16px);opacity:0;pointer-events:none;padding:12px 16px;border:1px solid rgba(94,222,224,.26);border-radius:999px;background:rgba(6,16,27,.94);box-shadow:0 18px 44px rgba(0,0,0,.46),0 0 28px rgba(94,222,224,.12);color:#dffbfc;font-weight:900;transition:opacity .18s ease,transform .18s ease}
+  .notice{position:fixed;left:50%;top:calc(18px + env(safe-area-inset-top,0px));z-index:900;transform:translate(-50%,-16px);opacity:0;pointer-events:none;padding:12px 16px;border:1px solid rgba(94,222,224,.26);border-radius:999px;background:rgba(6,16,27,.94);box-shadow:0 18px 44px rgba(0,0,0,.46),0 0 28px rgba(94,222,224,.12);color:#dffbfc;font-weight:900;transition:opacity .18s ease,transform .18s ease}
   .notice.show{opacity:1;transform:translate(-50%,0)}
   .setting-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.025)}
   .setting-row strong{display:block}.setting-row small{display:block;color:var(--muted);margin-top:2px}
@@ -102,12 +129,14 @@
   .switch::after{content:"";position:absolute;left:4px;top:4px;width:22px;height:22px;border-radius:50%;background:#617f89;transition:transform .16s ease,background .16s ease,box-shadow .16s ease}
   .switch.on{background:linear-gradient(135deg,#0e3d4a,#0d746f)}
   .switch.on::after{transform:translateX(26px);background:#b8f0ee;box-shadow:0 0 16px rgba(94,222,224,.42)}
+  .switch.addict.on{background:linear-gradient(135deg,#f5d76e,#9f6e1d)}
+  .switch.addict.on::after{background:#18090a;box-shadow:0 0 18px rgba(245,215,110,.5)}
 
   /* VIEWS */
   .view{display:none}.view.show{display:block}
 
   /* Splash */
-  #splash{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 26%,rgba(33,199,189,.11),transparent 36%),linear-gradient(180deg,#02070d,#06101b);z-index:100}
+  #splash{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 26%,rgba(33,199,189,.11),transparent 36%),linear-gradient(180deg,#02070d,#06101b);z-index:1000}
   .s-card{ text-align:center;padding:28px 26px;border:1px solid var(--border);border-radius:16px;background:rgba(5,14,24,.68);box-shadow:0 24px 90px rgba(0,0,0,.68),0 0 42px rgba(33,199,189,.08)}
   .s-logo{display:block;width:min(280px,72vw);height:auto;margin:0 auto 8px;filter:drop-shadow(0 18px 36px rgba(0,0,0,.55)) drop-shadow(0 0 20px rgba(33,199,189,.18))}
   .s-tag{color:var(--muted)}
@@ -118,29 +147,60 @@
   .hero{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:12px 0 18px}
   .hero h1{margin:0;font-size:24px;letter-spacing:.04em}
   .hero small{color:var(--muted)}
-  .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-  @media (max-width:1100px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
-  @media (max-width:900px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
-  @media (max-width:640px){ .grid{grid-template-columns:1fr} }
-  .game-card{position:relative;overflow:hidden;border-radius:16px;border:1px solid var(--border);background:var(--surface);
-    padding:14px;min-height:140px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .08s, box-shadow .2s,border-color .2s;z-index:1}
+  .lobby-search-shell{width:100%}
+  .lobby-search-shell small{display:none}
+  .search-field{position:relative;width:100%}
+  .search-field::before{content:"";position:absolute;left:14px;top:50%;width:14px;height:14px;border:2px solid #83a8b4;border-radius:50%;transform:translateY(-50%);pointer-events:none}
+  .search-field::after{content:"";position:absolute;left:27px;top:calc(50% + 8px);width:7px;height:2px;background:#83a8b4;border-radius:999px;transform:rotate(45deg);transform-origin:left center;pointer-events:none}
+  .game-search{width:100%;min-height:46px;border-radius:14px;border:1px solid rgba(94,222,224,.2);background:rgba(255,255,255,.035);color:#e4f5f7;padding:0 46px 0 42px;font-weight:800;outline:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02)}
+  .game-search::placeholder{color:#83a8b4}
+  .game-search:focus{border-color:rgba(94,222,224,.42);box-shadow:0 0 0 3px rgba(94,222,224,.1),inset 0 0 0 1px rgba(255,255,255,.04)}
+  .search-x{position:absolute;right:8px;top:50%;width:34px;height:34px;border:0;border-radius:10px;background:transparent;color:#e4f5f7;font-size:22px;line-height:1;transform:translateY(-50%);cursor:pointer}
+  .game-search-panel{position:fixed;left:0;right:0;top:var(--search-top,92px);bottom:0;z-index:260;display:none;background:rgba(3,9,18,.96);backdrop-filter:blur(10px);border-top:1px solid var(--border);overflow:auto;padding:14px max(14px,env(safe-area-inset-right)) calc(18px + env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))}
+  .game-search-panel.show{display:block}
+  .search-panel-inner{max-width:1280px;margin:0 auto}
+  .search-top{position:sticky;top:0;z-index:2;padding-bottom:12px;background:linear-gradient(180deg,rgba(3,9,18,.98),rgba(3,9,18,.9))}
+  .search-results{display:grid;grid-template-columns:repeat(auto-fill,minmax(136px,1fr));gap:12px;align-content:start;padding-top:4px}
+  .search-results .game-card{width:100%;min-width:0;flex:none}
+  .search-empty{display:none;margin-top:18px;color:var(--muted);font-weight:800}
+  .search-empty.show{display:block}
+  .grid{display:flex;gap:12px;overflow-x:auto;overflow-y:hidden;padding:2px 2px 12px;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:rgba(94,222,224,.34) transparent}
+  .game-card{position:relative;overflow:hidden;border-radius:16px;border:1px solid var(--border);background:rgba(11,23,37,.76);backdrop-filter:blur(12px);
+    padding:10px;min-height:224px;aspect-ratio:12/16;flex:0 0 clamp(142px,18vw,178px);display:flex;flex-direction:column;justify-content:flex-start;transition:transform .08s, box-shadow .2s,border-color .2s;z-index:1;scroll-snap-align:start;cursor:pointer}
   .game-card:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:rgba(255,255,255,.15)}
-  .game-card .title{font-weight:800}
-  .game-card .cta{margin-top:8px}
-  .tag{font-size:12px;color:#a9c3dc}
-  .live-count{margin-top:10px;display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#cfe2ff;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:999px;padding:5px 9px}
+  .game-card>div:not(.bgfx):not(.cta):not(.ribbon):not(.live-count){display:contents}
+  .game-card .title{font-weight:900;line-height:1.15;margin-top:1px;min-height:32px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .game-card .cta{display:none}
+  .game-strip.recent-strip .game-card:nth-child(n+3){display:none}
+  #card-roulette,#card-dice,#card-coinflip,#card-bread,#card-plinko{display:none}
+  .high-stakes-band{position:relative;overflow:hidden;border:1px solid rgba(245,215,110,.25);border-radius:18px;padding:14px;background:radial-gradient(circle at 18% 10%,rgba(245,215,110,.18),transparent 32%),radial-gradient(circle at 92% 72%,rgba(94,222,224,.12),transparent 38%),linear-gradient(135deg,rgba(22,7,11,.92),rgba(11,17,31,.9) 56%,rgba(5,26,32,.9));backdrop-filter:blur(12px);box-shadow:0 24px 70px rgba(0,0,0,.5),inset 0 0 0 1px rgba(255,255,255,.04)}
+  .high-stakes-band::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(245,215,110,.06),transparent);pointer-events:none}
+  .high-stakes-grid{display:flex;gap:12px;overflow-x:auto;overflow-y:hidden;padding:2px 2px 12px;position:relative;z-index:1;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:rgba(245,215,110,.34) transparent}
+  .game-card.high-stakes{border-color:rgba(245,215,110,.28);background:linear-gradient(180deg,rgba(45,14,20,.82),rgba(5,12,22,.92))}
+  .game-card.high-stakes .ribbon{background:linear-gradient(135deg,#f5d76e,#9f6e1d);color:#18090a}
+  #view-lobby .tag{display:none}
+  .tag{font-size:11px;line-height:1.25;color:#a9c3dc;margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .live-count{margin-top:auto;display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#cfe2ff;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:999px;padding:5px 8px;width:max-content;max-width:100%}
   .live-dot{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px rgba(94,222,224,.55)}
   .ribbon{position:absolute;right:10px;top:10px;font-size:12px;padding:4px 10px;border-radius:999px;background:linear-gradient(135deg,#9bd7d5,#168f89);color:#021418;font-weight:900}
   .coming{opacity:.5;pointer-events:none}
-  .bgfx{position:absolute;inset:auto -30% -40% -30%;height:140%;background:
-        radial-gradient(60% 60% at 50% 40%, rgba(33,199,189,.12), transparent 60%),
-        radial-gradient(60% 60% at 60% 70%, rgba(94,222,224,.08), transparent 70%);pointer-events:none;z-index:0}
-  .lobby-band{margin-top:18px}
+  .bgfx{position:relative;height:118px;margin:-2px -2px 10px;border-radius:12px;background-color:#07111d;background-size:cover;background-position:center;pointer-events:none;z-index:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),inset 0 -34px 54px rgba(0,0,0,.24)}
+  .bgfx::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(0,0,0,.05) 48%,rgba(0,0,0,.36));pointer-events:none}
+  #view-lobby .game-card[data-game-link="blackjack"] .bgfx,#card-blackjack .bgfx,.search-card[data-game-link="blackjack"] .bgfx{background-image:url("GameIcons/Blackjack.png")}
+  #view-lobby .game-card[data-game-link="crash"] .bgfx,#card-crash .bgfx,.search-card[data-game-link="crash"] .bgfx{background-image:url("GameIcons/Crash.png")}
+  #view-lobby .game-card[data-game-link="mines"] .bgfx,#card-mines .bgfx,.search-card[data-game-link="mines"] .bgfx{background-image:url("GameIcons/Mines.png")}
+  #view-lobby .game-card[data-game-link="chicken"] .bgfx,#card-chicken .bgfx,.search-card[data-game-link="chicken"] .bgfx{background-image:url("GameIcons/Chicken.png")}
+  #view-lobby .game-card[data-game-link="roulette"] .bgfx,#card-roulette .bgfx,.search-card[data-game-link="roulette"] .bgfx{background-image:url("GameIcons/Roulette.png")}
+  #view-lobby .game-card[data-game-link="dice"] .bgfx,#card-dice .bgfx,.search-card[data-game-link="dice"] .bgfx{background-image:url("GameIcons/Dice.png")}
+  #view-lobby .game-card[data-game-link="coinflip"] .bgfx,#card-coinflip .bgfx,.search-card[data-game-link="coinflip"] .bgfx{background-image:url("GameIcons/CoinFlip.png")}
+  #view-lobby .game-card[data-game-link="bread"] .bgfx,#card-bread .bgfx,.search-card[data-game-link="bread"] .bgfx{background-image:url("GameIcons/RussianRoulette.png")}
+  #view-lobby .game-card[data-game-link="plinko"] .bgfx,#card-plinko .bgfx,.search-card[data-game-link="plinko"] .bgfx{background-image:url("GameIcons/Plinko.png")}
+  .lobby-band{margin-top:22px}
   .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 10px}
   .section-head h2{font-size:15px;letter-spacing:.06em;text-transform:uppercase;margin:0;color:#dcecff}
   .section-head small{color:var(--muted)}
-  .game-strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-  .live-table{border:1px solid var(--border);border-radius:14px;background:var(--surface);overflow:hidden}
+  .game-strip{display:flex;gap:12px;overflow-x:auto;overflow-y:hidden;padding:2px 2px 12px;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:rgba(94,222,224,.34) transparent}
+  .live-table{border:1px solid var(--border);border-radius:14px;background:rgba(11,23,37,.76);backdrop-filter:blur(12px);overflow:hidden}
   .live-row{display:grid;grid-template-columns:1.2fr .9fr .9fr .9fr;gap:8px;align-items:center;padding:10px 12px;border-top:1px solid var(--border);font-size:13px}
   .live-row:first-child{border-top:none}
   .live-head{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;background:rgba(255,255,255,.025)}
@@ -149,7 +209,17 @@
   .live-bet{color:#afffe9}
   .live-profit.win{color:var(--win);font-weight:900}
   .live-profit.loss{color:#ff8a8a;font-weight:900}
-  @media (max-width:900px){ .game-strip{grid-template-columns:1fr} }
+  @media (max-width:720px){
+    .grid,.game-strip,.high-stakes-grid{gap:10px;margin-left:-10px;margin-right:-10px;padding-left:10px;padding-right:10px}
+    .search-results{grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+    .game-card{flex-basis:136px;min-height:192px;border-radius:12px;padding:8px}
+    .bgfx{height:96px;border-radius:10px;margin:0 0 8px}
+    .game-card .title{font-size:13px}
+    .game-card .title{min-height:30px}
+    .tag{font-size:10px;-webkit-line-clamp:1}
+    .live-count{font-size:10px;padding:4px 7px}
+    .ribbon{font-size:10px;padding:3px 7px;right:8px;top:8px}
+  }
   @media (max-width:640px){ .live-row{grid-template-columns:1fr .8fr .8fr}.live-row .live-user{display:none} }
 
   .btn{appearance:none;border:none;border-radius:12px;padding:10px 14px;font-weight:800;cursor:pointer;color:#021418;
@@ -178,7 +248,7 @@
 
   .controls{margin-top:18px; display:grid; gap:14px; grid-template-columns: 1.2fr .8fr}
   @media (max-width:900px){ .controls{grid-template-columns:1fr} }
-  .panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px}
+  .panel{background:rgba(11,23,37,.8);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:14px}
   .status{min-height:28px;padding:8px 12px;border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.25);color:#cfe9ff}
   .status.win{ color:#eaffea; border-color:rgba(124,255,107,.4); box-shadow: inset 0 0 18px rgba(124,255,107,.12) }
   .status.lose{ color:#ffe6e6; border-color:rgba(255,255,255,.35); box-shadow: inset 0 0 18px rgba(255,255,255,.12) }
@@ -220,10 +290,14 @@
   .footer{margin-top:18px;color:#a8bfd6;font-size:12px;text-align:center;opacity:.7}
 
   /* MODALS (shop + wallet) */
-  .backdrop{position:fixed; inset:0; background:rgba(3,10,20,.6); display:none; align-items:center; justify-content:center; z-index:300; backdrop-filter: blur(4px);}
+  .backdrop{position:fixed; inset:0; background:rgba(3,10,20,.6); display:none; align-items:center; justify-content:center; z-index:500; backdrop-filter: blur(4px);}
   .modal{width:min(560px,90vw); background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:16px 16px 18px; color:var(--text);
     transform: translateY(10px) scale(.98); opacity:0; transition: transform .15s ease, opacity .15s ease; box-shadow: var(--shadow);}
   .modal.show{ transform:none; opacity:1; }
+  .modal.gate-modal{border-color:rgba(94,222,224,.24);background:linear-gradient(180deg,#0d1a29,#07111d);box-shadow:0 24px 72px rgba(0,0,0,.58),0 0 34px rgba(94,222,224,.1)}
+  .modal.high-gate{border-color:rgba(245,215,110,.34);background:radial-gradient(circle at 20% 0%,rgba(245,215,110,.14),transparent 34%),linear-gradient(145deg,#1a070b,#07111d 62%,#061b21);box-shadow:0 28px 82px rgba(0,0,0,.68),0 0 42px rgba(245,215,110,.12)}
+  .gate-copy{color:#c9dbe5;line-height:1.45;margin:8px 0 14px}
+  .gate-short{display:inline-flex;margin:4px 0 0;padding:7px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.22);color:var(--gold);font-weight:900}
   .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
   .modal-title{font-weight:800;letter-spacing:.06em}
   .xbtn{appearance:none;border:none;background:transparent;color:#cfe2ff;cursor:pointer;padding:6px 8px;border-radius:8px}
@@ -269,7 +343,7 @@
   /* ===== CRASH ===== */
   .crash-wrap{display:grid; grid-template-columns: 1.3fr .7fr; gap:14px}
   @media (max-width:900px){ .crash-wrap{grid-template-columns:1fr} }
-  .crash-board{position:relative; background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:12px; overflow:hidden}
+  .crash-board{position:relative;background:rgba(11,23,37,.8);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px;padding:12px;overflow:hidden}
   .crash-top{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px}
   .crash-mult{font-size:44px; font-weight:900; letter-spacing:.04em}
   .crash-sub{color:#9db2c9}
@@ -282,7 +356,7 @@
   /* ===== MINES ===== */
   .mines-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
   @media (max-width:900px){ .mines-wrap{grid-template-columns:1fr} }
-  .mines-board{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px}
+  .mines-board{background:rgba(11,23,37,.8);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px;padding:14px}
   .mines-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap}
   .mult-big{font-size:36px;font-weight:900;color:var(--gold)}
   .mines-grid{
@@ -329,7 +403,7 @@
   /* ===== ROULETTE ===== */
   .roulette-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
   @media (max-width:900px){ .roulette-wrap{grid-template-columns:1fr} }
-  .roulette-board{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px;overflow:hidden}
+  .roulette-board{background:rgba(11,23,37,.8);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px;padding:14px;overflow:hidden}
   .roulette-stage{display:grid;place-items:center;min-height:300px;background:radial-gradient(circle at 50% 50%,rgba(245,215,110,.12),transparent 60%),linear-gradient(180deg,#0d1726,#0a111d);border:1px solid var(--border);border-radius:14px;position:relative}
   .roulette-wheel{width:min(290px,78vw);aspect-ratio:1;border-radius:50%;position:relative;background:conic-gradient(#0c8f55 0deg 9.73deg,#111 9.73deg 19.46deg,#b8182c 19.46deg 29.19deg,#111 29.19deg 38.92deg,#b8182c 38.92deg 48.65deg,#111 48.65deg 58.38deg,#b8182c 58.38deg 68.11deg,#111 68.11deg 77.84deg,#b8182c 77.84deg 87.57deg,#111 87.57deg 97.3deg,#b8182c 97.3deg 107.03deg,#111 107.03deg 116.76deg,#b8182c 116.76deg 126.49deg,#111 126.49deg 136.22deg,#b8182c 136.22deg 145.95deg,#111 145.95deg 155.68deg,#b8182c 155.68deg 165.41deg,#111 165.41deg 175.14deg,#b8182c 175.14deg 184.87deg,#111 184.87deg 194.6deg,#b8182c 194.6deg 204.33deg,#111 204.33deg 214.06deg,#b8182c 214.06deg 223.79deg,#111 223.79deg 233.52deg,#b8182c 233.52deg 243.25deg,#111 243.25deg 252.98deg,#b8182c 252.98deg 262.71deg,#111 262.71deg 272.44deg,#b8182c 272.44deg 282.17deg,#111 282.17deg 291.9deg,#b8182c 291.9deg 301.63deg,#111 301.63deg 311.36deg,#b8182c 311.36deg 321.09deg,#111 321.09deg 330.82deg,#b8182c 330.82deg 340.55deg,#111 340.55deg 350.28deg,#b8182c 350.28deg 360deg);box-shadow:inset 0 0 0 12px #6b421d,inset 0 0 0 18px #b57a32,0 20px 45px rgba(0,0,0,.45);transition:transform 12s cubic-bezier(.12,.8,.16,1)}
   .roulette-wheel::before{content:"";position:absolute;inset:25%;border-radius:50%;background:radial-gradient(circle,#263447,#0b1220);box-shadow:inset 0 0 0 5px rgba(255,255,255,.08)}
@@ -346,10 +420,25 @@
   .straight-row{display:flex;gap:8px;margin-top:10px}
   .straight-row .input{min-width:0}
 
+  /* ===== COIN FLIP ===== */
+  .coin-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:14px}
+  @media (max-width:900px){.coin-wrap{grid-template-columns:1fr}}
+  .coin-board{background:rgba(11,23,37,.8);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px;padding:14px;overflow:hidden}
+  .coin-stage{display:grid;place-items:center;min-height:360px;border:1px solid var(--border);border-radius:14px;background:radial-gradient(circle at 50% 25%,rgba(245,215,110,.15),transparent 42%),linear-gradient(180deg,#101826,#070d17)}
+  .coin-face{position:relative;width:min(230px,62vw);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;border:10px solid #926b25;background:#170d02;box-shadow:0 24px 55px rgba(0,0,0,.45),0 0 34px rgba(245,215,110,.18);color:transparent;font-size:60px;font-weight:950;transition:transform 4s cubic-bezier(.18,.8,.2,1);transform-style:preserve-3d}
+  .coin-face::before,.coin-face::after{position:absolute;inset:0;border-radius:50%;display:grid;place-items:center;backface-visibility:hidden;font-size:60px;font-weight:950;box-shadow:inset 0 -12px 22px rgba(0,0,0,.24),inset 0 10px 18px rgba(255,255,255,.18)}
+  .coin-face::before{content:"H";background:radial-gradient(circle at 35% 26%,#fff4bb,#d5a436 42%,#5c3b11 80%);color:#170d02}
+  .coin-face::after{content:"T";transform:rotateY(180deg);background:radial-gradient(circle at 35% 26%,#eaffff,#5edee0 42%,#064553 80%);color:#021418}
+  .coin-face.tails{transform:rotateY(180deg)}
+  .coin-face.flip{transform:rotateY(3600deg) scale(1.04)}
+  .coin-face.tails.flip{transform:rotateY(3780deg) scale(1.04)}
+  .coin-picks{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+  .coin-picks button.active{background:linear-gradient(135deg,#f5d76e,#5edee0);color:#031018}
+
   /* ===== CHICKEN ROAD ===== */
   .chicken-wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}
   @media (max-width:900px){ .chicken-wrap{grid-template-columns:1fr} }
-  .chicken-board{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px;overflow:hidden}
+  .chicken-board{background:rgba(11,23,37,.8);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px;padding:14px;overflow:hidden}
   .chicken-road{display:grid;grid-template-columns:repeat(8,minmax(68px,1fr));gap:8px;overflow-x:auto;padding:12px;border-radius:14px;border:1px solid var(--border);background:linear-gradient(180deg,#17202d,#0a111d)}
   .road-tile{position:relative;min-height:118px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,#333b46,#161c25);display:flex;align-items:flex-end;justify-content:center;padding:8px;color:#dbeafe;overflow:hidden}
   .road-tile::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:3px;background:repeating-linear-gradient(180deg,#f5d76e 0 14px,transparent 14px 26px);opacity:.55}
@@ -367,7 +456,7 @@
   /* ===== DICE ===== */
   .dice-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:14px}
   @media (max-width:900px){ .dice-wrap{grid-template-columns:1fr} }
-  .dice-board{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px;overflow:hidden}
+  .dice-board{background:rgba(11,23,37,.8);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px;padding:14px;overflow:hidden}
   .dice-stage{min-height:280px;border-radius:14px;border:1px solid var(--border);background:radial-gradient(circle at 50% 30%,rgba(94,222,224,.12),transparent 60%),linear-gradient(180deg,#0d1726,#080f1b);display:grid;place-items:center;padding:18px}
   .dice-face{width:min(220px,62vw);aspect-ratio:1;border-radius:28px;background:linear-gradient(145deg,#f5fbff,#9fb7cf);color:#07111f;display:grid;place-items:center;box-shadow:0 22px 50px rgba(0,0,0,.45),inset 0 -8px 0 rgba(0,0,0,.12);font-size:48px;font-weight:900;transition:transform .55s ease}
   .dice-face.rolling{transform:rotate(14deg) scale(1.04)}
@@ -385,7 +474,7 @@
   /* ===== BREAD ===== */
   .bread-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:14px}
   @media (max-width:900px){ .bread-wrap{grid-template-columns:1fr} }
-  .bread-board{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px;overflow:hidden}
+  .bread-board{background:rgba(11,23,37,.8);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px;padding:14px;overflow:hidden}
   .bread-stage{min-height:330px;border-radius:14px;border:1px solid var(--border);background:radial-gradient(circle at 50% 34%,rgba(94,222,224,.14),transparent 58%),linear-gradient(180deg,#0b1522,#050b13);display:grid;place-items:center;padding:18px;perspective:800px}
   .revolver-face{position:relative;width:min(270px,74vw);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 50% 50%,#06101b 0 18%,#5edee0 19% 21%,#0b1f2e 22% 39%,#8fb7bd 40% 42%,#081321 43% 64%,#15495a 65% 69%,#02070d 70%);box-shadow:0 30px 70px rgba(0,0,0,.58),0 0 44px rgba(94,222,224,.16),inset 0 0 34px rgba(0,0,0,.78);transition:transform .36s ease,filter .22s ease}
   .revolver-face::before{content:"";position:absolute;inset:40%;border-radius:50%;background:radial-gradient(circle,#b7d7d6,#224c58 45%,#02070d 68%);box-shadow:inset 0 0 18px rgba(0,0,0,.62),0 0 18px rgba(94,222,224,.22)}
@@ -409,7 +498,7 @@
   /* ===== PLINKO ===== */
   .plinko-wrap{display:grid;grid-template-columns:1.08fr .92fr;gap:14px}
   @media (max-width:900px){ .plinko-wrap{grid-template-columns:1fr} }
-  .plinko-board{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px;overflow:hidden}
+  .plinko-board{background:rgba(11,23,37,.8);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px;padding:14px;overflow:hidden}
   .plinko-stage{position:relative;height:520px;border-radius:14px;border:1px solid var(--border);background:radial-gradient(circle at 50% 18%,rgba(94,222,224,.13),transparent 42%),linear-gradient(180deg,#0b1522,#050b13);overflow:hidden}
   .plinko-pin{position:absolute;width:8px;height:8px;border-radius:50%;background:#9bd7d5;box-shadow:0 0 12px rgba(94,222,224,.34);transform:translate(-50%,-50%)}
   .plinko-ball{position:absolute;width:18px;height:18px;border-radius:50%;left:50%;top:18px;transform:translate(-50%,-50%);background:radial-gradient(circle at 35% 28%,#fff,#5edee0 38%,#0e817d 72%);box-shadow:0 0 18px rgba(94,222,224,.55),0 12px 22px rgba(0,0,0,.45);z-index:4;transition:left .12s ease,top .12s ease}
@@ -424,7 +513,7 @@
   .plinko-status{margin-top:12px}
 
   /* ===== AGE GATE ===== */
-  #age.backdrop{z-index:350}
+  #age.backdrop{z-index:550}
   #age-close{display:none}
   .age-body{display:flex; flex-direction:column; gap:10px}
   .age-title{font-weight:900; letter-spacing:.06em}
@@ -434,6 +523,7 @@
   .control-float{display:none}
 
   @media (max-width:720px){
+    body::after{background-size:132px 112px}
     .wrap{padding:10px}
     header.nav{align-items:stretch;flex-direction:column;gap:10px;border-radius:12px}
     .brand{display:contents}
@@ -518,7 +608,6 @@
           <div class="profile-menu" id="profile-menu">
             <button class="menu-item" id="menu-profile" type="button"><span>Profile</span><span>›</span></button>
             <button class="menu-item" id="open-wallet" type="button"><span>Wallet</span><span>$</span></button>
-            <button class="menu-item" id="menu-topup" type="button"><span>Top Up</span><span>+</span></button>
             <button class="menu-item" id="menu-lobby" type="button"><span>Casino Lobby</span><span>›</span></button>
             <div class="menu-note">For any issues with your expierence please contact our <span class="support-link">24/7 Chat Support</span>.</div>
           </div>
@@ -526,14 +615,44 @@
       </div>
     </header>
 
+    <div class="game-search-panel" id="game-search-panel" aria-hidden="true">
+      <div class="search-panel-inner">
+        <div class="search-top">
+          <div class="search-field">
+            <input class="game-search" id="game-search-panel-input" type="search" placeholder="Search your game" autocomplete="off">
+            <button class="search-x" id="game-search-close" type="button" aria-label="Close search">x</button>
+          </div>
+        </div>
+        <div class="search-results" id="game-search-results"></div>
+        <div class="search-empty" id="game-search-empty">No games found.</div>
+      </div>
+    </div>
+
     <!-- LOBBY -->
     <section id="view-lobby" class="view show" aria-label="Casino Lobby">
       <div class="hero">
-        <div>
-          <h1>Casino</h1>
+        <div class="lobby-search-shell">
+          <div class="search-field">
+            <input class="game-search" id="lobby-game-search" type="search" placeholder="Search your game" autocomplete="off" readonly>
+          </div>
           <small>Here at PLUTUS, we’re passionate about providing you with the best in online social casinos. The PLUTUS studio team takes an innovative approach to development and is committed to bringing entertainment to your gaming. </small>
         </div>
-        <button class="btn ghost" id="refresh-lobby">Refresh</button>
+        <button class="btn ghost" id="refresh-lobby" hidden>Refresh</button>
+      </div>
+
+      <div class="lobby-band high-stakes-band">
+        <div class="section-head">
+          <h2>High Stakes</h2>
+          <small>Minimum $25,000. Max bet amount is ∞.</small>
+        </div>
+        <div class="high-stakes-grid">
+          <article class="game-card high-stakes" data-game-link="blackjack" data-high-stakes="true"><div class="bgfx"></div><div><div class="title">Blackjack</div><div class="tag">Table limit removed for serious hands</div><div class="live-count"><span class="live-dot"></span><span data-live-count="hs-blackjack">846</span> playing</div></div><div class="cta"><button class="btn" type="button" data-play-game="blackjack" data-high-stakes="true">Play High Stakes</button></div><div class="ribbon">High</div></article>
+          <article class="game-card high-stakes" data-game-link="dice" data-high-stakes="true"><div class="bgfx"></div><div><div class="title">Dice</div><div class="tag">Higher wager ceiling, same instant roll</div><div class="live-count"><span class="live-dot"></span><span data-live-count="hs-dice">612</span> playing</div></div><div class="cta"><button class="btn" type="button" data-play-game="dice" data-high-stakes="true">Play High Stakes</button></div><div class="ribbon">High</div></article>
+          <article class="game-card high-stakes" data-game-link="crash" data-high-stakes="true"><div class="bgfx"></div><div><div class="title">Crash</div><div class="tag">Big wallet liftoffs with full-balance max</div><div class="live-count"><span class="live-dot"></span><span data-live-count="hs-crash">1,124</span> playing</div></div><div class="cta"><button class="btn" type="button" data-play-game="crash" data-high-stakes="true">Play High Stakes</button></div><div class="ribbon">High</div></article>
+          <article class="game-card high-stakes" data-game-link="mines" data-high-stakes="true"><div class="bgfx"></div><div><div class="title">Mines</div><div class="tag">One bad tile can erase a monster bet</div><div class="live-count"><span class="live-dot"></span><span data-live-count="hs-mines">733</span> playing</div></div><div class="cta"><button class="btn" type="button" data-play-game="mines" data-high-stakes="true">Play High Stakes</button></div><div class="ribbon">High</div></article>
+          <article class="game-card high-stakes" data-game-link="roulette" data-high-stakes="true"><div class="bgfx"></div><div><div class="title">Roulette</div><div class="tag">Red, black, zero, or straight number pressure</div><div class="live-count"><span class="live-dot"></span><span data-live-count="hs-roulette">389</span> playing</div></div><div class="cta"><button class="btn" type="button" data-play-game="roulette" data-high-stakes="true">Play High Stakes</button></div><div class="ribbon">High</div></article>
+          <article class="game-card high-stakes" data-game-link="coinflip" data-high-stakes="true"><div class="bgfx"></div><div><div class="title">Coin Flip</div><div class="tag">Heads or tails with a climbing multiplier</div><div class="live-count"><span class="live-dot"></span><span data-live-count="hs-coinflip">528</span> playing</div></div><div class="cta"><button class="btn" type="button" data-play-game="coinflip" data-high-stakes="true">Play High Stakes</button></div><div class="ribbon">High</div></article>
+        </div>
       </div>
 
       <div class="lobby-band">
@@ -541,13 +660,13 @@
           <h2>Recent Games</h2>
           <small>Your latest favorites</small>
         </div>
-        <div class="game-strip">
+        <div class="game-strip recent-strip">
           <article class="game-card" data-game-link="bread">
             <div class="bgfx"></div>
             <div>
               <div class="title">Russian Roulette</div>
               <div class="tag">Survive pulls, build multiplier, cash out in time</div>
-              <div class="live-count"><span class="live-dot"></span><span data-live-count="bread">4,812</span> playing</div>
+              <div class="live-count"><span class="live-dot"></span><span data-live-count="recent-bread">1,482</span> playing</div>
             </div>
             <div class="cta"><button class="btn" type="button" data-play-game="bread">Play</button></div>
           </article>
@@ -556,7 +675,7 @@
             <div>
               <div class="title">Plinko</div>
               <div class="tag">Drop the ball through pins and chase edge multipliers</div>
-              <div class="live-count"><span class="live-dot"></span><span data-live-count="plinko">7,344</span> playing</div>
+              <div class="live-count"><span class="live-dot"></span><span data-live-count="recent-plinko">2,344</span> playing</div>
             </div>
             <div class="cta"><button class="btn" type="button" data-play-game="plinko">Play</button></div>
           </article>
@@ -565,7 +684,7 @@
             <div>
               <div class="title">Dice</div>
               <div class="tag">Fast 100-sided rolls with custom volatility</div>
-              <div class="live-count"><span class="live-dot"></span><span data-live-count="dice">8,421</span> playing</div>
+              <div class="live-count"><span class="live-dot"></span><span data-live-count="recent-dice">1,921</span> playing</div>
             </div>
             <div class="cta"><button class="btn" type="button" data-play-game="dice">Play</button></div>
           </article>
@@ -574,7 +693,7 @@
             <div>
               <div class="title">Chicken</div>
               <div class="tag">Cross lanes and cash out before traffic hits</div>
-              <div class="live-count"><span class="live-dot"></span><span data-live-count="chicken">5,706</span> playing</div>
+              <div class="live-count"><span class="live-dot"></span><span data-live-count="recent-chicken">2,706</span> playing</div>
             </div>
             <div class="cta"><button class="btn" type="button" data-play-game="chicken">Play</button></div>
           </article>
@@ -595,7 +714,7 @@
             <div class="title">Blackjack</div>
             <div class="tag">Classic 3:2 • Dealer stands on all 17</div>
           </div>
-            <div class="live-count"><span class="live-dot"></span><span data-live-count="blackjack">3,214</span> playing</div>
+            <div class="live-count"><span class="live-dot"></span><span data-live-count="trend-blackjack">6,214</span> playing</div>
           <div class="cta"><button class="btn" id="play-blackjack" type="button">Play</button></div>
           <div class="ribbon">Live</div>
         </article>
@@ -606,7 +725,7 @@
             <div class="title">Crash</div>
             <div class="tag">Cash out before the rocket explodes</div>
           </div>
-            <div class="live-count"><span class="live-dot"></span><span data-live-count="crash">9,118</span> playing</div>
+            <div class="live-count"><span class="live-dot"></span><span data-live-count="trend-crash">7,118</span> playing</div>
           <div class="cta"><button class="btn" id="play-crash" type="button">Play</button></div>
           <div class="ribbon">Live</div>
         </article>
@@ -617,7 +736,7 @@
             <div class="title">Mines</div>
             <div class="tag">4×4 grid • 1 hidden bomb • cash out anytime</div>
           </div>
-            <div class="live-count"><span class="live-dot"></span><span data-live-count="mines">6,772</span> playing</div>
+            <div class="live-count"><span class="live-dot"></span><span data-live-count="trend-mines">5,772</span> playing</div>
           <div class="cta"><button class="btn" id="play-mines" type="button">Play</button></div>
           <div class="ribbon">Live</div>
         </article>
@@ -628,7 +747,7 @@
             <div class="title">Roulette</div>
             <div class="tag">Red/black, odd/even, dozens, or straight number</div>
           </div>
-            <div class="live-count"><span class="live-dot"></span><span data-live-count="roulette">2,904</span> playing</div>
+            <div class="live-count"><span class="live-dot"></span><span data-live-count="original-roulette-hidden">2,904</span> playing</div>
           <div class="cta"><button class="btn" id="play-roulette" type="button">Play</button></div>
           <div class="ribbon">Live</div>
         </article>
@@ -639,7 +758,7 @@
             <div class="title">Chicken</div>
             <div class="tag">Cross lanes, dodge cars, cash out before impact</div>
           </div>
-            <div class="live-count"><span class="live-dot"></span><span data-live-count="chicken">5,706</span> playing</div>
+            <div class="live-count"><span class="live-dot"></span><span data-live-count="trend-chicken">5,706</span> playing</div>
           <div class="cta"><button class="btn" id="play-chicken" type="button">Play</button></div>
           <div class="ribbon">Live</div>
         </article>
@@ -650,9 +769,20 @@
             <div class="title">Dice</div>
             <div class="tag">100-sided roll with over/under target control</div>
           </div>
-            <div class="live-count"><span class="live-dot"></span><span data-live-count="dice">8,421</span> playing</div>
+            <div class="live-count"><span class="live-dot"></span><span data-live-count="original-dice-hidden">1,421</span> playing</div>
           <div class="cta"><button class="btn" id="play-dice" type="button">Play</button></div>
           <div class="ribbon">Live</div>
+        </article>
+
+        <article class="game-card" id="card-coinflip">
+          <div class="bgfx"></div>
+          <div>
+            <div class="title">Coin Flip</div>
+            <div class="tag">Pick heads or tails and press your luck through climbing multipliers</div>
+          </div>
+            <div class="live-count"><span class="live-dot"></span><span data-live-count="original-coinflip-hidden">1,903</span> playing</div>
+          <div class="cta"><button class="btn" id="play-coinflip" type="button">Play</button></div>
+          <div class="ribbon">New</div>
         </article>
 
         <article class="game-card" id="card-bread">
@@ -661,7 +791,7 @@
             <div class="title">Russian Roulette</div>
             <div class="tag">Six-chamber survival game with fast-rising multipliers</div>
           </div>
-            <div class="live-count"><span class="live-dot"></span><span data-live-count="bread">4,812</span> playing</div>
+            <div class="live-count"><span class="live-dot"></span><span data-live-count="original-bread-hidden">1,812</span> playing</div>
           <div class="cta"><button class="btn" id="play-bread" type="button">Play</button></div>
           <div class="ribbon">Live</div>
         </article>
@@ -672,7 +802,7 @@
             <div class="title">Plinko</div>
             <div class="tag">Risk levels, 8-16 rows, edge-heavy payouts</div>
           </div>
-            <div class="live-count"><span class="live-dot"></span><span data-live-count="plinko">7,344</span> playing</div>
+            <div class="live-count"><span class="live-dot"></span><span data-live-count="original-plinko-hidden">2,344</span> playing</div>
           <div class="cta"><button class="btn" id="play-plinko" type="button">Play</button></div>
           <div class="ribbon">Live</div>
         </article>
@@ -684,23 +814,50 @@
           <small>Built in-house for instant play</small>
         </div>
         <div class="game-strip">
-          <article class="game-card" data-game-link="mines">
+          <article class="game-card" data-game-link="roulette">
             <div class="bgfx"></div>
             <div>
-              <div class="title">Mines</div>
-              <div class="tag">Pick safe tiles and exit before the bomb</div>
-              <div class="live-count"><span class="live-dot"></span><span data-live-count="mines">6,772</span> playing</div>
+              <div class="title">Roulette</div>
+              <div class="tag">Red/black, odd/even, dozens, or straight number</div>
+              <div class="live-count"><span class="live-dot"></span><span data-live-count="original-roulette">2,104</span> playing</div>
             </div>
-            <div class="cta"><button class="btn" type="button" data-play-game="mines">Play</button></div>
+            <div class="cta"><button class="btn" type="button" data-play-game="roulette">Play</button></div>
           </article>
-          <article class="game-card" data-game-link="crash">
+          <article class="game-card" data-game-link="dice">
             <div class="bgfx"></div>
             <div>
-              <div class="title">Crash</div>
-              <div class="tag">Watch the multiplier climb, cash out clean</div>
-              <div class="live-count"><span class="live-dot"></span><span data-live-count="crash">9,118</span> playing</div>
+              <div class="title">Dice</div>
+              <div class="tag">100-sided roll with over/under target control</div>
+              <div class="live-count"><span class="live-dot"></span><span data-live-count="original-dice">1,421</span> playing</div>
             </div>
-            <div class="cta"><button class="btn" type="button" data-play-game="crash">Play</button></div>
+            <div class="cta"><button class="btn" type="button" data-play-game="dice">Play</button></div>
+          </article>
+          <article class="game-card" data-game-link="coinflip">
+            <div class="bgfx"></div>
+            <div>
+              <div class="title">Coin Flip</div>
+              <div class="tag">Pick heads or tails and press your luck through climbing multipliers</div>
+              <div class="live-count"><span class="live-dot"></span><span data-live-count="original-coinflip">1,903</span> playing</div>
+            </div>
+            <div class="cta"><button class="btn" type="button" data-play-game="coinflip">Play</button></div>
+          </article>
+          <article class="game-card" data-game-link="bread">
+            <div class="bgfx"></div>
+            <div>
+              <div class="title">Russian Roulette</div>
+              <div class="tag">Six-chamber survival game with fast-rising multipliers</div>
+              <div class="live-count"><span class="live-dot"></span><span data-live-count="original-bread">1,812</span> playing</div>
+            </div>
+            <div class="cta"><button class="btn" type="button" data-play-game="bread">Play</button></div>
+          </article>
+          <article class="game-card" data-game-link="plinko">
+            <div class="bgfx"></div>
+            <div>
+              <div class="title">Plinko</div>
+              <div class="tag">Risk levels, 8-16 rows, edge-heavy payouts</div>
+              <div class="live-count"><span class="live-dot"></span><span data-live-count="original-plinko">2,344</span> playing</div>
+            </div>
+            <div class="cta"><button class="btn" type="button" data-play-game="plinko">Play</button></div>
           </article>
         </div>
       </div>
@@ -961,7 +1118,7 @@
       <div class="hero">
         <div>
           <h1>Roulette</h1>
-          <small>Pick your spot, spin the wheel, and settle instantly with play-money chips.</small>
+          <small>Pick your spot, spin the wheel, and settle instantly with chips.</small>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn ghost" id="back-to-lobby-4">Casino</button>
@@ -1308,6 +1465,74 @@
       </div>
     </section>
 
+    <!-- COIN FLIP -->
+    <section id="view-coinflip" class="view" aria-label="Coin Flip Game">
+      <div class="hero">
+        <div>
+          <h1>Coin Flip</h1>
+          <small>Choose heads or tails. Win flips to climb the multiplier, then cash out before the streak breaks.</small>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn ghost" id="back-to-lobby-9">Casino</button>
+          <button class="btn ghost" id="to-dice-2">Dice</button>
+        </div>
+      </div>
+
+      <div class="coin-wrap">
+        <div class="coin-board">
+          <div class="mines-top">
+            <div>
+              <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Current Multiplier</div>
+              <div class="mult-big" id="coin-mult">1.00x</div>
+            </div>
+            <div class="status" id="coin-status">Set a bet, choose heads or tails, and start.</div>
+          </div>
+          <div class="coin-stage">
+            <div class="coin-face" id="coin-face">H</div>
+          </div>
+          <div class="mini-stats">
+            <div class="mini-stat"><div class="k">Streak</div><div class="v" id="coin-streak">0</div></div>
+            <div class="mini-stat"><div class="k">Next Win</div><div class="v" id="coin-next">1.96x</div></div>
+            <div class="mini-stat"><div class="k">Max Mult</div><div class="v">1027604.48x</div></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px">
+            <div style="font-weight:800;letter-spacing:.5px">Betting</div>
+            <div style="color:var(--muted);font-size:12px" id="coin-limits">Min $10 - Max $5,000</div>
+          </div>
+          <div class="control-result" id="coin-result"></div>
+          <div class="coin-picks" id="coin-picks">
+            <button class="btn active" data-side="heads" type="button">Heads</button>
+            <button class="btn ghost" data-side="tails" type="button">Tails</button>
+          </div>
+          <div class="betting" style="margin-top:12px">
+            <div class="bet-input">
+              <button class="btn ghost" id="coin-clear">Clear</button>
+              <button class="btn" id="coin-minus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">- $10</button>
+              <div class="num" id="coin-bet-display">$0</div>
+              <button class="btn" id="coin-plus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">+ $10</button>
+              <button class="btn" id="coin-max-bet">Max</button>
+            </div>
+            <div class="chip-row" id="coin-chips">
+              <div class="chip" data-v="10" title="+$10"><span>10</span></div>
+              <div class="chip" data-v="50" title="+$50"><span>50</span></div>
+              <div class="chip" data-v="100" title="+$100"><span>100</span></div>
+              <div class="chip" data-v="500" title="+$500"><span>500</span></div>
+              <div class="chip" data-v="1000" title="+$1,000"><span>1K</span></div>
+            </div>
+          </div>
+          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+            <button class="btn" id="coin-start" disabled>Start</button>
+            <button class="btn" id="coin-flip" disabled>Flip</button>
+            <button class="btn ghost" id="coin-cashout" disabled>Cash Out</button>
+            <button class="btn ghost" id="coin-reset">New Round</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- DICE -->
     <section id="view-dice" class="view" aria-label="Dice Game">
       <div class="hero">
@@ -1475,6 +1700,10 @@
         <button class="switch on" id="song-toggle" type="button" role="switch" aria-checked="true"></button>
       </div>
       <div class="setting-row">
+        <div><strong>Addict Mode</strong><small>Private high-stakes luck bias for the player.</small></div>
+        <button class="switch addict" id="addict-toggle" type="button" role="switch" aria-checked="false"></button>
+      </div>
+      <div class="setting-row">
         <div class="volume-control">
           <div class="volume-line"><strong>Song volume</strong><small id="song-volume-label">12%</small></div>
           <input id="song-volume" type="range" min="0" max="100" step="1" value="12" aria-label="Song volume">
@@ -1492,6 +1721,18 @@
         </div>
         <div class="ledger-list" id="ledger-list"></div>
       </div>
+    </div>
+  </div>
+
+  <!-- INSUFFICIENT CHIPS MODAL -->
+  <div class="backdrop" id="chip-gate">
+    <div class="modal gate-modal" id="chip-gate-modal" role="dialog" aria-modal="true" aria-labelledby="chip-gate-title">
+      <div class="modal-header">
+        <div class="modal-title" id="chip-gate-title">Not Enough Chips</div>
+        <button class="xbtn" id="chip-gate-close" aria-label="Close">x</button>
+      </div>
+      <div class="gate-copy" id="chip-gate-copy">You do not have enough chips to bet.</div>
+      <div class="gate-short" id="chip-gate-short">$0 short</div>
     </div>
   </div>
 
@@ -1536,6 +1777,7 @@
   const LS_SONG_KEY = 'casino.song';
   const LS_SONG_VOL_KEY = 'casino.songVolume';
   const LS_LEDGER_KEY = 'casino.wagerLedger';
+  const LS_ADDICT_KEY = 'casino.addictMode';
   const APP_KEY    = 'casino.appver';
   const DEFAULT_BALANCE = 1006000;
   const DEFAULT_EXODUS  = 11342053.20;
@@ -1566,10 +1808,12 @@
 
   const state = {
     view: 'splash',
+    highStakes: false,
     bankroll: 1000,
     exodus: DEFAULT_EXODUS,
     soundOn: loadFlag(LS_SOUND_KEY, true),
     songOn: loadFlag(LS_SONG_KEY, true),
+    addictMode: loadFlag(LS_ADDICT_KEY, false),
     songVolume: clamp(lsNum(LS_SONG_VOL_KEY, 0.12), 0, 1),
 
     /* Blackjack */
@@ -1688,6 +1932,21 @@
       autoTimer: null
     },
 
+    /* Coin Flip */
+    coinflip: {
+      minBet: 10,
+      maxBet: 5000,
+      bet: 0,
+      phase: 'betting',
+      selected: 'heads',
+      streak: 0,
+      multiplier: 1.00,
+      lastSide: '',
+      message: 'Set a bet, choose heads or tails, and start.',
+      resolved: false,
+      animating: false
+    },
+
     /* Dice */
     dice: {
       minBet: 10,
@@ -1714,6 +1973,7 @@
   const vChicken = document.getElementById('view-chicken');
   const vBread = document.getElementById('view-bread');
   const vPlinko = document.getElementById('view-plinko');
+  const vCoinFlip = document.getElementById('view-coinflip');
   const vDice = document.getElementById('view-dice');
 
   const tabCasino = document.getElementById('tab-casino');
@@ -1726,6 +1986,7 @@
   const playChicken = document.getElementById('play-chicken');
   const playBread = document.getElementById('play-bread');
   const playPlinko = document.getElementById('play-plinko');
+  const playCoinFlip = document.getElementById('play-coinflip');
   const playDice = document.getElementById('play-dice');
 
   const cardBlackjack = document.getElementById('card-blackjack');
@@ -1735,6 +1996,7 @@
   const cardChicken = document.getElementById('card-chicken');
   const cardBread = document.getElementById('card-bread');
   const cardPlinko = document.getElementById('card-plinko');
+  const cardCoinFlip = document.getElementById('card-coinflip');
   const cardDice = document.getElementById('card-dice');
 
   const notice = document.getElementById('notice');
@@ -1821,7 +2083,7 @@
   function soundKindFor(target){
     if (target.closest('#age-yes')) return 'enter';
     if (target.closest('#control-float')) return 'float';
-    if (target.closest('[data-play-game],.chip,.pick,#bj-chips,#crash-chips,#mines-chips,#roulette-chips,#chicken-chips,#bread-chips,#plinko-chips,#dice-chips,#deal-now,#hit,#stand,#double,#new-round,#crash-start,#crash-cashout,#mines-start,#mines-cashout,#roulette-spin,#chicken-start,#chicken-step,#chicken-cashout,#bread-start,#bread-pull,#bread-cashout,#plinko-drop,#dice-roll')) return 'bet';
+    if (target.closest('[data-play-game],.chip,.pick,#bj-chips,#crash-chips,#mines-chips,#roulette-chips,#chicken-chips,#bread-chips,#plinko-chips,#coin-chips,#dice-chips,#deal-now,#hit,#stand,#double,#new-round,#crash-start,#crash-cashout,#mines-start,#mines-cashout,#roulette-spin,#chicken-start,#chicken-step,#chicken-cashout,#bread-start,#bread-pull,#bread-cashout,#plinko-drop,#coin-start,#coin-flip,#coin-cashout,#dice-roll')) return 'bet';
     return 'ui';
   }
   document.addEventListener('pointerdown', (e) => {
@@ -1838,6 +2100,7 @@
   const backToLobby6 = document.getElementById('back-to-lobby-6');
   const backToLobby7 = document.getElementById('back-to-lobby-7');
   const backToLobby8 = document.getElementById('back-to-lobby-8');
+  const backToLobby9 = document.getElementById('back-to-lobby-9');
   const toBlackjack = document.getElementById('to-blackjack');
   const toCrash = document.getElementById('to-crash');
   const toMines = document.getElementById('to-mines');
@@ -1845,7 +2108,15 @@
   const toChicken = document.getElementById('to-chicken');
   const toDice = document.getElementById('to-dice');
   const toRoulette2 = document.getElementById('to-roulette-2');
+  const toDice2 = document.getElementById('to-dice-2');
   const refreshLobby = document.getElementById('refresh-lobby');
+  const navHeader = document.querySelector('header.nav');
+  const lobbyGameSearch = document.getElementById('lobby-game-search');
+  const gameSearchPanel = document.getElementById('game-search-panel');
+  const gameSearchPanelInput = document.getElementById('game-search-panel-input');
+  const gameSearchClose = document.getElementById('game-search-close');
+  const gameSearchResults = document.getElementById('game-search-results');
+  const gameSearchEmpty = document.getElementById('game-search-empty');
 
   function cleanupCrash(){
     const S = state.crash;
@@ -1865,6 +2136,7 @@
     vChicken.classList.toggle('show', view === 'chicken');
     vBread.classList.toggle('show', view === 'bread');
     vPlinko.classList.toggle('show', view === 'plinko');
+    vCoinFlip.classList.toggle('show', view === 'coinflip');
     vDice.classList.toggle('show', view === 'dice');
     tabCasino.classList.toggle('active', view !== 'splash');
 
@@ -1876,9 +2148,11 @@
       resetChickenRound(true);
       resetBreadRound(true);
       resetPlinkoRound(true);
+      resetCoinRound(true);
       resetDiceRound(true);
+      state.highStakes = false;
     }
-    if (view === 'blackjack' || view === 'crash' || view === 'mines' || view === 'roulette' || view === 'chicken' || view === 'bread' || view === 'plinko' || view === 'dice') {
+    if (view === 'blackjack' || view === 'crash' || view === 'mines' || view === 'roulette' || view === 'chicken' || view === 'bread' || view === 'plinko' || view === 'coinflip' || view === 'dice') {
       window.scrollTo({top:0, behavior:'smooth'});
     }
     if (view === 'crash') {
@@ -1900,6 +2174,9 @@
     if (view === 'plinko') {
       renderPlinkoBoard();
       updatePlinkoUI();
+    }
+    if (view === 'coinflip') {
+      updateCoinUI();
     }
     if (view === 'dice') {
       updateDiceUI();
@@ -1937,31 +2214,129 @@
     tab?.addEventListener('click', () => notify('Coming soon..'));
   });
 
-  const goBJ = () => { splash.style.display='none'; if (!isAgeVerified()) { openAgeGate(); return; } show('blackjack'); };
-  const goCrash = () => { splash.style.display='none'; if (!isAgeVerified()) { openAgeGate(); return; } show('crash'); };
-  const goMines = () => { splash.style.display='none'; if (!isAgeVerified()) { openAgeGate(); return; } show('mines'); };
-  const goRoulette = () => { splash.style.display='none'; if (!isAgeVerified()) { openAgeGate(); return; } show('roulette'); };
-  const goChicken = () => { splash.style.display='none'; if (!isAgeVerified()) { openAgeGate(); return; } show('chicken'); };
-  const goBread = () => { splash.style.display='none'; if (!isAgeVerified()) { openAgeGate(); return; } show('bread'); };
-  const goPlinko = () => { splash.style.display='none'; if (!isAgeVerified()) { openAgeGate(); return; } show('plinko'); };
-  const goDice = () => { splash.style.display='none'; if (!isAgeVerified()) { openAgeGate(); return; } show('dice'); };
+  const normalLimits = { min:10, max:5000 };
+  const highLimits = () => ({ min:25000, max:Math.max(25000, state.bankroll) });
+  function applyGameLimits(game, high = false){
+    state.highStakes = high;
+    const limits = high ? highLimits() : normalLimits;
+    const target = game === 'blackjack' ? state : state[game];
+    if (!target) return;
+    target.minBet = limits.min;
+    target.maxBet = limits.max;
+    if (target.bet > limits.max) target.bet = Math.floor(limits.max / 10) * 10;
+    if (target.bet > 0 && target.bet < limits.min) target.bet = 0;
+  }
+  const highStakeBoost = () => state.highStakes ? 1.08 : 1;
+  const boostedPaid = (bet, multiplier) => Math.floor(bet + Math.max(0, bet * (multiplier - 1) * highStakeBoost()));
+  function enterGame(game, view, high = false){
+    high = high === true;
+    splash.style.display='none';
+    if (!isAgeVerified()) { openAgeGate(); return; }
+    const min = high ? highLimits().min : normalLimits.min;
+    if (state.bankroll < min) {
+      openChipGate({high, min});
+      return;
+    }
+    applyGameLimits(game, high);
+    show(view);
+  }
+  const goBJ = (high = false) => enterGame('blackjack', 'blackjack', high);
+  const goCrash = (high = false) => enterGame('crash', 'crash', high);
+  const goMines = (high = false) => enterGame('mines', 'mines', high);
+  const goRoulette = (high = false) => enterGame('roulette', 'roulette', high);
+  const goChicken = (high = false) => enterGame('chicken', 'chicken', high);
+  const goBread = (high = false) => enterGame('bread', 'bread', high);
+  const goPlinko = (high = false) => enterGame('plinko', 'plinko', high);
+  const goCoinFlip = (high = false) => enterGame('coinflip', 'coinflip', high);
+  const goDice = (high = false) => enterGame('dice', 'dice', high);
+  const gameLaunchers = {blackjack:goBJ, crash:goCrash, mines:goMines, roulette:goRoulette, chicken:goChicken, bread:goBread, plinko:goPlinko, coinflip:goCoinFlip, dice:goDice};
+  const searchableGames = [
+    {key:'blackjack', name:'Blackjack', count:'trend-blackjack'},
+    {key:'crash', name:'Crash', count:'trend-crash'},
+    {key:'mines', name:'Mines', count:'trend-mines'},
+    {key:'chicken', name:'Chicken', count:'trend-chicken'},
+    {key:'roulette', name:'Roulette', count:'original-roulette'},
+    {key:'dice', name:'Dice', count:'original-dice'},
+    {key:'coinflip', name:'Coin Flip', aliases:'coin heads tails', count:'original-coinflip'},
+    {key:'bread', name:'Russian Roulette', aliases:'roulette revolver bullet', count:'original-bread'},
+    {key:'plinko', name:'Plinko', count:'original-plinko'}
+  ];
+  function updateSearchPanelTop(){
+    if (!navHeader) return;
+    const bottom = navHeader.getBoundingClientRect().bottom;
+    document.documentElement.style.setProperty('--search-top', `${Math.max(0, Math.round(bottom + 8))}px`);
+  }
+  function countText(key){
+    const el = document.querySelector(`[data-live-count="${key}"]`);
+    return el ? el.textContent : '0';
+  }
+  function renderSearchResults(){
+    const q = (gameSearchPanelInput?.value || '').trim().toLowerCase();
+    const matches = q
+      ? searchableGames.filter(game => `${game.name} ${game.key} ${game.aliases || ''}`.toLowerCase().includes(q))
+      : [];
+    gameSearchResults.innerHTML = matches.map(game => `
+      <article class="game-card search-card" data-game-link="${game.key}">
+        <div class="bgfx"></div>
+        <div class="title">${game.name}</div>
+        <div class="live-count"><span class="live-dot"></span><span>${countText(game.count)}</span> playing</div>
+      </article>
+    `).join('');
+    gameSearchEmpty.classList.toggle('show', matches.length === 0);
+  }
+  function openGameSearch(){
+    closeProfileMenu();
+    updateSearchPanelTop();
+    gameSearchPanel.classList.add('show');
+    gameSearchPanel.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    gameSearchPanelInput.value = '';
+    renderSearchResults();
+    requestAnimationFrame(() => gameSearchPanelInput.focus({preventScroll:true}));
+  }
+  function closeGameSearch(){
+    gameSearchPanel.classList.remove('show');
+    gameSearchPanel.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (lobbyGameSearch) lobbyGameSearch.value = '';
+  }
 
-  playBlackjack.addEventListener('click', goBJ);
-  cardBlackjack.addEventListener('click', goBJ);
-  playCrash.addEventListener('click', goCrash);
-  cardCrash.addEventListener('click', goCrash);
-  playMines.addEventListener('click', goMines);
-  cardMines.addEventListener('click', goMines);
-  playRoulette.addEventListener('click', goRoulette);
-  cardRoulette.addEventListener('click', goRoulette);
-  playChicken.addEventListener('click', goChicken);
-  cardChicken.addEventListener('click', goChicken);
-  playBread.addEventListener('click', goBread);
-  cardBread.addEventListener('click', goBread);
-  playPlinko.addEventListener('click', goPlinko);
-  cardPlinko.addEventListener('click', goPlinko);
-  playDice.addEventListener('click', goDice);
-  cardDice.addEventListener('click', goDice);
+  playBlackjack.addEventListener('click', () => goBJ(false));
+  cardBlackjack.addEventListener('click', () => goBJ(false));
+  playCrash.addEventListener('click', () => goCrash(false));
+  cardCrash.addEventListener('click', () => goCrash(false));
+  playMines.addEventListener('click', () => goMines(false));
+  cardMines.addEventListener('click', () => goMines(false));
+  playRoulette.addEventListener('click', () => goRoulette(false));
+  cardRoulette.addEventListener('click', () => goRoulette(false));
+  playChicken.addEventListener('click', () => goChicken(false));
+  cardChicken.addEventListener('click', () => goChicken(false));
+  playBread.addEventListener('click', () => goBread(false));
+  cardBread.addEventListener('click', () => goBread(false));
+  playPlinko.addEventListener('click', () => goPlinko(false));
+  cardPlinko.addEventListener('click', () => goPlinko(false));
+  playCoinFlip.addEventListener('click', () => goCoinFlip(false));
+  cardCoinFlip.addEventListener('click', () => goCoinFlip(false));
+  playDice.addEventListener('click', () => goDice(false));
+  cardDice.addEventListener('click', () => goDice(false));
+  lobbyGameSearch?.addEventListener('focus', openGameSearch);
+  lobbyGameSearch?.addEventListener('click', openGameSearch);
+  gameSearchClose?.addEventListener('click', closeGameSearch);
+  gameSearchPanelInput?.addEventListener('input', renderSearchResults);
+  window.addEventListener('resize', () => {
+    if (gameSearchPanel?.classList.contains('show')) updateSearchPanelTop();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && gameSearchPanel?.classList.contains('show')) closeGameSearch();
+  });
+  gameSearchResults?.addEventListener('click', (e) => {
+    const card = e.target.closest('[data-game-link]');
+    if (!card) return;
+    const go = gameLaunchers[card.dataset.gameLink];
+    if (!go) return;
+    closeGameSearch();
+    go(false);
+  });
 
   backToLobby.addEventListener('click', ()=> show('lobby'));
   backToLobby2.addEventListener('click', ()=> show('lobby'));
@@ -1971,23 +2346,26 @@
   backToLobby6.addEventListener('click', ()=> show('lobby'));
   backToLobby7.addEventListener('click', ()=> show('lobby'));
   backToLobby8.addEventListener('click', ()=> show('lobby'));
-  toBlackjack.addEventListener('click', goBJ);
-  toCrash.addEventListener('click', goCrash);
-  toMines.addEventListener('click', goMines);
-  toRoulette.addEventListener('click', goRoulette);
-  toChicken.addEventListener('click', goChicken);
-  toDice.addEventListener('click', goDice);
-  toRoulette2.addEventListener('click', goRoulette);
+  backToLobby9.addEventListener('click', ()=> show('lobby'));
+  toBlackjack.addEventListener('click', () => goBJ(false));
+  toCrash.addEventListener('click', () => goCrash(false));
+  toMines.addEventListener('click', () => goMines(false));
+  toRoulette.addEventListener('click', () => goRoulette(false));
+  toChicken.addEventListener('click', () => goChicken(false));
+  toDice.addEventListener('click', () => goDice(false));
+  toRoulette2.addEventListener('click', () => goRoulette(false));
+  toDice2.addEventListener('click', () => goDice(false));
   document.querySelectorAll('[data-play-game],[data-game-link]').forEach(el => {
     el.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-play-game]');
       const game = btn ? btn.dataset.playGame : el.dataset.gameLink;
       if (!game) return;
-      const go = {blackjack:goBJ, crash:goCrash, mines:goMines, roulette:goRoulette, chicken:goChicken, bread:goBread, plinko:goPlinko, dice:goDice}[game];
-      if (go) go();
+      const high = (btn || el).dataset.highStakes === 'true';
+      const go = gameLaunchers[game];
+      if (go) go(high);
     });
   });
-  refreshLobby.addEventListener('click', ()=> { refreshLobby.disabled=true; setTimeout(()=>refreshLobby.disabled=false, 600); });
+  refreshLobby?.addEventListener('click', ()=> { refreshLobby.disabled=true; setTimeout(()=>refreshLobby.disabled=false, 600); });
 
   /* ---------- DOM refs ---------- */
   const elBalance = document.getElementById('balance');
@@ -2009,6 +2387,7 @@
     chicken: document.getElementById('chicken-result'),
     bread: document.getElementById('bread-result'),
     plinko: document.getElementById('plinko-result'),
+    coinflip: document.getElementById('coin-result'),
     dice: document.getElementById('dice-result')
   };
 
@@ -2056,15 +2435,21 @@
   const usernameEl = document.getElementById('username');
   const profileButton = document.getElementById('profile-button');
   const profileMenu = document.getElementById('profile-menu');
-  const menuTopup = document.getElementById('menu-topup');
   const menuLobby = document.getElementById('menu-lobby');
   const menuProfile = document.getElementById('menu-profile');
   const profileSettingsWrap = document.getElementById('profile-settings');
   const profileSettingsModal = document.getElementById('profile-settings-modal');
   const profileSettingsClose = document.getElementById('profile-settings-close');
   const profileSettingsUser = document.getElementById('profile-settings-user');
+  const chipGateWrap = document.getElementById('chip-gate');
+  const chipGateModal = document.getElementById('chip-gate-modal');
+  const chipGateClose = document.getElementById('chip-gate-close');
+  const chipGateTitle = document.getElementById('chip-gate-title');
+  const chipGateCopy = document.getElementById('chip-gate-copy');
+  const chipGateShort = document.getElementById('chip-gate-short');
   const soundToggle = document.getElementById('sound-toggle');
   const songToggle = document.getElementById('song-toggle');
+  const addictToggle = document.getElementById('addict-toggle');
   const songVolume = document.getElementById('song-volume');
   const songVolumeLabel = document.getElementById('song-volume-label');
   const ledgerClear = document.getElementById('ledger-clear');
@@ -2109,6 +2494,8 @@
     soundToggle?.setAttribute('aria-checked', state.soundOn ? 'true' : 'false');
     songToggle?.classList.toggle('on', state.songOn);
     songToggle?.setAttribute('aria-checked', state.songOn ? 'true' : 'false');
+    addictToggle?.classList.toggle('on', state.addictMode);
+    addictToggle?.setAttribute('aria-checked', state.addictMode ? 'true' : 'false');
     if (songVolume) songVolume.value = String(Math.round(state.songVolume * 100));
     if (songVolumeLabel) songVolumeLabel.textContent = `${Math.round(state.songVolume * 100)}%`;
   }
@@ -2122,6 +2509,22 @@
   function closeProfileSettings(){
     profileSettingsModal.classList.remove('show');
     setTimeout(() => profileSettingsWrap.style.display = 'none', 150);
+  }
+  function openChipGate({high = false, min = 10} = {}){
+    closeProfileMenu();
+    const short = Math.max(0, min - state.bankroll);
+    chipGateModal.classList.toggle('high-gate', high);
+    chipGateTitle.textContent = high ? 'High Stakes Denied' : 'Not Enough Chips';
+    chipGateCopy.textContent = high
+      ? "You do not have enough chips to step into High Stakes. Come back when you are ready to lose thousands chasing millions."
+      : 'You do not have enough chips to place bets. You should probably top up before jumping back in.';
+    chipGateShort.textContent = `${fmt(short)} short`;
+    chipGateWrap.style.display = 'flex';
+    requestAnimationFrame(() => chipGateModal.classList.add('show'));
+  }
+  function closeChipGate(){
+    chipGateModal.classList.remove('show');
+    setTimeout(() => chipGateWrap.style.display = 'none', 150);
   }
   function setSongEnabled(enabled){
     state.songOn = enabled;
@@ -2149,6 +2552,7 @@
     chicken: 'Chicken',
     bread: 'Russian Roulette',
     plinko: 'Plinko',
+    coinflip: 'Coin Flip',
     dice: 'Dice'
   };
   const ledgerBetFor = game => ({
@@ -2159,6 +2563,7 @@
     chicken: state.chicken?.bet,
     bread: state.bread?.bet,
     plinko: state.plinko?.bet,
+    coinflip: state.coinflip?.bet,
     dice: state.dice?.bet
   }[game] || 0);
   function loadWagerLedger(){
@@ -2348,13 +2753,13 @@
   profileButton.addEventListener('click', (e)=>{
     e.preventDefault();
     e.stopPropagation();
+    if (gameSearchPanel?.classList.contains('show')) closeGameSearch();
     toggleProfileMenu();
   });
   document.addEventListener('click', (e)=>{
     if (!profileMenu || !profileButton) return;
     if (!profileMenu.contains(e.target) && !profileButton.contains(e.target)) closeProfileMenu();
   });
-  menuTopup.addEventListener('click', openShopModal);
   menuProfile.addEventListener('click', openProfileSettings);
   menuLobby.addEventListener('click', ()=>{
     closeProfileMenu();
@@ -2362,6 +2767,7 @@
   });
   profileSettingsClose.addEventListener('click', closeProfileSettings);
   profileSettingsWrap.addEventListener('click', (e)=>{ if(e.target===profileSettingsWrap) closeProfileSettings(); });
+  chipGateClose.addEventListener('click', closeChipGate);
   soundToggle.addEventListener('click', () => {
     state.soundOn = !state.soundOn;
     saveFlag(LS_SOUND_KEY, state.soundOn);
@@ -2369,6 +2775,12 @@
     if (state.soundOn) playButtonSound();
   });
   songToggle.addEventListener('click', () => setSongEnabled(!state.songOn));
+  addictToggle.addEventListener('click', () => {
+    state.addictMode = !state.addictMode;
+    saveFlag(LS_ADDICT_KEY, state.addictMode);
+    syncSettingsToggles();
+    if (state.soundOn) playButtonSound('enter');
+  });
   songVolume.addEventListener('input', () => setSongVolume(songVolume.value));
   ledgerClear.addEventListener('click', () => {
     localStorage.removeItem(LS_LEDGER_KEY);
@@ -2824,6 +3236,9 @@
   function settle(kind){
     stopDecisionTimer();
     stopCountdown();
+    if (state.addictMode && (kind === 'dealer-blackjack' || kind === 'player-bust' || kind === 'dealer-win')) {
+      kind = kind === 'player-bust' ? 'dealer-bust' : 'player-win';
+    }
 
     state.animating = false;
     state.phase = 'settle';
@@ -2832,8 +3247,9 @@
     let msg = '';
 
     if (kind === 'player-blackjack') {
-      state.bankroll += wager * 2.5;
-      msg = `Blackjack. Profit ${fmt(wager * 1.5)}. Paid ${fmt(wager * 2.5)} total.`;
+      const paid = boostedPaid(wager, 2.5);
+      state.bankroll += paid;
+      msg = `Blackjack. Profit ${fmt(paid - wager)}. Paid ${fmt(paid)} total.`;
       glow('win');
     } else if (kind === 'dealer-blackjack') {
       msg = `You lose ${fmt(wager)} (Dealer blackjack).`;
@@ -2842,12 +3258,14 @@
       msg = `You lose ${fmt(wager)} (Bust).`;
       glow('lose');
     } else if (kind === 'dealer-bust') {
-      state.bankroll += wager * 2;
-      msg = `Dealer bust. Profit ${fmt(wager)}. Paid ${fmt(wager * 2)} total.`;
+      const paid = boostedPaid(wager, 2);
+      state.bankroll += paid;
+      msg = `Dealer bust. Profit ${fmt(paid - wager)}. Paid ${fmt(paid)} total.`;
       glow('win');
     } else if (kind === 'player-win') {
-      state.bankroll += wager * 2;
-      msg = `You win. Profit ${fmt(wager)}. Paid ${fmt(wager * 2)} total.`;
+      const paid = boostedPaid(wager, 2);
+      state.bankroll += paid;
+      msg = `You win. Profit ${fmt(paid - wager)}. Paid ${fmt(paid)} total.`;
       glow('win');
     } else if (kind === 'dealer-win') {
       msg = `You lose ${fmt(wager)}.`;
@@ -3019,7 +3437,7 @@
       cMult.textContent = '1.00×';
     } else if (S.phase === 'flying') {
       cStatus.textContent = 'Live — cash out any time';
-      cSub.textContent = `Potential payout: ${fmt(Math.floor(S.bet * S.multiplier))}`;
+      cSub.textContent = `Potential payout: ${fmt(boostedPaid(S.bet, S.multiplier))}`;
       cCount.textContent = '';
       cMult.textContent = `${S.multiplier.toFixed(2)}×`;
     } else if (S.phase === 'crashed') {
@@ -3113,7 +3531,7 @@
     if (token !== S.roundToken) return;
 
     S.phase = 'flying';
-    S.crashPoint = sampleCrashPoint();
+    S.crashPoint = state.addictMode ? Number(crashMultiplier(14).toFixed(2)) : sampleCrashPoint();
     S.startTime = performance.now();
     S.points = [[0,1]];
     updateCrashUI();
@@ -3152,7 +3570,7 @@
     S.resolved = true;
     S.cashedOutAt = S.multiplier;
 
-    const win = Math.floor(S.bet * S.cashedOutAt);
+    const win = boostedPaid(S.bet, S.cashedOutAt);
     const profit = Math.max(0, win - S.bet);
     state.bankroll += win;
     saveBalance(state.bankroll);
@@ -3341,7 +3759,7 @@
     minesBetDisplay.textContent = fmt(S.bet);
     minesMult.textContent = `${S.multiplier.toFixed(2)}×`;
     minesSafeCount.textContent = String(S.safePicks);
-    minesPotential.textContent = fmt(Math.floor(S.bet * S.multiplier));
+    minesPotential.textContent = fmt(boostedPaid(S.bet, S.multiplier));
 
     minesStart.disabled = !(S.phase === 'betting' && S.bet >= S.minBet && S.bet <= state.bankroll);
     minesCashout.disabled = !(S.phase === 'playing' && S.safePicks > 0 && !S.resolved);
@@ -3358,7 +3776,7 @@
       showControlResult('mines', S.message);
     }
     else if (S.phase === 'cashed') {
-      const paid = Math.floor(S.bet * S.multiplier);
+      const paid = boostedPaid(S.bet, S.multiplier);
       const profit = Math.max(0, paid - S.bet);
       S.message = `Cashed out. Profit ${fmt(profit)}. Paid ${fmt(paid)} total.`;
       minesStatus.textContent = 'Round complete.';
@@ -3435,8 +3853,8 @@
       bomb: false,
       revealed: false
     }));
-    S.bombIndex = Math.floor(Math.random() * 16);
-    S.tiles[S.bombIndex].bomb = true;
+    S.bombIndex = state.addictMode ? -1 : Math.floor(Math.random() * 16);
+    if (S.bombIndex >= 0) S.tiles[S.bombIndex].bomb = true;
     S.safePicks = 0;
     S.multiplier = 1.00;
     S.message = 'Pick a tile...';
@@ -3474,6 +3892,14 @@
 
     const maxSafe = 15;
     if (S.safePicks >= maxSafe) {
+      if (state.addictMode && S.bombIndex < 0) {
+        const last = S.tiles.find(t => !t.revealed);
+        if (last) {
+          last.bomb = true;
+          last.revealed = true;
+          S.bombIndex = last.index;
+        }
+      }
       cashoutMines(true);
       return;
     }
@@ -3489,7 +3915,7 @@
     S.resolved = true;
     S.phase = 'cashed';
 
-    const payout = Math.floor(S.bet * S.multiplier);
+    const payout = boostedPaid(S.bet, S.multiplier);
     state.bankroll += payout;
     saveBalance(state.bankroll);
 
@@ -3530,6 +3956,7 @@
      ROULETTE
      ====================== */
   const ROULETTE_RED = new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
+  const ROULETTE_WHEEL = [0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
   const rouletteWheel = document.getElementById('roulette-wheel');
   const rouletteResult = document.getElementById('roulette-result');
   const rouletteLast = document.getElementById('roulette-last');
@@ -3550,6 +3977,15 @@
     if (n === 0) return 'green';
     return ROULETTE_RED.has(n) ? 'red' : 'black';
   }
+  function syncRouletteWheelPaint(){
+    const slotDeg = 360 / ROULETTE_WHEEL.length;
+    const stops = ROULETTE_WHEEL.map((n, i) => {
+      const color = rouletteColor(n) === 'green' ? '#0c8f55' : rouletteColor(n) === 'red' ? '#b8182c' : '#111';
+      return `${color} ${(i * slotDeg).toFixed(2)}deg ${((i + 1) * slotDeg).toFixed(2)}deg`;
+    }).join(',');
+    rouletteWheel.style.background = `conic-gradient(${stops})`;
+  }
+  syncRouletteWheelPaint();
 
   function roulettePayout(selected){
     if (selected === 'green' || selected === 'straight') return 35;
@@ -3588,6 +4024,21 @@
     if (S.selected === 'dozen2') return n >= 13 && n <= 24;
     if (S.selected === 'dozen3') return n >= 25 && n <= 36;
     return false;
+  }
+  function addictRouletteResult(){
+    const S = state.roulette;
+    if (S.selected === 'straight') return clamp(Math.round(S.straight || 7), 0, 36);
+    if (S.selected === 'green') return 0;
+    if (S.selected === 'red') return ROULETTE_RED[0];
+    if (S.selected === 'black') return 2;
+    if (S.selected === 'odd') return 1;
+    if (S.selected === 'even') return 2;
+    if (S.selected === 'low') return 8;
+    if (S.selected === 'high') return 19;
+    if (S.selected === 'dozen1') return 7;
+    if (S.selected === 'dozen2') return 14;
+    if (S.selected === 'dozen3') return 31;
+    return 7;
   }
 
   function rouletteSetBet(v){
@@ -3675,9 +4126,11 @@
     clearControlResult('roulette');
     updateRouletteUI();
 
-    const result = Math.floor(Math.random() * 37);
-    const slotDeg = 360 / 37;
-    S.rotation += 4320 + (360 - result * slotDeg) + Math.random() * (slotDeg * 0.65);
+    const result = state.addictMode ? addictRouletteResult() : Math.floor(Math.random() * 37);
+    const slotDeg = 360 / ROULETTE_WHEEL.length;
+    const resultIndex = ROULETTE_WHEEL.indexOf(result);
+    const pocketCenter = resultIndex * slotDeg + slotDeg / 2;
+    S.rotation += 4320 + (360 - pocketCenter);
     rouletteWheel.style.transform = `rotate(${S.rotation}deg)`;
 
     setTimeout(() => settleRoulette(result), 12100);
@@ -3692,8 +4145,8 @@
 
     const color = rouletteColor(result);
     if (rouletteWins(result)) {
-      const profit = S.bet * roulettePayout(S.selected);
-      const payout = S.bet + profit;
+      const payout = boostedPaid(S.bet, 1 + roulettePayout(S.selected));
+      const profit = payout - S.bet;
       state.bankroll += payout;
       S.message = `${result} ${color}. Profit ${fmt(profit)}. Paid ${fmt(payout)} total.`;
     } else {
@@ -3936,7 +4389,7 @@
   const breadChambers = Array.from(document.querySelectorAll('#bread-revolver .chamber'));
   const shotFlash = document.getElementById('shot-flash');
   const BREAD_MULTS = [1.20, 1.42, 1.82, 2.45, 3.30, 4.65, 6.40, 8.80, 12.00];
-  const BREAD_RISK = 1 / 6;
+  const BREAD_CHAMBERS = 6;
 
   function clearBreadChamberReveal(){
     breadChambers.forEach(chamber => chamber.classList.remove('bullet','fired'));
@@ -3947,6 +4400,12 @@
     if (!chamber) return;
     chamber.classList.add('bullet');
     chamber.classList.toggle('fired', fired);
+  }
+  function breadPullsUntilBullet(){
+    const S = state.bread;
+    if (S.bulletIndex < 0) return 0;
+    const from = S.activeChamber < 0 ? -1 : S.activeChamber;
+    return ((S.bulletIndex - from + BREAD_CHAMBERS) % BREAD_CHAMBERS) || BREAD_CHAMBERS;
   }
   function flashShot(){
     if (!shotFlash) return;
@@ -3965,7 +4424,7 @@
     breadMult.textContent = `${current.toFixed(2)}x`;
     breadPulls.textContent = String(S.pulls);
     breadPotential.textContent = fmt(paid);
-    breadStatus.textContent = S.message;
+    breadStatus.textContent = S.phase === 'waiting' && S.resolved ? 'Round complete.' : S.message;
     breadRevolver.style.setProperty('--bread-rot', `${S.rotation}deg`);
     breadStart.disabled = !(S.phase === 'betting' && S.bet >= S.minBet && S.bet <= state.bankroll);
     breadPull.disabled = !(S.phase === 'playing' && !S.animating);
@@ -4016,11 +4475,11 @@
     const S = state.bread;
     if (S.phase !== 'playing' || S.animating) return;
     S.animating = true;
-    S.activeChamber = Math.floor(Math.random() * 6);
-    S.rotation += 360 + S.activeChamber * 60;
+    S.activeChamber = (S.activeChamber + 1 + BREAD_CHAMBERS) % BREAD_CHAMBERS;
+    S.rotation += 360 + (360 / BREAD_CHAMBERS);
     breadRevolver.classList.remove('hit');
     breadRevolver.classList.add('spin');
-    S.message = 'Spinning chamber...';
+    S.message = 'Cylinder cycling...';
     updateBreadUI();
     setTimeout(() => {
       const eliminated = S.activeChamber === S.bulletIndex;
@@ -4046,7 +4505,7 @@
         return;
       }
       updateBreadUI();
-    }, 460);
+    }, 720);
   }
   function cashoutBread(force = false){
     const S = state.bread;
@@ -4057,8 +4516,9 @@
     saveBalance(state.bankroll);
     S.phase = 'waiting';
     S.resolved = true;
+    const pullsLeft = breadPullsUntilBullet();
     revealBreadBullet(S.bulletIndex, false);
-    S.message = `Cashed out after ${S.pulls} pull${S.pulls === 1 ? '' : 's'}. Bullet was in chamber ${S.bulletIndex + 1}. Profit ${fmt(profit)}. Paid ${fmt(paid)} total.`;
+    S.message = `Cashed out after ${S.pulls} pull${S.pulls === 1 ? '' : 's'}. Bullet was in chamber ${S.bulletIndex + 1}; you were ${pullsLeft} trigger pull${pullsLeft === 1 ? '' : 's'} from death. Profit ${fmt(profit)}. Paid ${fmt(paid)} total.`;
     showControlResult('bread', S.message);
     updateBreadUI();
   }
@@ -4184,7 +4644,7 @@
     plinkoSlot.textContent = S.lastSlot >= 0 ? String(S.lastSlot + 1) : '-';
     plinkoMult.textContent = `${S.lastMult.toFixed(S.lastMult >= 10 ? 1 : 2)}x`;
     plinkoMax.textContent = `${Math.max(...mults).toFixed(1)}x`;
-    plinkoStatus.textContent = `${S.message} Each drop costs ${fmt(S.bet)}.`;
+    plinkoStatus.textContent = `Each drop costs ${fmt(S.bet)}.`;
     plinkoDrop.disabled = !(S.bet >= S.minBet && S.bet <= state.bankroll);
     if (plinkoAuto) {
       plinkoAuto.textContent = S.autoDropping ? 'Stop Auto' : 'Auto Drop';
@@ -4247,7 +4707,7 @@
     if (S.autoTimer) clearInterval(S.autoTimer);
     S.autoTimer = null;
     S.autoDropping = false;
-    if (message) S.message = message;
+    if (message) showControlResult('plinko', message);
     updatePlinkoUI();
   }
   function togglePlinkoAuto(){
@@ -4257,12 +4717,17 @@
       return;
     }
     if (S.bet < S.minBet || S.bet > state.bankroll) {
-      S.message = 'Set an affordable bet before starting Auto Drop.';
+      showControlResult('plinko', 'Set an affordable bet before starting Auto Drop.');
       updatePlinkoUI();
       return;
     }
     S.autoDropping = true;
-    S.message = 'Auto Drop running. One ball drops every 0.75 seconds.';
+    if (state.addictMode && S.risk === 'expert' && S.rows === 16) {
+      S.addictAutoStartBalance = state.bankroll;
+      S.addictLastJackpotAt = 0;
+      S.addictJackpotTriggered = false;
+    }
+    showControlResult('plinko', 'Auto Drop running. One ball drops every 0.75 seconds.');
     updatePlinkoUI();
     dropPlinko();
     S.autoTimer = setInterval(() => {
@@ -4284,7 +4749,6 @@
     state.bankroll -= bet;
     saveBalance(state.bankroll);
     S.phase = 'betting';
-    S.message = 'Ball dropping...';
     updatePlinkoUI();
 
     const ball = document.createElement('div');
@@ -4296,8 +4760,12 @@
     const bottom = 430;
     const rowGap = (bottom - top) / Math.max(rows, 1);
     const stepX = width / (rows + 2);
+    const addictPlinkoReady = state.addictMode && S.autoDropping && S.risk === 'expert' && rows === 16;
+    const startBalance = S.addictAutoStartBalance || (state.bankroll + bet);
+    const spentPct = startBalance > 0 ? (startBalance - state.bankroll) / startBalance : 0;
+    const forceJackpot = addictPlinkoReady && ((!S.addictJackpotTriggered && spentPct >= .69) || (S.addictJackpotTriggered && performance.now() - (S.addictLastJackpotAt || 0) >= 20000));
     for (let r = 0; r < rows; r++) {
-      if (Math.random() > 0.5) slot += 1;
+      if (forceJackpot || Math.random() > 0.5) slot += 1;
       const x = width / 2 + (slot - (r + 1) / 2) * stepX;
       const y = top + (r + 1) * rowGap;
       ball.style.left = `${x}px`;
@@ -4305,7 +4773,11 @@
       await sleep(82);
     }
 
-    const mult = mults[slot] || 0;
+    const mult = forceJackpot ? 1000 : (mults[slot] || 0);
+    if (forceJackpot) {
+      S.addictJackpotTriggered = true;
+      S.addictLastJackpotAt = performance.now();
+    }
     const paid = Math.floor(bet * mult);
     const profit = paid - bet;
     state.bankroll += paid;
@@ -4314,6 +4786,7 @@
     S.lastSlot = slot;
     S.lastMult = mult;
     S.message = profit >= 0 ? `Slot ${slot + 1}. Profit ${fmt(profit)}. Paid ${fmt(paid)} total.` : `Slot ${slot + 1}. You lost ${fmt(Math.abs(profit))}. Paid ${fmt(paid)} total.`;
+    showControlResult('plinko', S.message);
     const bucket = plinkoBuckets.querySelector(`[data-slot="${slot}"]`);
     bucket?.classList.add('hit');
     setTimeout(() => bucket?.classList.remove('hit'), 520);
@@ -4322,6 +4795,144 @@
     updatePlinkoUI();
     setTimeout(() => ball.remove(), 650);
   }
+
+  /* ======================
+     COIN FLIP
+     ====================== */
+  const coinFace = document.getElementById('coin-face');
+  const coinStatus = document.getElementById('coin-status');
+  const coinMult = document.getElementById('coin-mult');
+  const coinStreak = document.getElementById('coin-streak');
+  const coinNext = document.getElementById('coin-next');
+  const coinBetDisplay = document.getElementById('coin-bet-display');
+  const coinLimits = document.getElementById('coin-limits');
+  const coinPicks = document.getElementById('coin-picks');
+  const coinMinus10 = document.getElementById('coin-minus10');
+  const coinPlus10 = document.getElementById('coin-plus10');
+  const coinMaxBet = document.getElementById('coin-max-bet');
+  const coinClear = document.getElementById('coin-clear');
+  const coinStart = document.getElementById('coin-start');
+  const coinFlip = document.getElementById('coin-flip');
+  const coinCashout = document.getElementById('coin-cashout');
+  const coinReset = document.getElementById('coin-reset');
+  const COIN_MAX_MULT = 1027604.48;
+  function coinMultiplier(streak){
+    if (streak <= 0) return 1;
+    return Math.min(COIN_MAX_MULT, 1.96 * Math.pow(2, streak - 1));
+  }
+  function coinNextMultiplier(){ return coinMultiplier(state.coinflip.streak + 1); }
+  function renderCoinFace(){
+    const side = state.coinflip.lastSide === 'tails' ? 'tails' : 'heads';
+    coinFace.textContent = side === 'tails' ? 'T' : 'H';
+    coinFace.classList.toggle('tails', side === 'tails');
+  }
+  function updateCoinUI(){
+    const S = state.coinflip;
+    elBalance.textContent = fmt(state.bankroll);
+    coinBetDisplay.textContent = fmt(S.bet);
+    coinLimits.textContent = `Min ${fmt(S.minBet)} - Max ${fmt(Math.min(S.maxBet, state.bankroll))}${state.highStakes ? ' • High Stakes' : ''}`;
+    coinMult.textContent = `${S.multiplier.toFixed(S.multiplier >= 100 ? 2 : 2)}x`;
+    coinStreak.textContent = String(S.streak);
+    coinNext.textContent = `${coinNextMultiplier().toFixed(2)}x`;
+    coinStatus.textContent = S.phase === 'waiting' && S.resolved ? 'Round complete.' : S.message;
+    renderCoinFace();
+    coinStart.disabled = !(S.phase === 'betting' && S.bet >= S.minBet && S.bet <= state.bankroll);
+    coinFlip.disabled = !(S.phase === 'playing' && !S.animating);
+    coinCashout.disabled = !(S.phase === 'playing' && S.streak > 0 && !S.animating);
+    coinPicks.querySelectorAll('[data-side]').forEach(btn => {
+      const active = btn.dataset.side === S.selected;
+      btn.classList.toggle('active', active);
+      btn.classList.toggle('ghost', !active);
+    });
+  }
+  function coinSetBet(v){
+    const S = state.coinflip;
+    if (S.phase !== 'betting') return;
+    const max = Math.min(S.maxBet, state.bankroll);
+    S.bet = Math.round(clamp(v, 0, max) / 10) * 10;
+    updateCoinUI();
+  }
+  function coinAdjust(d){ coinSetBet(state.coinflip.bet + d); }
+  function resetCoinRound(silent = false){
+    const S = state.coinflip;
+    S.bet = 0;
+    S.phase = 'betting';
+    S.selected = S.selected || 'heads';
+    S.streak = 0;
+    S.multiplier = 1.00;
+    S.lastSide = '';
+    S.message = 'Set a bet, choose heads or tails, and start.';
+    S.resolved = false;
+    S.animating = false;
+    clearControlResult('coinflip');
+    coinFace?.classList.remove('flip','tails');
+    if (!silent) updateCoinUI();
+  }
+  coinPicks.addEventListener('click', e => {
+    const btn = e.target.closest('[data-side]');
+    if (!btn || state.coinflip.phase !== 'betting') return;
+    state.coinflip.selected = btn.dataset.side;
+    updateCoinUI();
+  });
+  coinMinus10.addEventListener('click', ()=> coinAdjust(-10));
+  coinPlus10.addEventListener('click', ()=> coinAdjust(10));
+  coinMaxBet.addEventListener('click', ()=> coinSetBet(Math.min(state.coinflip.maxBet, state.bankroll)));
+  coinClear.addEventListener('click', ()=> coinSetBet(0));
+  document.querySelectorAll('#coin-chips .chip').forEach(chip=> chip.addEventListener('click', ()=> coinAdjust(parseInt(chip.dataset.v,10))));
+  coinStart.addEventListener('click', () => {
+    const S = state.coinflip;
+    if (S.phase !== 'betting' || S.bet < S.minBet || S.bet > state.bankroll) return;
+    state.bankroll -= S.bet;
+    saveBalance(state.bankroll);
+    S.phase = 'playing';
+    S.streak = 0;
+    S.multiplier = 1.00;
+    S.resolved = false;
+    S.message = `Round live. Picked ${S.selected}. Flip or cash out after a win.`;
+    clearControlResult('coinflip');
+    updateCoinUI();
+  });
+  coinFlip.addEventListener('click', async () => {
+    const S = state.coinflip;
+    if (S.phase !== 'playing' || S.animating) return;
+    S.animating = true;
+    S.message = 'Coin is flipping...';
+    coinFace.classList.add('flip');
+    updateCoinUI();
+    await sleep(4000);
+    const result = state.addictMode ? S.selected : (Math.random() < 0.5 ? 'heads' : 'tails');
+    S.lastSide = result;
+    coinFace.textContent = result === 'heads' ? 'H' : 'T';
+    coinFace.classList.remove('flip');
+    if (result === S.selected) {
+      S.streak += 1;
+      S.multiplier = coinMultiplier(S.streak);
+      S.message = `${result.toUpperCase()} hit. Streak ${S.streak}. Multiplier ${S.multiplier.toFixed(2)}x.`;
+      showControlResult('coinflip', S.message);
+      playOutcomeSound('win');
+    } else {
+      S.phase = 'waiting';
+      S.resolved = true;
+      S.message = `${result.toUpperCase()} landed. You lost ${fmt(S.bet)}.`;
+      showControlResult('coinflip', S.message);
+    }
+    S.animating = false;
+    updateCoinUI();
+  });
+  coinCashout.addEventListener('click', () => {
+    const S = state.coinflip;
+    if (S.phase !== 'playing' || S.streak <= 0 || S.animating) return;
+    const paid = boostedPaid(S.bet, S.multiplier);
+    const profit = Math.max(0, paid - S.bet);
+    state.bankroll += paid;
+    saveBalance(state.bankroll);
+    S.phase = 'waiting';
+    S.resolved = true;
+    S.message = `Cashed out after ${S.streak} flip${S.streak === 1 ? '' : 's'}. Profit ${fmt(profit)}. Paid ${fmt(paid)} total.`;
+    showControlResult('coinflip', S.message);
+    updateCoinUI();
+  });
+  coinReset.addEventListener('click', ()=> resetCoinRound(false));
 
   /* ======================
      DICE
@@ -4359,6 +4970,15 @@
   function diceWins(roll){
     const S = state.dice;
     return S.mode === 'over' ? roll > S.target : roll < S.target;
+  }
+  function addictDiceRoll(){
+    const S = state.dice;
+    if (S.mode === 'over') {
+      const min = Math.min(99.99, S.target + 0.01);
+      return Number((min + Math.random() * Math.max(0, 99.99 - min)).toFixed(2));
+    }
+    const max = Math.max(0.01, S.target - 0.01);
+    return Number((Math.random() * max).toFixed(2));
   }
 
   function updateDiceUI(){
@@ -4462,7 +5082,7 @@
     diceFace.classList.add('rolling');
     updateDiceUI();
 
-    const finalRoll = Math.floor(Math.random() * 10001) / 100;
+    const finalRoll = state.addictMode ? addictDiceRoll() : Math.floor(Math.random() * 10001) / 100;
     let ticks = 0;
     const iv = setInterval(() => {
       ticks++;
@@ -4483,7 +5103,7 @@
     S.resolved = true;
     diceFace.classList.remove('rolling');
     if (diceWins(finalRoll)) {
-      const paid = Math.floor(S.bet * diceMultiplier());
+      const paid = boostedPaid(S.bet, diceMultiplier());
       const profit = Math.max(0, paid - S.bet);
       state.bankroll += paid;
       S.message = `Rolled ${finalRoll.toFixed(2)}. Profit ${fmt(profit)}. Paid ${fmt(paid)} total.`;
@@ -4509,9 +5129,17 @@
   }
 
   /* ====== LOBBY LIVE DATA ====== */
-  const liveGames = ['Blackjack','Crash','Mines','Roulette','Chicken','Russian Roulette','Plinko','Dice'];
+  const liveGames = ['Blackjack','Crash','Mines','Roulette','Chicken','Russian Roulette','Plinko','Coin Flip','Dice'];
   const liveUsers = ['vaultedAce','minted','chipstorm','neonroll','luckybyte','cashline','orbit_77','plutusmax','bluefelt','riskmode','stacked','fastlane'];
-  const liveCounts = {blackjack:3214, crash:9118, mines:6772, roulette:2904, chicken:5706, bread:4812, plinko:7344, dice:8421};
+  const liveCountRanges = {
+    'hs-blackjack':[360,1200], 'hs-dice':[240,980], 'hs-crash':[520,1200], 'hs-mines':[300,1060], 'hs-roulette':[180,820], 'hs-coinflip':[210,900],
+    'trend-blackjack':[5200,8000], 'trend-crash':[6100,8000], 'trend-mines':[4300,7200], 'trend-chicken':[4000,6800],
+    'recent-bread':[900,3000], 'recent-plinko':[1200,3000], 'recent-dice':[858,2800], 'recent-chicken':[1600,3200],
+    'original-roulette':[900,3000], 'original-dice':[858,2600], 'original-coinflip':[900,2800], 'original-bread':[858,2400], 'original-plinko':[1200,3000],
+    'original-roulette-hidden':[900,3000], 'original-dice-hidden':[858,2600], 'original-coinflip-hidden':[900,2800], 'original-bread-hidden':[858,2400], 'original-plinko-hidden':[1200,3000]
+  };
+  const randomLiveCount = ([min, max]) => Math.floor(min + Math.random() * (max - min + 1));
+  const liveCounts = Object.fromEntries(Object.entries(liveCountRanges).map(([key, range]) => [key, randomLiveCount(range)]));
   const liveFeed = document.getElementById('live-feed');
 
   function randomLiveBet(){
@@ -4540,10 +5168,12 @@
   }
 
   function tickLobbyLive(){
-    Object.keys(liveCounts).forEach(game => {
-      liveCounts[game] = Math.max(850, liveCounts[game] + Math.floor(Math.random() * 51) - 22);
-      document.querySelectorAll(`[data-live-count="${game}"]`).forEach(el => {
-        el.textContent = liveCounts[game].toLocaleString();
+    Object.keys(liveCounts).forEach(key => {
+      const range = liveCountRanges[key];
+      const drift = Math.floor(Math.random() * 41) - 18;
+      liveCounts[key] = clamp(liveCounts[key] + drift, range[0], range[1]);
+      document.querySelectorAll(`[data-live-count="${key}"]`).forEach(el => {
+        el.textContent = Math.round(liveCounts[key]).toLocaleString();
       });
     });
     addLiveBetRow();
@@ -4558,7 +5188,7 @@
   /* ====== MOBILE CONTROL DOCK ====== */
   const controlFloat = document.getElementById('control-float');
   const dockTargets = () => Array.from(document.querySelectorAll(
-    '#view-blackjack .controls, #view-crash .crash-wrap > .panel, #view-mines .mines-wrap > .panel, #view-roulette .roulette-wrap > .panel, #view-chicken .chicken-wrap > .panel, #view-bread .bread-wrap > .panel, #view-plinko .plinko-wrap > .panel, #view-dice .dice-wrap > .panel'
+    '#view-blackjack .controls, #view-crash .crash-wrap > .panel, #view-mines .mines-wrap > .panel, #view-roulette .roulette-wrap > .panel, #view-chicken .chicken-wrap > .panel, #view-bread .bread-wrap > .panel, #view-plinko .plinko-wrap > .panel, #view-coinflip .coin-wrap > .panel, #view-dice .dice-wrap > .panel'
   ));
 
   function initControlDocks(){
@@ -4581,6 +5211,7 @@
       chicken: '#view-chicken .chicken-board',
       bread: '#view-bread .bread-board',
       plinko: '#view-plinko .plinko-board',
+      coinflip: '#view-coinflip .coin-board',
       dice: '#view-dice .dice-board'
     };
     return document.querySelector(selectors[state.view] || '.view.show');
@@ -4665,6 +5296,7 @@
   }
 
   function openAgeGate(){
+    closeProfileMenu();
     ageDeny.style.display='none';
     ageWrap.style.display='flex';
     ageYes.focus({ preventScroll:true });
@@ -4746,6 +5378,7 @@
     resetChickenRound(true);
     resetBreadRound(true);
     resetPlinkoRound(true);
+    resetCoinRound(true);
     resetDiceRound(true);
     updateCrashUI();
     updateMinesUI();
@@ -4754,6 +5387,7 @@
     updateBreadUI();
     renderPlinkoBoard();
     updatePlinkoUI();
+    updateCoinUI();
     updateDiceUI();
     initControlDocks();
     initLobbyLive();

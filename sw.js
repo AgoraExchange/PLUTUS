@@ -1,11 +1,20 @@
-const CACHE_NAME = 'plutus-casino-v6';
+const CACHE_NAME = 'plutus-casino-v27';
 const ASSETS = [
   './',
   './index.html',
   './manifest.webmanifest',
   './logo.png',
   './Instapfp.jpg',
-  './cantina.mp3'
+  './cantina.mp3',
+  './GameIcons/Blackjack.png',
+  './GameIcons/Chicken.png',
+  './GameIcons/CoinFlip.png',
+  './GameIcons/Crash.png',
+  './GameIcons/Dice.png',
+  './GameIcons/Mines.png',
+  './GameIcons/Plinko.png',
+  './GameIcons/Roulette.png',
+  './GameIcons/RussianRoulette.png'
 ];
 
 self.addEventListener('install', event => {
