@@ -195,6 +195,8 @@
   #view-lobby .game-card[data-game-link="coinflip"] .bgfx,#card-coinflip .bgfx,.search-card[data-game-link="coinflip"] .bgfx{background-image:url("GameIcons/CoinFlip.png")}
   #view-lobby .game-card[data-game-link="bread"] .bgfx,#card-bread .bgfx,.search-card[data-game-link="bread"] .bgfx{background-image:url("GameIcons/RussianRoulette.png")}
   #view-lobby .game-card[data-game-link="plinko"] .bgfx,#card-plinko .bgfx,.search-card[data-game-link="plinko"] .bgfx{background-image:url("GameIcons/Plinko.png")}
+  #view-lobby .game-card[data-game-link="pump"] .bgfx,.search-card[data-game-link="pump"] .bgfx{background-image:url("GameIcons/Pump.png")}
+  #view-lobby .game-card[data-game-link="cups"] .bgfx,.search-card[data-game-link="cups"] .bgfx{background-image:url("GameIcons/Cups.png")}
   .lobby-band{margin-top:22px}
   .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 10px}
   .section-head h2{font-size:15px;letter-spacing:.06em;text-transform:uppercase;margin:0;color:#dcecff}
@@ -512,6 +514,40 @@
   .plinko-row-control input{width:100%;accent-color:#21c7bd}
   .plinko-status{margin-top:12px}
 
+  /* ===== PUMP ===== */
+  .pump-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:14px}
+  @media (max-width:900px){.pump-wrap{grid-template-columns:1fr}}
+  .pump-board{background:rgba(11,23,37,.8);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px;padding:14px;overflow:hidden}
+  .pump-stage{min-height:360px;border-radius:14px;border:1px solid var(--border);background:radial-gradient(circle at 50% 28%,rgba(94,222,224,.16),transparent 48%),linear-gradient(180deg,#091726,#050b13);display:grid;place-items:center;overflow:hidden}
+  .pump-balloon{position:relative;width:120px;aspect-ratio:.82;border-radius:50% 50% 46% 46%;background:radial-gradient(circle at 34% 24%,#f4ffff,#5edee0 34%,#096c75 76%);box-shadow:0 22px 54px rgba(0,0,0,.44),0 0 34px rgba(94,222,224,.34),inset 0 -18px 28px rgba(0,0,0,.28);transform:scale(var(--pump-scale,1));transition:transform .22s ease,filter .18s ease}
+  .pump-balloon::after{content:"";position:absolute;left:50%;bottom:-15px;width:24px;height:22px;transform:translateX(-50%);clip-path:polygon(50% 0,100% 100%,0 100%);background:#096c75}
+  .pump-balloon.pop{animation:pump-pop .42s ease forwards}
+  @keyframes pump-pop{50%{transform:scale(1.25);filter:brightness(1.6)}100%{transform:scale(.08);opacity:0}}
+  .pump-mode{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0}
+  .pump-mode button.active{background:linear-gradient(135deg,#9bd7d5,#21c7bd);color:#021418}
+
+  /* ===== CUPS ===== */
+  .cups-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:14px}
+  @media (max-width:900px){.cups-wrap{grid-template-columns:1fr}}
+  .cups-board{background:rgba(11,23,37,.8);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px;padding:14px;overflow:hidden}
+  .cups-stage{min-height:360px;border-radius:14px;border:1px solid var(--border);background:radial-gradient(circle at 50% 28%,rgba(94,222,224,.16),transparent 48%),linear-gradient(180deg,#091726,#050b13);display:grid;place-items:center;overflow:hidden;padding:18px}
+  .cups-row{width:min(620px,100%);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:end}
+  .cup{position:relative;min-height:190px;border:0;background:transparent;cursor:pointer;filter:drop-shadow(0 24px 24px rgba(0,0,0,.36));transition:transform .22s ease,filter .22s ease}
+  .cup:disabled{cursor:not-allowed;opacity:.62}
+  .cup::before{content:"";position:absolute;left:12%;right:12%;bottom:22px;height:132px;border-radius:18px 18px 34px 34px;background:linear-gradient(135deg,#102b3a,#5edee0 44%,#07111d 86%);clip-path:polygon(14% 0,86% 0,100% 100%,0 100%);box-shadow:inset 0 0 24px rgba(255,255,255,.12),inset 0 -24px 34px rgba(0,0,0,.36),0 0 22px rgba(94,222,224,.18)}
+  .cup::after{content:"";position:absolute;left:18%;right:18%;bottom:14px;height:22px;border-radius:50%;background:linear-gradient(90deg,#06101b,#5edee0,#06101b);box-shadow:0 8px 14px rgba(0,0,0,.34)}
+  .cup .ball{position:absolute;left:50%;bottom:8px;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#fff,#5edee0 36%,#0b7f7a 72%);box-shadow:0 0 18px rgba(94,222,224,.62);transform:translateX(-50%) scale(0);transition:transform .22s ease;z-index:0}
+  .cup.reveal{transform:translateY(-24px)}
+  .cup.reveal .ball{transform:translateX(-50%) scale(1)}
+  .cup.win::before{box-shadow:inset 0 0 24px rgba(255,255,255,.12),0 0 30px rgba(94,222,224,.42)}
+  .cup.lose::before{background:linear-gradient(135deg,#28141a,#6a2231 44%,#07111d 86%);box-shadow:inset 0 0 24px rgba(255,255,255,.08),0 0 26px rgba(255,92,92,.2)}
+  .cups-row.shuffling .cup:nth-child(1){animation:cup-shuffle-a .72s ease-in-out}
+  .cups-row.shuffling .cup:nth-child(2){animation:cup-shuffle-b .72s ease-in-out}
+  .cups-row.shuffling .cup:nth-child(3){animation:cup-shuffle-c .72s ease-in-out}
+  @keyframes cup-shuffle-a{35%{transform:translateX(120%) translateY(-18px)}70%{transform:translateX(220%) translateY(0)}}
+  @keyframes cup-shuffle-b{35%{transform:translateX(-112%) translateY(16px)}70%{transform:translateX(112%) translateY(-14px)}}
+  @keyframes cup-shuffle-c{35%{transform:translateX(-120%) translateY(-12px)}70%{transform:translateX(-220%) translateY(0)}}
+
   /* ===== AGE GATE ===== */
   #age.backdrop{z-index:550}
   #age-close{display:none}
@@ -568,6 +604,8 @@
     .chicken-wrap>.panel{position:sticky;bottom:8px;z-index:45;box-shadow:0 -12px 34px rgba(0,0,0,.38);max-height:68vh;overflow:auto}
     .bread-wrap>.panel{position:sticky;bottom:8px;z-index:45;box-shadow:0 -12px 34px rgba(0,0,0,.38);max-height:68vh;overflow:auto}
     .plinko-wrap>.panel{position:sticky;bottom:8px;z-index:45;box-shadow:0 -12px 34px rgba(0,0,0,.38);max-height:68vh;overflow:auto}
+    .pump-wrap>.panel{position:sticky;bottom:8px;z-index:45;box-shadow:0 -12px 34px rgba(0,0,0,.38);max-height:68vh;overflow:auto}
+    .cups-wrap>.panel{position:sticky;bottom:8px;z-index:45;box-shadow:0 -12px 34px rgba(0,0,0,.38);max-height:68vh;overflow:auto}
     .dice-wrap>.panel{position:sticky;bottom:8px;z-index:45;box-shadow:0 -12px 34px rgba(0,0,0,.38);max-height:68vh;overflow:auto}
     .mobile-dock{transition:transform .22s ease, opacity .16s ease, max-height .22s ease, padding .22s ease, margin .22s ease;will-change:transform}
     .mobile-dock.dock-collapsed{max-height:0!important;margin-top:0!important;margin-bottom:0!important;padding-top:0!important;padding-bottom:0!important;border-width:0;transform:translateY(34px);opacity:0;overflow:hidden;pointer-events:none}
@@ -858,6 +896,24 @@
               <div class="live-count"><span class="live-dot"></span><span data-live-count="original-plinko">2,344</span> playing</div>
             </div>
             <div class="cta"><button class="btn" type="button" data-play-game="plinko">Play</button></div>
+          </article>
+          <article class="game-card" data-game-link="pump">
+            <div class="bgfx"></div>
+            <div>
+              <div class="title">Pump</div>
+              <div class="tag">Inflate the balloon, climb multipliers, cash out before it pops</div>
+              <div class="live-count"><span class="live-dot"></span><span data-live-count="original-pump">1,266</span> playing</div>
+            </div>
+            <div class="cta"><button class="btn" type="button" data-play-game="pump">Play</button></div>
+          </article>
+          <article class="game-card" data-game-link="cups">
+            <div class="bgfx"></div>
+            <div>
+              <div class="title">Cups</div>
+              <div class="tag">Track the ball, pick the cup, and push the multiplier</div>
+              <div class="live-count"><span class="live-dot"></span><span data-live-count="original-cups">1,488</span> playing</div>
+            </div>
+            <div class="cta"><button class="btn" type="button" data-play-game="cups">Play</button></div>
           </article>
         </div>
       </div>
@@ -1533,6 +1589,144 @@
       </div>
     </section>
 
+    <!-- PUMP -->
+    <section id="view-pump" class="view" aria-label="Pump Game">
+      <div class="hero">
+        <div>
+          <h1>Pump</h1>
+          <small>Pump the balloon for a higher multiplier. Cash out before it pops.</small>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn ghost" id="back-to-lobby-10">Casino</button>
+          <button class="btn ghost" id="to-plinko-2">Plinko</button>
+        </div>
+      </div>
+
+      <div class="pump-wrap">
+        <div class="pump-board">
+          <div class="mines-top">
+            <div>
+              <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Current Multiplier</div>
+              <div class="mult-big" id="pump-mult">1.00x</div>
+            </div>
+            <div class="status" id="pump-status">Set a bet, choose a mode, and start pumping.</div>
+          </div>
+          <div class="pump-stage">
+            <div class="pump-balloon" id="pump-balloon"></div>
+          </div>
+          <div class="mini-stats">
+            <div class="mini-stat"><div class="k">Pumps</div><div class="v" id="pump-count">0</div></div>
+            <div class="mini-stat"><div class="k">Mode</div><div class="v" id="pump-mode-label">Easy</div></div>
+            <div class="mini-stat"><div class="k">Potential</div><div class="v" id="pump-potential">$0</div></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px">
+            <div style="font-weight:800;letter-spacing:.5px">Betting</div>
+            <div style="color:var(--muted);font-size:12px" id="pump-limits">Min $10 - Max $5,000</div>
+          </div>
+          <div class="control-result" id="pump-result"></div>
+          <div class="pump-mode" id="pump-mode">
+            <button class="btn active" data-mode="easy" type="button">Easy</button>
+            <button class="btn ghost" data-mode="medium" type="button">Medium</button>
+            <button class="btn ghost" data-mode="hard" type="button">Hard</button>
+            <button class="btn ghost" data-mode="expert" type="button">Expert</button>
+          </div>
+          <div class="betting" style="margin-top:12px">
+            <div class="bet-input">
+              <button class="btn ghost" id="pump-clear">Clear</button>
+              <button class="btn" id="pump-minus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">- $10</button>
+              <div class="num" id="pump-bet-display">$0</div>
+              <button class="btn" id="pump-plus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">+ $10</button>
+              <button class="btn" id="pump-max-bet">Max</button>
+            </div>
+            <div class="chip-row" id="pump-chips">
+              <div class="chip" data-v="10" title="+$10"><span>10</span></div>
+              <div class="chip" data-v="50" title="+$50"><span>50</span></div>
+              <div class="chip" data-v="100" title="+$100"><span>100</span></div>
+              <div class="chip" data-v="500" title="+$500"><span>500</span></div>
+              <div class="chip" data-v="1000" title="+$1,000"><span>1K</span></div>
+            </div>
+          </div>
+          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+            <button class="btn" id="pump-start" disabled>Start</button>
+            <button class="btn" id="pump-action" disabled>Pump</button>
+            <button class="btn ghost" id="pump-cashout" disabled>Cash Out</button>
+            <button class="btn ghost" id="pump-reset">New Round</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CUPS -->
+    <section id="view-cups" class="view" aria-label="Cups Game">
+      <div class="hero">
+        <div>
+          <h1>Cups</h1>
+          <small>Follow the shuffle, pick the cup hiding the ball, then cash out or risk the next round.</small>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn ghost" id="back-to-lobby-11">Casino</button>
+          <button class="btn ghost" id="to-pump-2">Pump</button>
+        </div>
+      </div>
+
+      <div class="cups-wrap">
+        <div class="cups-board">
+          <div class="mines-top">
+            <div>
+              <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Current Multiplier</div>
+              <div class="mult-big" id="cups-mult">1.00x</div>
+            </div>
+            <div class="status" id="cups-status">Set a bet and start the shuffle.</div>
+          </div>
+          <div class="cups-stage">
+            <div class="cups-row" id="cups-row">
+              <button class="cup" data-cup="0" type="button" aria-label="Pick left cup"><span class="ball"></span></button>
+              <button class="cup" data-cup="1" type="button" aria-label="Pick center cup"><span class="ball"></span></button>
+              <button class="cup" data-cup="2" type="button" aria-label="Pick right cup"><span class="ball"></span></button>
+            </div>
+          </div>
+          <div class="mini-stats">
+            <div class="mini-stat"><div class="k">Round</div><div class="v" id="cups-round">0</div></div>
+            <div class="mini-stat"><div class="k">Next Win</div><div class="v" id="cups-next">1.25x</div></div>
+            <div class="mini-stat"><div class="k">Potential</div><div class="v" id="cups-potential">$0</div></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px">
+            <div style="font-weight:800;letter-spacing:.5px">Betting</div>
+            <div style="color:var(--muted);font-size:12px" id="cups-limits">Min $10 - Max $5,000</div>
+          </div>
+          <div class="control-result" id="cups-result"></div>
+          <div class="betting" style="margin-top:12px">
+            <div class="bet-input">
+              <button class="btn ghost" id="cups-clear">Clear</button>
+              <button class="btn" id="cups-minus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">- $10</button>
+              <div class="num" id="cups-bet-display">$0</div>
+              <button class="btn" id="cups-plus10" style="background:linear-gradient(135deg,#8fb7bd,#456f78);color:#031018">+ $10</button>
+              <button class="btn" id="cups-max-bet">Max</button>
+            </div>
+            <div class="chip-row" id="cups-chips">
+              <div class="chip" data-v="10" title="+$10"><span>10</span></div>
+              <div class="chip" data-v="50" title="+$50"><span>50</span></div>
+              <div class="chip" data-v="100" title="+$100"><span>100</span></div>
+              <div class="chip" data-v="500" title="+$500"><span>500</span></div>
+              <div class="chip" data-v="1000" title="+$1,000"><span>1K</span></div>
+            </div>
+          </div>
+          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+            <button class="btn" id="cups-start" disabled>Start</button>
+            <button class="btn" id="cups-next-round" disabled>Next Shuffle</button>
+            <button class="btn ghost" id="cups-cashout" disabled>Cash Out</button>
+            <button class="btn ghost" id="cups-reset">New Round</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- DICE -->
     <section id="view-dice" class="view" aria-label="Dice Game">
       <div class="hero">
@@ -1932,6 +2126,35 @@
       autoTimer: null
     },
 
+    /* Pump */
+    pump: {
+      minBet: 10,
+      maxBet: 5000,
+      bet: 0,
+      phase: 'betting',
+      mode: 'easy',
+      pumps: 0,
+      multiplier: 1.00,
+      message: 'Set a bet, choose a mode, and start pumping.',
+      resolved: false,
+      animating: false
+    },
+
+    /* Cups */
+    cups: {
+      minBet: 10,
+      maxBet: 5000,
+      bet: 0,
+      phase: 'betting',
+      round: 0,
+      multiplier: 1.00,
+      ballIndex: -1,
+      selected: -1,
+      message: 'Set a bet and start the shuffle.',
+      resolved: false,
+      animating: false
+    },
+
     /* Coin Flip */
     coinflip: {
       minBet: 10,
@@ -1973,6 +2196,8 @@
   const vChicken = document.getElementById('view-chicken');
   const vBread = document.getElementById('view-bread');
   const vPlinko = document.getElementById('view-plinko');
+  const vPump = document.getElementById('view-pump');
+  const vCups = document.getElementById('view-cups');
   const vCoinFlip = document.getElementById('view-coinflip');
   const vDice = document.getElementById('view-dice');
 
@@ -2083,7 +2308,7 @@
   function soundKindFor(target){
     if (target.closest('#age-yes')) return 'enter';
     if (target.closest('#control-float')) return 'float';
-    if (target.closest('[data-play-game],.chip,.pick,#bj-chips,#crash-chips,#mines-chips,#roulette-chips,#chicken-chips,#bread-chips,#plinko-chips,#coin-chips,#dice-chips,#deal-now,#hit,#stand,#double,#new-round,#crash-start,#crash-cashout,#mines-start,#mines-cashout,#roulette-spin,#chicken-start,#chicken-step,#chicken-cashout,#bread-start,#bread-pull,#bread-cashout,#plinko-drop,#coin-start,#coin-flip,#coin-cashout,#dice-roll')) return 'bet';
+    if (target.closest('[data-play-game],.chip,.pick,#bj-chips,#crash-chips,#mines-chips,#roulette-chips,#chicken-chips,#bread-chips,#plinko-chips,#pump-chips,#cups-chips,#coin-chips,#dice-chips,#deal-now,#hit,#stand,#double,#new-round,#crash-start,#crash-cashout,#mines-start,#mines-cashout,#roulette-spin,#chicken-start,#chicken-step,#chicken-cashout,#bread-start,#bread-pull,#bread-cashout,#plinko-drop,#pump-start,#pump-action,#pump-cashout,#cups-start,#cups-next-round,#cups-cashout,.cup,#coin-start,#coin-flip,#coin-cashout,#dice-roll')) return 'bet';
     return 'ui';
   }
   document.addEventListener('pointerdown', (e) => {
@@ -2101,6 +2326,8 @@
   const backToLobby7 = document.getElementById('back-to-lobby-7');
   const backToLobby8 = document.getElementById('back-to-lobby-8');
   const backToLobby9 = document.getElementById('back-to-lobby-9');
+  const backToLobby10 = document.getElementById('back-to-lobby-10');
+  const backToLobby11 = document.getElementById('back-to-lobby-11');
   const toBlackjack = document.getElementById('to-blackjack');
   const toCrash = document.getElementById('to-crash');
   const toMines = document.getElementById('to-mines');
@@ -2109,6 +2336,8 @@
   const toDice = document.getElementById('to-dice');
   const toRoulette2 = document.getElementById('to-roulette-2');
   const toDice2 = document.getElementById('to-dice-2');
+  const toPlinko2 = document.getElementById('to-plinko-2');
+  const toPump2 = document.getElementById('to-pump-2');
   const refreshLobby = document.getElementById('refresh-lobby');
   const navHeader = document.querySelector('header.nav');
   const lobbyGameSearch = document.getElementById('lobby-game-search');
@@ -2136,6 +2365,8 @@
     vChicken.classList.toggle('show', view === 'chicken');
     vBread.classList.toggle('show', view === 'bread');
     vPlinko.classList.toggle('show', view === 'plinko');
+    vPump.classList.toggle('show', view === 'pump');
+    vCups.classList.toggle('show', view === 'cups');
     vCoinFlip.classList.toggle('show', view === 'coinflip');
     vDice.classList.toggle('show', view === 'dice');
     tabCasino.classList.toggle('active', view !== 'splash');
@@ -2148,11 +2379,13 @@
       resetChickenRound(true);
       resetBreadRound(true);
       resetPlinkoRound(true);
+      resetPumpRound(true);
+      resetCupsRound(true);
       resetCoinRound(true);
       resetDiceRound(true);
       state.highStakes = false;
     }
-    if (view === 'blackjack' || view === 'crash' || view === 'mines' || view === 'roulette' || view === 'chicken' || view === 'bread' || view === 'plinko' || view === 'coinflip' || view === 'dice') {
+    if (view === 'blackjack' || view === 'crash' || view === 'mines' || view === 'roulette' || view === 'chicken' || view === 'bread' || view === 'plinko' || view === 'pump' || view === 'cups' || view === 'coinflip' || view === 'dice') {
       window.scrollTo({top:0, behavior:'smooth'});
     }
     if (view === 'crash') {
@@ -2174,6 +2407,12 @@
     if (view === 'plinko') {
       renderPlinkoBoard();
       updatePlinkoUI();
+    }
+    if (view === 'pump') {
+      updatePumpUI();
+    }
+    if (view === 'cups') {
+      updateCupsUI();
     }
     if (view === 'coinflip') {
       updateCoinUI();
@@ -2247,9 +2486,11 @@
   const goChicken = (high = false) => enterGame('chicken', 'chicken', high);
   const goBread = (high = false) => enterGame('bread', 'bread', high);
   const goPlinko = (high = false) => enterGame('plinko', 'plinko', high);
+  const goPump = (high = false) => enterGame('pump', 'pump', high);
+  const goCups = (high = false) => enterGame('cups', 'cups', high);
   const goCoinFlip = (high = false) => enterGame('coinflip', 'coinflip', high);
   const goDice = (high = false) => enterGame('dice', 'dice', high);
-  const gameLaunchers = {blackjack:goBJ, crash:goCrash, mines:goMines, roulette:goRoulette, chicken:goChicken, bread:goBread, plinko:goPlinko, coinflip:goCoinFlip, dice:goDice};
+  const gameLaunchers = {blackjack:goBJ, crash:goCrash, mines:goMines, roulette:goRoulette, chicken:goChicken, bread:goBread, plinko:goPlinko, pump:goPump, cups:goCups, coinflip:goCoinFlip, dice:goDice};
   const searchableGames = [
     {key:'blackjack', name:'Blackjack', count:'trend-blackjack'},
     {key:'crash', name:'Crash', count:'trend-crash'},
@@ -2259,7 +2500,9 @@
     {key:'dice', name:'Dice', count:'original-dice'},
     {key:'coinflip', name:'Coin Flip', aliases:'coin heads tails', count:'original-coinflip'},
     {key:'bread', name:'Russian Roulette', aliases:'roulette revolver bullet', count:'original-bread'},
-    {key:'plinko', name:'Plinko', count:'original-plinko'}
+    {key:'plinko', name:'Plinko', count:'original-plinko'},
+    {key:'pump', name:'Pump', aliases:'balloon inflate pop', count:'original-pump'},
+    {key:'cups', name:'Cups', aliases:'shell three cup ball shuffle', count:'original-cups'}
   ];
   function updateSearchPanelTop(){
     if (!navHeader) return;
@@ -2347,6 +2590,8 @@
   backToLobby7.addEventListener('click', ()=> show('lobby'));
   backToLobby8.addEventListener('click', ()=> show('lobby'));
   backToLobby9.addEventListener('click', ()=> show('lobby'));
+  backToLobby10.addEventListener('click', ()=> show('lobby'));
+  backToLobby11.addEventListener('click', ()=> show('lobby'));
   toBlackjack.addEventListener('click', () => goBJ(false));
   toCrash.addEventListener('click', () => goCrash(false));
   toMines.addEventListener('click', () => goMines(false));
@@ -2355,6 +2600,8 @@
   toDice.addEventListener('click', () => goDice(false));
   toRoulette2.addEventListener('click', () => goRoulette(false));
   toDice2.addEventListener('click', () => goDice(false));
+  toPlinko2.addEventListener('click', () => goPlinko(false));
+  toPump2.addEventListener('click', () => goPump(false));
   document.querySelectorAll('[data-play-game],[data-game-link]').forEach(el => {
     el.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-play-game]');
@@ -2387,6 +2634,8 @@
     chicken: document.getElementById('chicken-result'),
     bread: document.getElementById('bread-result'),
     plinko: document.getElementById('plinko-result'),
+    pump: document.getElementById('pump-result'),
+    cups: document.getElementById('cups-result'),
     coinflip: document.getElementById('coin-result'),
     dice: document.getElementById('dice-result')
   };
@@ -2552,6 +2801,8 @@
     chicken: 'Chicken',
     bread: 'Russian Roulette',
     plinko: 'Plinko',
+    pump: 'Pump',
+    cups: 'Cups',
     coinflip: 'Coin Flip',
     dice: 'Dice'
   };
@@ -2563,6 +2814,8 @@
     chicken: state.chicken?.bet,
     bread: state.bread?.bet,
     plinko: state.plinko?.bet,
+    pump: state.pump?.bet,
+    cups: state.cups?.bet,
     coinflip: state.coinflip?.bet,
     dice: state.dice?.bet
   }[game] || 0);
@@ -4797,6 +5050,296 @@
   }
 
   /* ======================
+     PUMP
+     ====================== */
+  const pumpBalloon = document.getElementById('pump-balloon');
+  const pumpStatus = document.getElementById('pump-status');
+  const pumpMult = document.getElementById('pump-mult');
+  const pumpCount = document.getElementById('pump-count');
+  const pumpModeLabel = document.getElementById('pump-mode-label');
+  const pumpPotential = document.getElementById('pump-potential');
+  const pumpBetDisplay = document.getElementById('pump-bet-display');
+  const pumpLimits = document.getElementById('pump-limits');
+  const pumpMode = document.getElementById('pump-mode');
+  const pumpMinus10 = document.getElementById('pump-minus10');
+  const pumpPlus10 = document.getElementById('pump-plus10');
+  const pumpMaxBet = document.getElementById('pump-max-bet');
+  const pumpClear = document.getElementById('pump-clear');
+  const pumpStart = document.getElementById('pump-start');
+  const pumpAction = document.getElementById('pump-action');
+  const pumpCashout = document.getElementById('pump-cashout');
+  const pumpReset = document.getElementById('pump-reset');
+  const PUMP_MODES = {
+    easy: {label:'Easy', step:.13, risk:.08},
+    medium: {label:'Medium', step:.22, risk:.13},
+    hard: {label:'Hard', step:.36, risk:.19},
+    expert: {label:'Expert', step:.58, risk:.27}
+  };
+  function pumpMultiplier(){
+    const S = state.pump;
+    const cfg = PUMP_MODES[S.mode];
+    return Number((1 + S.pumps * cfg.step + Math.max(0, S.pumps - 1) * cfg.step * .12).toFixed(2));
+  }
+  function pumpPopChance(){
+    const S = state.pump;
+    const cfg = PUMP_MODES[S.mode];
+    return clamp(cfg.risk + Math.max(0, S.pumps - 1) * .018, .03, .86);
+  }
+  function updatePumpUI(){
+    const S = state.pump;
+    const cfg = PUMP_MODES[S.mode];
+    elBalance.textContent = fmt(state.bankroll);
+    pumpBetDisplay.textContent = fmt(S.bet);
+    pumpLimits.textContent = `Min ${fmt(S.minBet)} - Max ${fmt(Math.min(S.maxBet, state.bankroll))}${state.highStakes ? ' • High Stakes' : ''}`;
+    pumpMult.textContent = `${S.multiplier.toFixed(2)}x`;
+    pumpCount.textContent = String(S.pumps);
+    pumpModeLabel.textContent = cfg.label;
+    pumpPotential.textContent = fmt(boostedPaid(S.bet, S.multiplier));
+    pumpStatus.textContent = S.phase === 'waiting' && S.resolved ? 'Round complete.' : S.message;
+    pumpBalloon.style.setProperty('--pump-scale', String(clamp(1 + S.pumps * .09, 1, 2.35)));
+    pumpStart.disabled = !(S.phase === 'betting' && S.bet >= S.minBet && S.bet <= state.bankroll);
+    pumpAction.disabled = !(S.phase === 'playing' && !S.animating);
+    pumpCashout.disabled = !(S.phase === 'playing' && !S.animating && S.pumps > 0);
+    pumpMode.querySelectorAll('[data-mode]').forEach(btn => {
+      const active = btn.dataset.mode === S.mode;
+      btn.classList.toggle('active', active);
+      btn.classList.toggle('ghost', !active);
+    });
+  }
+  function pumpSetBet(v){
+    const S = state.pump;
+    if (S.phase !== 'betting') return;
+    const max = Math.min(S.maxBet, state.bankroll);
+    S.bet = Math.round(clamp(v, 0, max) / 10) * 10;
+    updatePumpUI();
+  }
+  function pumpAdjust(d){ pumpSetBet(state.pump.bet + d); }
+  function resetPumpRound(silent = false){
+    const S = state.pump;
+    S.bet = 0;
+    S.phase = 'betting';
+    S.pumps = 0;
+    S.multiplier = 1.00;
+    S.message = 'Set a bet, choose a mode, and start pumping.';
+    S.resolved = false;
+    S.animating = false;
+    pumpBalloon?.classList.remove('pop');
+    clearControlResult('pump');
+    if (!silent) updatePumpUI();
+  }
+  pumpMode.addEventListener('click', e => {
+    const btn = e.target.closest('[data-mode]');
+    if (!btn || state.pump.phase !== 'betting') return;
+    state.pump.mode = btn.dataset.mode;
+    updatePumpUI();
+  });
+  pumpMinus10.addEventListener('click', ()=> pumpAdjust(-10));
+  pumpPlus10.addEventListener('click', ()=> pumpAdjust(10));
+  pumpMaxBet.addEventListener('click', ()=> pumpSetBet(Math.min(state.pump.maxBet, state.bankroll)));
+  pumpClear.addEventListener('click', ()=> pumpSetBet(0));
+  pumpReset.addEventListener('click', ()=> resetPumpRound(false));
+  document.querySelectorAll('#pump-chips .chip').forEach(chip=> chip.addEventListener('click', ()=> pumpAdjust(parseInt(chip.dataset.v,10))));
+  pumpStart.addEventListener('click', () => {
+    const S = state.pump;
+    if (S.phase !== 'betting' || S.bet < S.minBet || S.bet > state.bankroll) return;
+    state.bankroll -= S.bet;
+    saveBalance(state.bankroll);
+    S.phase = 'playing';
+    S.pumps = 0;
+    S.multiplier = 1.00;
+    S.resolved = false;
+    S.message = 'Balloon ready. Pump or cash out after a safe pump.';
+    pumpBalloon.classList.remove('pop');
+    clearControlResult('pump');
+    updatePumpUI();
+  });
+  pumpAction.addEventListener('click', async () => {
+    const S = state.pump;
+    if (S.phase !== 'playing' || S.animating) return;
+    S.animating = true;
+    S.message = 'Pumping...';
+    updatePumpUI();
+    await sleep(260);
+    const pop = !state.addictMode && Math.random() < pumpPopChance();
+    if (pop) {
+      S.phase = 'waiting';
+      S.resolved = true;
+      S.animating = false;
+      S.message = `Balloon popped. You lost ${fmt(S.bet)}.`;
+      pumpBalloon.classList.add('pop');
+      showControlResult('pump', S.message);
+      playOutcomeSound('loss');
+      recordWagerResult('pump', S.message, {bet:S.bet, paid:0, net:-S.bet});
+      updatePumpUI();
+      return;
+    }
+    S.pumps += 1;
+    S.multiplier = pumpMultiplier();
+    S.animating = false;
+    S.message = `Safe pump. Cash out ${fmt(boostedPaid(S.bet, S.multiplier))} or pump again.`;
+    showControlResult('pump', S.message);
+    updatePumpUI();
+  });
+  pumpCashout.addEventListener('click', () => {
+    const S = state.pump;
+    if (S.phase !== 'playing' || S.pumps <= 0 || S.animating || S.resolved) return;
+    const paid = boostedPaid(S.bet, S.multiplier);
+    const profit = Math.max(0, paid - S.bet);
+    state.bankroll += paid;
+    saveBalance(state.bankroll);
+    S.phase = 'waiting';
+    S.resolved = true;
+    S.message = `Cashed out after ${S.pumps} pump${S.pumps === 1 ? '' : 's'}. Profit ${fmt(profit)}. Paid ${fmt(paid)} total.`;
+    showControlResult('pump', S.message);
+    playOutcomeSound('win');
+    recordWagerResult('pump', S.message, {bet:S.bet, paid, net:profit});
+    updatePumpUI();
+  });
+
+  /* ======================
+     CUPS
+     ====================== */
+  const cupsRow = document.getElementById('cups-row');
+  const cupsStatus = document.getElementById('cups-status');
+  const cupsMult = document.getElementById('cups-mult');
+  const cupsRound = document.getElementById('cups-round');
+  const cupsNext = document.getElementById('cups-next');
+  const cupsPotential = document.getElementById('cups-potential');
+  const cupsBetDisplay = document.getElementById('cups-bet-display');
+  const cupsLimits = document.getElementById('cups-limits');
+  const cupsMinus10 = document.getElementById('cups-minus10');
+  const cupsPlus10 = document.getElementById('cups-plus10');
+  const cupsMaxBet = document.getElementById('cups-max-bet');
+  const cupsClear = document.getElementById('cups-clear');
+  const cupsStart = document.getElementById('cups-start');
+  const cupsNextRound = document.getElementById('cups-next-round');
+  const cupsCashout = document.getElementById('cups-cashout');
+  const cupsReset = document.getElementById('cups-reset');
+  const CUPS_MULTS = [1.25, 1.50, 2.00, 3.00, 5.00, 10.00, 18.00, 32.00, 60.00, 110.00];
+  const cupsNextMultiplier = () => CUPS_MULTS[Math.min(state.cups.round, CUPS_MULTS.length - 1)];
+  function renderCups(){
+    const S = state.cups;
+    cupsRow.classList.toggle('shuffling', S.phase === 'shuffling');
+    cupsRow.querySelectorAll('.cup').forEach((cup, index) => {
+      const reveal = S.phase === 'waiting' || S.phase === 'playing';
+      const pickedWrong = reveal && S.selected === index && S.selected !== S.ballIndex;
+      cup.disabled = S.phase !== 'picking' || S.animating;
+      cup.classList.toggle('reveal', reveal && (index === S.ballIndex || S.selected === index));
+      cup.classList.toggle('win', reveal && index === S.ballIndex);
+      cup.classList.toggle('lose', pickedWrong);
+    });
+  }
+  function updateCupsUI(){
+    const S = state.cups;
+    elBalance.textContent = fmt(state.bankroll);
+    cupsBetDisplay.textContent = fmt(S.bet);
+    cupsLimits.textContent = `Min ${fmt(S.minBet)} - Max ${fmt(Math.min(S.maxBet, state.bankroll))}${state.highStakes ? ' â€¢ High Stakes' : ''}`;
+    cupsMult.textContent = `${S.multiplier.toFixed(2)}x`;
+    cupsRound.textContent = String(S.round);
+    cupsNext.textContent = `${cupsNextMultiplier().toFixed(2)}x`;
+    cupsPotential.textContent = fmt(boostedPaid(S.bet, S.multiplier));
+    cupsStatus.textContent = S.phase === 'waiting' && S.resolved ? 'Round complete.' : S.message;
+    cupsStart.disabled = !(S.phase === 'betting' && S.bet >= S.minBet && S.bet <= state.bankroll);
+    cupsNextRound.disabled = !(S.phase === 'playing' && !S.animating && S.round > 0);
+    cupsCashout.disabled = !(S.phase === 'playing' && !S.animating && S.round > 0);
+    renderCups();
+  }
+  function cupsSetBet(v){
+    const S = state.cups;
+    if (S.phase !== 'betting') return;
+    const max = Math.min(S.maxBet, state.bankroll);
+    S.bet = Math.round(clamp(v, 0, max) / 10) * 10;
+    updateCupsUI();
+  }
+  function cupsAdjust(d){ cupsSetBet(state.cups.bet + d); }
+  function resetCupsRound(silent = false){
+    const S = state.cups;
+    S.bet = 0;
+    S.phase = 'betting';
+    S.round = 0;
+    S.multiplier = 1.00;
+    S.ballIndex = -1;
+    S.selected = -1;
+    S.message = 'Set a bet and start the shuffle.';
+    S.resolved = false;
+    S.animating = false;
+    cupsRow?.classList.remove('shuffling');
+    clearControlResult('cups');
+    if (!silent) updateCupsUI();
+  }
+  async function cupsShuffle(){
+    const S = state.cups;
+    S.phase = 'shuffling';
+    S.animating = true;
+    S.selected = -1;
+    S.ballIndex = Math.floor(Math.random() * 3);
+    S.message = 'Watch the cups...';
+    clearControlResult('cups');
+    updateCupsUI();
+    await sleep(820);
+    S.phase = 'picking';
+    S.animating = false;
+    S.message = 'Pick the cup hiding the ball.';
+    updateCupsUI();
+  }
+  cupsMinus10.addEventListener('click', ()=> cupsAdjust(-10));
+  cupsPlus10.addEventListener('click', ()=> cupsAdjust(10));
+  cupsMaxBet.addEventListener('click', ()=> cupsSetBet(Math.min(state.cups.maxBet, state.bankroll)));
+  cupsClear.addEventListener('click', ()=> cupsSetBet(0));
+  cupsReset.addEventListener('click', ()=> resetCupsRound(false));
+  document.querySelectorAll('#cups-chips .chip').forEach(chip=> chip.addEventListener('click', ()=> cupsAdjust(parseInt(chip.dataset.v,10))));
+  cupsStart.addEventListener('click', () => {
+    const S = state.cups;
+    if (S.phase !== 'betting' || S.bet < S.minBet || S.bet > state.bankroll) return;
+    state.bankroll -= S.bet;
+    saveBalance(state.bankroll);
+    S.round = 0;
+    S.multiplier = 1.00;
+    S.resolved = false;
+    cupsShuffle();
+  });
+  cupsNextRound.addEventListener('click', () => {
+    const S = state.cups;
+    if (S.phase !== 'playing' || S.animating || S.resolved) return;
+    cupsShuffle();
+  });
+  cupsRow.addEventListener('click', e => {
+    const cup = e.target.closest('.cup');
+    const S = state.cups;
+    if (!cup || S.phase !== 'picking' || S.animating) return;
+    const picked = Number(cup.dataset.cup);
+    S.selected = picked;
+    if (state.addictMode) S.ballIndex = picked;
+    if (picked !== S.ballIndex) {
+      S.phase = 'waiting';
+      S.resolved = true;
+      S.message = `Wrong cup. You lost ${fmt(S.bet)}.`;
+      showControlResult('cups', S.message);
+      updateCupsUI();
+      return;
+    }
+    S.round += 1;
+    S.multiplier = CUPS_MULTS[Math.min(S.round - 1, CUPS_MULTS.length - 1)];
+    S.phase = 'playing';
+    S.message = `Correct cup. Cash out ${fmt(boostedPaid(S.bet, S.multiplier))} or shuffle again.`;
+    showControlResult('cups', S.message);
+    updateCupsUI();
+  });
+  cupsCashout.addEventListener('click', () => {
+    const S = state.cups;
+    if (S.phase !== 'playing' || S.round <= 0 || S.animating || S.resolved) return;
+    const paid = boostedPaid(S.bet, S.multiplier);
+    const profit = Math.max(0, paid - S.bet);
+    state.bankroll += paid;
+    saveBalance(state.bankroll);
+    S.phase = 'waiting';
+    S.resolved = true;
+    S.message = `Cashed out after ${S.round} round${S.round === 1 ? '' : 's'}. Profit ${fmt(profit)}. Paid ${fmt(paid)} total.`;
+    showControlResult('cups', S.message);
+    updateCupsUI();
+  });
+
+  /* ======================
      COIN FLIP
      ====================== */
   const coinFace = document.getElementById('coin-face');
@@ -5129,13 +5672,13 @@
   }
 
   /* ====== LOBBY LIVE DATA ====== */
-  const liveGames = ['Blackjack','Crash','Mines','Roulette','Chicken','Russian Roulette','Plinko','Coin Flip','Dice'];
+  const liveGames = ['Blackjack','Crash','Mines','Roulette','Chicken','Russian Roulette','Plinko','Pump','Cups','Coin Flip','Dice'];
   const liveUsers = ['vaultedAce','minted','chipstorm','neonroll','luckybyte','cashline','orbit_77','plutusmax','bluefelt','riskmode','stacked','fastlane'];
   const liveCountRanges = {
     'hs-blackjack':[360,1200], 'hs-dice':[240,980], 'hs-crash':[520,1200], 'hs-mines':[300,1060], 'hs-roulette':[180,820], 'hs-coinflip':[210,900],
     'trend-blackjack':[5200,8000], 'trend-crash':[6100,8000], 'trend-mines':[4300,7200], 'trend-chicken':[4000,6800],
     'recent-bread':[900,3000], 'recent-plinko':[1200,3000], 'recent-dice':[858,2800], 'recent-chicken':[1600,3200],
-    'original-roulette':[900,3000], 'original-dice':[858,2600], 'original-coinflip':[900,2800], 'original-bread':[858,2400], 'original-plinko':[1200,3000],
+    'original-roulette':[900,3000], 'original-dice':[858,2600], 'original-coinflip':[900,2800], 'original-bread':[858,2400], 'original-plinko':[1200,3000], 'original-pump':[900,2900], 'original-cups':[858,2700],
     'original-roulette-hidden':[900,3000], 'original-dice-hidden':[858,2600], 'original-coinflip-hidden':[900,2800], 'original-bread-hidden':[858,2400], 'original-plinko-hidden':[1200,3000]
   };
   const randomLiveCount = ([min, max]) => Math.floor(min + Math.random() * (max - min + 1));
@@ -5188,7 +5731,7 @@
   /* ====== MOBILE CONTROL DOCK ====== */
   const controlFloat = document.getElementById('control-float');
   const dockTargets = () => Array.from(document.querySelectorAll(
-    '#view-blackjack .controls, #view-crash .crash-wrap > .panel, #view-mines .mines-wrap > .panel, #view-roulette .roulette-wrap > .panel, #view-chicken .chicken-wrap > .panel, #view-bread .bread-wrap > .panel, #view-plinko .plinko-wrap > .panel, #view-coinflip .coin-wrap > .panel, #view-dice .dice-wrap > .panel'
+    '#view-blackjack .controls, #view-crash .crash-wrap > .panel, #view-mines .mines-wrap > .panel, #view-roulette .roulette-wrap > .panel, #view-chicken .chicken-wrap > .panel, #view-bread .bread-wrap > .panel, #view-plinko .plinko-wrap > .panel, #view-pump .pump-wrap > .panel, #view-cups .cups-wrap > .panel, #view-coinflip .coin-wrap > .panel, #view-dice .dice-wrap > .panel'
   ));
 
   function initControlDocks(){
@@ -5211,6 +5754,8 @@
       chicken: '#view-chicken .chicken-board',
       bread: '#view-bread .bread-board',
       plinko: '#view-plinko .plinko-board',
+      pump: '#view-pump .pump-board',
+      cups: '#view-cups .cups-board',
       coinflip: '#view-coinflip .coin-board',
       dice: '#view-dice .dice-board'
     };
@@ -5378,6 +5923,8 @@
     resetChickenRound(true);
     resetBreadRound(true);
     resetPlinkoRound(true);
+    resetPumpRound(true);
+    resetCupsRound(true);
     resetCoinRound(true);
     resetDiceRound(true);
     updateCrashUI();
@@ -5387,6 +5934,8 @@
     updateBreadUI();
     renderPlinkoBoard();
     updatePlinkoUI();
+    updatePumpUI();
+    updateCupsUI();
     updateCoinUI();
     updateDiceUI();
     initControlDocks();
