@@ -106,7 +106,7 @@
   .menu-item:hover{background:rgba(255,255,255,.06)}
   .menu-note{padding:8px 10px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:4px}
   .support-link{color:#dffbfc;font-weight:900;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px;cursor:pointer}
-  .notice{position:fixed;left:50%;top:calc(18px + env(safe-area-inset-top,0px));z-index:900;transform:translate(-50%,-16px);opacity:0;pointer-events:none;padding:12px 16px;border:1px solid rgba(94,222,224,.26);border-radius:999px;background:rgba(6,16,27,.94);box-shadow:0 18px 44px rgba(0,0,0,.46),0 0 28px rgba(94,222,224,.12);color:#dffbfc;font-weight:900;transition:opacity .18s ease,transform .18s ease}
+  .notice{position:fixed;left:50%;top:calc(18px + env(safe-area-inset-top,0px));z-index:900;transform:translate(-50%,-16px);opacity:0;pointer-events:none;max-width:min(680px,calc(100vw - 24px));padding:12px 16px;border:1px solid rgba(94,222,224,.26);border-radius:18px;background:rgba(6,16,27,.94);box-shadow:0 18px 44px rgba(0,0,0,.46),0 0 28px rgba(94,222,224,.12);color:#dffbfc;font-weight:900;text-align:center;transition:opacity .18s ease,transform .18s ease}
   .notice.show{opacity:1;transform:translate(-50%,0)}
   .setting-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.025)}
   .setting-row strong{display:block}.setting-row small{display:block;color:var(--muted);margin-top:2px}
@@ -197,6 +197,10 @@
   #view-lobby .game-card[data-game-link="plinko"] .bgfx,#card-plinko .bgfx,.search-card[data-game-link="plinko"] .bgfx{background-image:url("GameIcons/Plinko.png")}
   #view-lobby .game-card[data-game-link="pump"] .bgfx,.search-card[data-game-link="pump"] .bgfx{background-image:url("GameIcons/Pump.png")}
   #view-lobby .game-card[data-game-link="cups"] .bgfx,.search-card[data-game-link="cups"] .bgfx{background-image:url("GameIcons/Cups.png")}
+  #view-lobby .game-card[data-game-link="maryjane"] .bgfx,.search-card[data-game-link="maryjane"] .bgfx{background-image:url("GameIcons/Maryjane.png")}
+  #view-lobby .game-card[data-game-link="angeleyes"] .bgfx,.search-card[data-game-link="angeleyes"] .bgfx{background-image:url("GameIcons/Angeleyes.png")}
+  #view-lobby .game-card[data-game-link="dontblink"] .bgfx,.search-card[data-game-link="dontblink"] .bgfx{background-image:url("GameIcons/Dontblink.png")}
+  #view-lobby .game-card[data-game-link="golddigger"] .bgfx,.search-card[data-game-link="golddigger"] .bgfx{background-image:url("GameIcons/Golddigger.png")}
   .lobby-band{margin-top:22px}
   .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 10px}
   .section-head h2{font-size:15px;letter-spacing:.06em;text-transform:uppercase;margin:0;color:#dcecff}
@@ -519,12 +523,53 @@
   @media (max-width:900px){.pump-wrap{grid-template-columns:1fr}}
   .pump-board{background:rgba(11,23,37,.8);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px;padding:14px;overflow:hidden}
   .pump-stage{min-height:360px;border-radius:14px;border:1px solid var(--border);background:radial-gradient(circle at 50% 28%,rgba(94,222,224,.16),transparent 48%),linear-gradient(180deg,#091726,#050b13);display:grid;place-items:center;overflow:hidden}
-  .pump-balloon{position:relative;width:120px;aspect-ratio:.82;border-radius:50% 50% 46% 46%;background:radial-gradient(circle at 34% 24%,#f4ffff,#5edee0 34%,#096c75 76%);box-shadow:0 22px 54px rgba(0,0,0,.44),0 0 34px rgba(94,222,224,.34),inset 0 -18px 28px rgba(0,0,0,.28);transform:scale(var(--pump-scale,1));transition:transform .22s ease,filter .18s ease}
-  .pump-balloon::after{content:"";position:absolute;left:50%;bottom:-15px;width:24px;height:22px;transform:translateX(-50%);clip-path:polygon(50% 0,100% 100%,0 100%);background:#096c75}
+  .pump-balloon{position:relative;width:120px;aspect-ratio:.82;border-radius:50% 50% 46% 46%;background:radial-gradient(circle at 34% 24%,#fff3f0,#ff5a4d 34%,#a80f1b 76%);box-shadow:0 22px 54px rgba(0,0,0,.44),0 0 34px rgba(255,76,69,.3),inset 0 -18px 28px rgba(80,0,8,.3);transform:scale(var(--pump-scale,1));transition:transform .22s ease,filter .18s ease}
+  .pump-balloon::after{content:"";position:absolute;left:50%;bottom:-15px;width:24px;height:22px;transform:translateX(-50%);clip-path:polygon(50% 0,100% 100%,0 100%);background:#a80f1b}
   .pump-balloon.pop{animation:pump-pop .42s ease forwards}
   @keyframes pump-pop{50%{transform:scale(1.25);filter:brightness(1.6)}100%{transform:scale(.08);opacity:0}}
   .pump-mode{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0}
   .pump-mode button.active{background:linear-gradient(135deg,#9bd7d5,#21c7bd);color:#021418}
+
+  /* ===== MARYJANE SLOTS ===== */
+  .slot-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
+  @media (max-width:900px){.slot-wrap{grid-template-columns:1fr}}
+  .slot-board{background:rgba(11,23,37,.8);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px;padding:14px;overflow:hidden}
+  .slot-stage{min-height:360px;border-radius:14px;border:1px solid rgba(255,255,255,.11);background:radial-gradient(circle at 50% 18%,rgba(65,220,143,.16),transparent 45%),linear-gradient(180deg,#081b16,#060d14 72%);display:grid;place-items:center;padding:18px;overflow:hidden}
+  .slot-cabinet{width:min(680px,100%);border-radius:18px;border:1px solid rgba(245,215,110,.22);background:linear-gradient(180deg,#172219,#08110f);box-shadow:0 26px 68px rgba(0,0,0,.46),inset 0 0 0 2px rgba(255,255,255,.04);padding:14px;position:relative}
+  .slot-marquee{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;color:var(--gold);font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+  .slot-marquee span{color:#d7ffe8;font-size:12px;letter-spacing:.12em}
+  .slot-reels{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;overflow:hidden}
+  #angeleyes-reels{grid-template-columns:repeat(3,minmax(0,1fr));max-width:430px;margin:0 auto}
+  .jackpot-meter{margin:0 0 12px;padding:13px 14px;border:1px solid rgba(245,215,110,.28);border-radius:14px;background:linear-gradient(135deg,rgba(245,215,110,.12),rgba(94,222,224,.06));box-shadow:inset 0 0 24px rgba(245,215,110,.08);text-align:center}
+  .jackpot-meter .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.16em}
+  .jackpot-meter .v{margin-top:3px;font-size:34px;font-weight:1000;color:var(--gold);text-shadow:0 0 18px rgba(245,215,110,.25)}
+  .jackpot-meter .s{font-size:12px;color:#9db2c9;margin-top:2px}
+  .slot-reel{display:grid;grid-template-rows:repeat(3,74px);gap:8px;padding:8px;border-radius:13px;background:linear-gradient(180deg,#07100f,#112017);border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 14px 26px rgba(0,0,0,.36);overflow:hidden}
+  .slot-cell{display:grid;place-items:center;min-width:0;border-radius:10px;background:linear-gradient(180deg,#f8fff9,#bfd9c7);color:#07110d;font-size:32px;font-weight:1000;text-align:center;line-height:1;box-shadow:inset 0 -5px 0 rgba(0,0,0,.12),0 8px 14px rgba(0,0,0,.22);transition:transform .18s ease,filter .18s ease,background .18s ease}
+  .slot-symbol{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;font-family:Georgia,'Times New Roman',serif;font-weight:1000;letter-spacing:0}
+  .slot-symbol.seven{color:#d80719;text-shadow:0 2px 0 #fff,0 0 12px rgba(216,7,25,.32);font-size:44px}
+  .slot-symbol.cherry{font-size:34px}
+  .slot-symbol.diamond{color:#1385ff;text-shadow:0 0 12px rgba(19,133,255,.4);font-size:34px}
+  .slot-symbol.bell{color:#c89411;text-shadow:0 0 12px rgba(245,215,110,.44);font-size:32px}
+  .slot-symbol.bar{width:48px;height:28px;border-radius:8px;background:#10141d;color:#f5f7fb;font-size:14px;font-family:Inter,system-ui,sans-serif}
+  .slot-symbol.chip{background:radial-gradient(circle,#f8fbff 0 38%,#d41927 40% 56%,#f8fbff 58% 100%);border:4px dashed #d41927;color:#07111d;font-size:26px;font-family:Inter,system-ui,sans-serif}
+  .slot-symbol.wild{color:#148852;font-size:30px;text-shadow:0 0 12px rgba(64,220,143,.5)}
+  .slot-symbol.bonus{background:linear-gradient(180deg,#fff6b8,#f5d76e);color:#112012;font-size:18px;font-family:Inter,system-ui,sans-serif}
+  .slot-cell.win{background:linear-gradient(180deg,#fff6b8,#f5d76e);filter:brightness(1.08);transform:scale(1.04)}
+  .slot-cell.wild{background:linear-gradient(180deg,#d9fff0,#40dc8f)}
+  .slot-cell.jackpot{background:linear-gradient(180deg,#fff2f2,#ff665c);color:#220407}
+  .slot-reels.spinning .slot-cell{animation:slot-blur .18s linear infinite}
+  @keyframes slot-blur{50%{transform:translateY(5px);filter:blur(1px) brightness(1.15)}}
+  .slot-select{width:100%;min-height:44px;border-radius:12px;border:1px solid var(--border);background:#07111d;color:#e6f8fb;padding:0 12px;font-weight:900}
+  .slot-paylines{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
+  .slot-payline{height:8px;border-radius:999px;background:rgba(255,255,255,.12)}
+  .slot-payline.active{background:linear-gradient(90deg,#40dc8f,#f5d76e);box-shadow:0 0 14px rgba(64,220,143,.26)}
+  .slot-line-overlay{position:absolute;left:14px;right:14px;top:58px;bottom:46px;pointer-events:none;opacity:0;transition:opacity .18s ease;z-index:4}
+  .slot-line-overlay.show{opacity:1}
+  .slot-line-overlay svg{width:100%;height:100%;display:block;overflow:visible}
+  .slot-line-overlay path{fill:none;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 5px rgba(0,0,0,.75))}
+  .slot-line-overlay .line-badge{filter:drop-shadow(0 0 5px rgba(0,0,0,.7))}
+  .slot-line-overlay text{font-size:8px;font-weight:1000;fill:#07111d;text-anchor:middle;dominant-baseline:middle}
 
   /* ===== CUPS ===== */
   .cups-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:14px}
@@ -534,19 +579,19 @@
   .cups-row{width:min(620px,100%);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:end}
   .cup{position:relative;min-height:190px;border:0;background:transparent;cursor:pointer;filter:drop-shadow(0 24px 24px rgba(0,0,0,.36));transition:transform .22s ease,filter .22s ease}
   .cup:disabled{cursor:not-allowed;opacity:.62}
-  .cup::before{content:"";position:absolute;left:12%;right:12%;bottom:22px;height:132px;border-radius:18px 18px 34px 34px;background:linear-gradient(135deg,#102b3a,#5edee0 44%,#07111d 86%);clip-path:polygon(14% 0,86% 0,100% 100%,0 100%);box-shadow:inset 0 0 24px rgba(255,255,255,.12),inset 0 -24px 34px rgba(0,0,0,.36),0 0 22px rgba(94,222,224,.18)}
-  .cup::after{content:"";position:absolute;left:18%;right:18%;bottom:14px;height:22px;border-radius:50%;background:linear-gradient(90deg,#06101b,#5edee0,#06101b);box-shadow:0 8px 14px rgba(0,0,0,.34)}
-  .cup .ball{position:absolute;left:50%;bottom:8px;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#fff,#5edee0 36%,#0b7f7a 72%);box-shadow:0 0 18px rgba(94,222,224,.62);transform:translateX(-50%) scale(0);transition:transform .22s ease;z-index:0}
-  .cup.reveal{transform:translateY(-24px)}
-  .cup.reveal .ball{transform:translateX(-50%) scale(1)}
-  .cup.win::before{box-shadow:inset 0 0 24px rgba(255,255,255,.12),0 0 30px rgba(94,222,224,.42)}
-  .cup.lose::before{background:linear-gradient(135deg,#28141a,#6a2231 44%,#07111d 86%);box-shadow:inset 0 0 24px rgba(255,255,255,.08),0 0 26px rgba(255,92,92,.2)}
-  .cups-row.shuffling .cup:nth-child(1){animation:cup-shuffle-a .72s ease-in-out}
-  .cups-row.shuffling .cup:nth-child(2){animation:cup-shuffle-b .72s ease-in-out}
-  .cups-row.shuffling .cup:nth-child(3){animation:cup-shuffle-c .72s ease-in-out}
-  @keyframes cup-shuffle-a{35%{transform:translateX(120%) translateY(-18px)}70%{transform:translateX(220%) translateY(0)}}
-  @keyframes cup-shuffle-b{35%{transform:translateX(-112%) translateY(16px)}70%{transform:translateX(112%) translateY(-14px)}}
-  @keyframes cup-shuffle-c{35%{transform:translateX(-120%) translateY(-12px)}70%{transform:translateX(-220%) translateY(0)}}
+  .cup::before{content:"";position:absolute;left:12%;right:12%;bottom:25px;height:136px;border-radius:20px 20px 38px 38px;background:linear-gradient(105deg,#6e0712 0%,#c71925 34%,#f34b45 48%,#ad0e1a 70%,#5e0610 100%);clip-path:polygon(22% 0,78% 0,98% 100%,2% 100%);box-shadow:inset 13px 0 18px rgba(255,255,255,.17),inset -18px 0 28px rgba(70,0,5,.34),inset 0 -22px 30px rgba(60,0,4,.34),0 0 0 2px rgba(255,255,255,.06)}
+  .cup::after{content:"";position:absolute;left:9%;right:9%;bottom:13px;height:29px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(35,2,6,.92) 0 45%,#f3f1e8 48% 62%,#a30d17 66% 100%);box-shadow:0 8px 14px rgba(0,0,0,.38),inset 0 -3px 7px rgba(80,0,5,.36)}
+  .cup .ball{position:absolute;left:50%;bottom:10px;width:32px;height:32px;border-radius:50%;background:radial-gradient(circle at 34% 28%,#ffffff 0 18%,#f7f7ef 42%,#d9d9ce 78%,#a7a89f 100%);box-shadow:0 0 12px rgba(255,255,255,.58),0 9px 14px rgba(0,0,0,.36);transform:translateX(-50%) scale(0);transition:transform .24s ease;z-index:0}
+  .cup.reveal{transform:translateY(-34px)}
+  .cup.reveal.has-ball .ball{transform:translateX(-50%) translateY(34px) scale(1)}
+  .cup.win::before{box-shadow:inset 13px 0 18px rgba(255,255,255,.17),inset -18px 0 28px rgba(70,0,5,.34),0 0 28px rgba(255,255,255,.24),0 0 34px rgba(243,75,69,.32)}
+  .cup.lose::before{background:linear-gradient(105deg,#3b050a 0%,#840b14 38%,#b21a22 55%,#4f050b 100%);box-shadow:inset 0 0 24px rgba(255,255,255,.08),0 0 26px rgba(255,92,92,.2)}
+  .cups-row.shuffling .cup:nth-child(1){animation:cup-shuffle-a 1.08s ease-in-out}
+  .cups-row.shuffling .cup:nth-child(2){animation:cup-shuffle-b 1.08s ease-in-out}
+  .cups-row.shuffling .cup:nth-child(3){animation:cup-shuffle-c 1.08s ease-in-out}
+  @keyframes cup-shuffle-a{22%{transform:translateX(112%) translateY(-20px)}48%{transform:translateX(220%) translateY(6px)}74%{transform:translateX(108%) translateY(-14px)}}
+  @keyframes cup-shuffle-b{22%{transform:translateX(-108%) translateY(15px)}48%{transform:translateX(108%) translateY(-18px)}74%{transform:translateX(-108%) translateY(12px)}}
+  @keyframes cup-shuffle-c{22%{transform:translateX(-112%) translateY(-14px)}48%{transform:translateX(-220%) translateY(6px)}74%{transform:translateX(-108%) translateY(-20px)}}
 
   /* ===== AGE GATE ===== */
   #age.backdrop{z-index:550}
@@ -606,6 +651,14 @@
     .plinko-wrap>.panel{position:sticky;bottom:8px;z-index:45;box-shadow:0 -12px 34px rgba(0,0,0,.38);max-height:68vh;overflow:auto}
     .pump-wrap>.panel{position:sticky;bottom:8px;z-index:45;box-shadow:0 -12px 34px rgba(0,0,0,.38);max-height:68vh;overflow:auto}
     .cups-wrap>.panel{position:sticky;bottom:8px;z-index:45;box-shadow:0 -12px 34px rgba(0,0,0,.38);max-height:68vh;overflow:auto}
+    .slot-wrap>.panel{position:sticky;bottom:8px;z-index:45;box-shadow:0 -12px 34px rgba(0,0,0,.38);max-height:68vh;overflow:auto}
+    .slot-reel{grid-template-rows:repeat(3,60px);gap:6px;padding:6px}
+    .slot-cell{font-size:28px}
+    .slot-symbol{width:44px;height:44px}
+    .slot-symbol.seven{font-size:38px}
+    .slot-symbol.bar{width:40px;height:26px;font-size:12px}
+    .slot-symbol.bonus{font-size:14px}
+    .slot-line-overlay{left:12px;right:12px;top:54px;bottom:40px}
     .dice-wrap>.panel{position:sticky;bottom:8px;z-index:45;box-shadow:0 -12px 34px rgba(0,0,0,.38);max-height:68vh;overflow:auto}
     .mobile-dock{transition:transform .22s ease, opacity .16s ease, max-height .22s ease, padding .22s ease, margin .22s ease;will-change:transform}
     .mobile-dock.dock-collapsed{max-height:0!important;margin-top:0!important;margin-bottom:0!important;padding-top:0!important;padding-bottom:0!important;border-width:0;transform:translateY(34px);opacity:0;overflow:hidden;pointer-events:none}
@@ -914,6 +967,55 @@
               <div class="live-count"><span class="live-dot"></span><span data-live-count="original-cups">1,488</span> playing</div>
             </div>
             <div class="cta"><button class="btn" type="button" data-play-game="cups">Play</button></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="lobby-band">
+        <div class="section-head">
+          <h2>Slot Games</h2>
+          <small>Classic reels, paylines, and instant payouts</small>
+        </div>
+        <div class="game-strip">
+          <article class="game-card" data-game-link="maryjane">
+            <div class="bgfx"></div>
+            <div>
+              <div class="title">MaryJane</div>
+              <div class="tag">Five reels, nine paylines, wilds, bonuses, and jackpot hits</div>
+              <div class="live-count"><span class="live-dot"></span><span data-live-count="slot-maryjane">1,036</span> playing</div>
+            </div>
+            <div class="cta"><button class="btn" type="button" data-play-game="maryjane">Play</button></div>
+            <div class="ribbon">Slots</div>
+          </article>
+          <article class="game-card" data-game-link="angeleyes">
+            <div class="bgfx"></div>
+            <div>
+              <div class="title">Angel Eyes</div>
+              <div class="tag">Three reels, diamond jackpots, and a 1000x chase hit</div>
+              <div class="live-count"><span class="live-dot"></span><span data-live-count="slot-angeleyes">1,647</span> playing</div>
+            </div>
+            <div class="cta"><button class="btn" type="button" data-play-game="angeleyes">Play</button></div>
+            <div class="ribbon">Slots</div>
+          </article>
+          <article class="game-card" data-game-link="dontblink">
+            <div class="bgfx"></div>
+            <div>
+              <div class="title">Dont Blink</div>
+              <div class="tag">Classic reels, 5 paylines, and a rising progressive jackpot</div>
+              <div class="live-count"><span class="live-dot"></span><span data-live-count="slot-dontblink">2,018</span> playing</div>
+            </div>
+            <div class="cta"><button class="btn" type="button" data-play-game="dontblink">Play</button></div>
+            <div class="ribbon">Jackpot</div>
+          </article>
+          <article class="game-card" data-game-link="golddigger">
+            <div class="bgfx"></div>
+            <div>
+              <div class="title">Gold Digger</div>
+              <div class="tag">Low-cost digging, 3-line pressure, and a slow progressive jackpot</div>
+              <div class="live-count"><span class="live-dot"></span><span data-live-count="slot-golddigger">1,376</span> playing</div>
+            </div>
+            <div class="cta"><button class="btn" type="button" data-play-game="golddigger">Play</button></div>
+            <div class="ribbon">Jackpot</div>
           </article>
         </div>
       </div>
@@ -1727,6 +1829,281 @@
       </div>
     </section>
 
+    <!-- MARYJANE SLOTS -->
+    <section id="view-maryjane" class="view" aria-label="MaryJane Slot Game">
+      <div class="hero">
+        <div>
+          <h1>MaryJane</h1>
+          <small>Five reels, selectable paylines, wild symbols, and instant slot payouts.</small>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn ghost" id="back-to-lobby-12">Casino</button>
+          <button class="btn ghost" id="to-cups-2">Cups</button>
+        </div>
+      </div>
+
+      <div class="slot-wrap">
+        <div class="slot-board">
+          <div class="mines-top">
+            <div>
+              <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Last Win</div>
+              <div class="mult-big" id="maryjane-win">$0</div>
+            </div>
+            <div class="status" id="maryjane-status">Choose lines and spin.</div>
+          </div>
+          <div class="slot-stage">
+            <div class="slot-cabinet">
+              <div class="slot-marquee"><div>MaryJane</div><span id="maryjane-marquee">Ready</span></div>
+              <div class="slot-reels" id="maryjane-reels">
+                <div class="slot-reel"><div class="slot-cell"><span class="slot-symbol chip">P</span></div><div class="slot-cell"><span class="slot-symbol seven">7</span></div><div class="slot-cell"><span class="slot-symbol bar">BAR</span></div></div>
+                <div class="slot-reel"><div class="slot-cell"><span class="slot-symbol diamond">◆</span></div><div class="slot-cell"><span class="slot-symbol cherry">🍒</span></div><div class="slot-cell"><span class="slot-symbol bell">🔔</span></div></div>
+                <div class="slot-reel"><div class="slot-cell"><span class="slot-symbol seven">7</span></div><div class="slot-cell"><span class="slot-symbol wild">★</span></div><div class="slot-cell"><span class="slot-symbol chip">P</span></div></div>
+                <div class="slot-reel"><div class="slot-cell"><span class="slot-symbol bar">BAR</span></div><div class="slot-cell"><span class="slot-symbol cherry">🍒</span></div><div class="slot-cell"><span class="slot-symbol diamond">◆</span></div></div>
+                <div class="slot-reel"><div class="slot-cell"><span class="slot-symbol bell">🔔</span></div><div class="slot-cell"><span class="slot-symbol seven">7</span></div><div class="slot-cell"><span class="slot-symbol bonus">$</span></div></div>
+              </div>
+              <div class="slot-line-overlay" id="maryjane-line-overlay" aria-hidden="true"></div>
+              <div class="slot-paylines" id="maryjane-paylines">
+                <div class="slot-payline active"></div><div class="slot-payline"></div><div class="slot-payline"></div>
+                <div class="slot-payline"></div><div class="slot-payline"></div><div class="slot-payline"></div>
+                <div class="slot-payline"></div><div class="slot-payline"></div><div class="slot-payline"></div>
+              </div>
+            </div>
+          </div>
+          <div class="mini-stats">
+            <div class="mini-stat"><div class="k">Lines</div><div class="v" id="maryjane-lines-stat">1</div></div>
+            <div class="mini-stat"><div class="k">Spin Cost</div><div class="v" id="maryjane-cost">$10</div></div>
+            <div class="mini-stat"><div class="k">Jackpot</div><div class="v" id="maryjane-jackpot">$50,000</div></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px">
+            <div style="font-weight:800;letter-spacing:.5px">Betting</div>
+            <div style="color:var(--muted);font-size:12px" id="maryjane-limits">Min $10 - Max $1,000</div>
+          </div>
+          <div class="control-result" id="maryjane-result"></div>
+          <div class="dice-slider-row">
+            <div class="row"><div>Paylines</div><div id="maryjane-lines-label" class="pillstat">1 Line</div></div>
+            <select class="slot-select" id="maryjane-lines" aria-label="MaryJane paylines">
+              <option value="1">Play 1 Line - $10</option>
+              <option value="3">Play 3 Lines - $100</option>
+              <option value="5">Play 5 Lines - $250</option>
+              <option value="7">Play 7 Lines - $500</option>
+              <option value="9">Play 9 Lines - $1,000</option>
+            </select>
+          </div>
+          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+            <button class="btn" id="maryjane-spin">Spin</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ANGEL EYES SLOTS -->
+    <section id="view-angeleyes" class="view" aria-label="Angel Eyes Slot Game">
+      <div class="hero">
+        <div>
+          <h1>Angel Eyes</h1>
+          <small>Three reels, one or three lines, rare diamond jackpots, and instant slot payouts.</small>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn ghost" id="back-to-lobby-13">Casino</button>
+          <button class="btn ghost" id="to-maryjane">MaryJane</button>
+        </div>
+      </div>
+
+      <div class="slot-wrap">
+        <div class="slot-board">
+          <div class="mines-top">
+            <div>
+              <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Last Win</div>
+              <div class="mult-big" id="angeleyes-win">$0</div>
+            </div>
+            <div class="status" id="angeleyes-status">Choose lines and spin.</div>
+          </div>
+          <div class="slot-stage">
+            <div class="slot-cabinet">
+              <div class="slot-marquee"><div>Angel Eyes</div><span id="angeleyes-marquee">Ready</span></div>
+              <div class="slot-reels" id="angeleyes-reels">
+                <div class="slot-reel"><div class="slot-cell"><span class="slot-symbol diamond">💎</span></div><div class="slot-cell"><span class="slot-symbol wild">👁</span></div><div class="slot-cell"><span class="slot-symbol seven">😇</span></div></div>
+                <div class="slot-reel"><div class="slot-cell"><span class="slot-symbol bonus">✨</span></div><div class="slot-cell"><span class="slot-symbol diamond">💎</span></div><div class="slot-cell"><span class="slot-symbol bell">⭐</span></div></div>
+                <div class="slot-reel"><div class="slot-cell"><span class="slot-symbol bell">⭐</span></div><div class="slot-cell"><span class="slot-symbol wild">👁</span></div><div class="slot-cell"><span class="slot-symbol chip">🕊</span></div></div>
+              </div>
+              <div class="slot-line-overlay" id="angeleyes-line-overlay" aria-hidden="true"></div>
+              <div class="slot-paylines" id="angeleyes-paylines">
+                <div class="slot-payline active"></div><div class="slot-payline"></div><div class="slot-payline"></div>
+              </div>
+            </div>
+          </div>
+          <div class="mini-stats">
+            <div class="mini-stat"><div class="k">Lines</div><div class="v" id="angeleyes-lines-stat">1</div></div>
+            <div class="mini-stat"><div class="k">Spin Cost</div><div class="v" id="angeleyes-cost">$1,000</div></div>
+            <div class="mini-stat"><div class="k">Top Hit</div><div class="v">1000x</div></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px">
+            <div style="font-weight:800;letter-spacing:.5px">Betting</div>
+            <div style="color:var(--muted);font-size:12px" id="angeleyes-limits">1 Line $1,000 - 3 Lines $4,500</div>
+          </div>
+          <div class="control-result" id="angeleyes-result"></div>
+          <div class="dice-slider-row">
+            <div class="row"><div>Paylines</div><div id="angeleyes-lines-label" class="pillstat">1 Line</div></div>
+            <select class="slot-select" id="angeleyes-lines" aria-label="Angel Eyes paylines">
+              <option value="1">Play 1 Line - $1,000</option>
+              <option value="3">Play 3 Lines - $4,500</option>
+            </select>
+          </div>
+          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+            <button class="btn" id="angeleyes-spin">Spin</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DONT BLINK SLOTS -->
+    <section id="view-dontblink" class="view" aria-label="Dont Blink Slot Game">
+      <div class="hero">
+        <div>
+          <h1>Dont Blink</h1>
+          <small>Five reels, 1/3/5 paylines, classic slot hits, and a progressive jackpot.</small>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn ghost" id="back-to-lobby-14">Casino</button>
+          <button class="btn ghost" id="to-angeleyes">Angel Eyes</button>
+        </div>
+      </div>
+
+      <div class="slot-wrap">
+        <div class="slot-board">
+          <div class="jackpot-meter">
+            <div class="k">Progressive Jackpot</div>
+            <div class="v" id="dontblink-jackpot">$250,000</div>
+            <div class="s" id="dontblink-jackpot-note">Climbing</div>
+          </div>
+          <div class="mines-top">
+            <div>
+              <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Last Win</div>
+              <div class="mult-big" id="dontblink-win">$0</div>
+            </div>
+            <div class="status" id="dontblink-status">Choose lines and spin.</div>
+          </div>
+          <div class="slot-stage">
+            <div class="slot-cabinet">
+              <div class="slot-marquee"><div>Dont Blink</div><span id="dontblink-marquee">Ready</span></div>
+              <div class="slot-reels" id="dontblink-reels">
+                <div class="slot-reel"><div class="slot-cell"><span class="slot-symbol wild">👁</span></div><div class="slot-cell"><span class="slot-symbol seven">7</span></div><div class="slot-cell"><span class="slot-symbol cherry">🍒</span></div></div>
+                <div class="slot-reel"><div class="slot-cell"><span class="slot-symbol bell">🔔</span></div><div class="slot-cell"><span class="slot-symbol bar">BAR</span></div><div class="slot-cell"><span class="slot-symbol diamond">💎</span></div></div>
+                <div class="slot-reel"><div class="slot-cell"><span class="slot-symbol bonus">⏳</span></div><div class="slot-cell"><span class="slot-symbol wild">👁</span></div><div class="slot-cell"><span class="slot-symbol seven">7</span></div></div>
+                <div class="slot-reel"><div class="slot-cell"><span class="slot-symbol cherry">🍒</span></div><div class="slot-cell"><span class="slot-symbol bell">🔔</span></div><div class="slot-cell"><span class="slot-symbol bar">BAR</span></div></div>
+                <div class="slot-reel"><div class="slot-cell"><span class="slot-symbol diamond">💎</span></div><div class="slot-cell"><span class="slot-symbol seven">7</span></div><div class="slot-cell"><span class="slot-symbol bonus">⏳</span></div></div>
+              </div>
+              <div class="slot-line-overlay" id="dontblink-line-overlay" aria-hidden="true"></div>
+              <div class="slot-paylines" id="dontblink-paylines">
+                <div class="slot-payline active"></div><div class="slot-payline"></div><div class="slot-payline"></div>
+                <div class="slot-payline"></div><div class="slot-payline"></div>
+              </div>
+            </div>
+          </div>
+          <div class="mini-stats">
+            <div class="mini-stat"><div class="k">Lines</div><div class="v" id="dontblink-lines-stat">1</div></div>
+            <div class="mini-stat"><div class="k">Spin Cost</div><div class="v" id="dontblink-cost">$500</div></div>
+            <div class="mini-stat"><div class="k">Jackpot Hit</div><div class="v">5 Eyes</div></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px">
+            <div style="font-weight:800;letter-spacing:.5px">Betting</div>
+            <div style="color:var(--muted);font-size:12px" id="dontblink-limits">1 Line $500 - 5 Lines $4,000</div>
+          </div>
+          <div class="control-result" id="dontblink-result"></div>
+          <div class="dice-slider-row">
+            <div class="row"><div>Paylines</div><div id="dontblink-lines-label" class="pillstat">1 Line</div></div>
+            <select class="slot-select" id="dontblink-lines" aria-label="Dont Blink paylines">
+              <option value="1">Play 1 Line - $500</option>
+              <option value="3">Play 3 Lines - $2,000</option>
+              <option value="5">Play 5 Lines - $4,000</option>
+            </select>
+          </div>
+          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+            <button class="btn" id="dontblink-spin">Spin</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GOLD DIGGER SLOTS -->
+    <section id="view-golddigger" class="view" aria-label="Gold Digger Slot Game">
+      <div class="hero">
+        <div>
+          <h1>Gold Digger</h1>
+          <small>Five reels, 1 or 3 paylines, small feeder wins, and a slow progressive jackpot.</small>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn ghost" id="back-to-lobby-15">Casino</button>
+          <button class="btn ghost" id="to-dontblink">Dont Blink</button>
+        </div>
+      </div>
+
+      <div class="slot-wrap">
+        <div class="slot-board">
+          <div class="jackpot-meter">
+            <div class="k">Gold Vein Jackpot</div>
+            <div class="v" id="golddigger-jackpot">$100,000</div>
+            <div class="s" id="golddigger-jackpot-note">Slow climb</div>
+          </div>
+          <div class="mines-top">
+            <div>
+              <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Last Win</div>
+              <div class="mult-big" id="golddigger-win">$0</div>
+            </div>
+            <div class="status" id="golddigger-status">Choose lines and spin.</div>
+          </div>
+          <div class="slot-stage">
+            <div class="slot-cabinet">
+              <div class="slot-marquee"><div>Gold Digger</div><span id="golddigger-marquee">Ready</span></div>
+              <div class="slot-reels" id="golddigger-reels">
+                <div class="slot-reel"><div class="slot-cell"><span class="slot-symbol bonus">⛏️</span></div><div class="slot-cell"><span class="slot-symbol bell">🪙</span></div><div class="slot-cell"><span class="slot-symbol bar">ROCK</span></div></div>
+                <div class="slot-reel"><div class="slot-cell"><span class="slot-symbol cherry">🪨</span></div><div class="slot-cell"><span class="slot-symbol diamond">💎</span></div><div class="slot-cell"><span class="slot-symbol bonus">⛏️</span></div></div>
+                <div class="slot-reel"><div class="slot-cell"><span class="slot-symbol bell">🪙</span></div><div class="slot-cell"><span class="slot-symbol seven">💰</span></div><div class="slot-cell"><span class="slot-symbol wild">🏆</span></div></div>
+                <div class="slot-reel"><div class="slot-cell"><span class="slot-symbol bar">ROCK</span></div><div class="slot-cell"><span class="slot-symbol cherry">🪨</span></div><div class="slot-cell"><span class="slot-symbol diamond">💎</span></div></div>
+                <div class="slot-reel"><div class="slot-cell"><span class="slot-symbol wild">🏆</span></div><div class="slot-cell"><span class="slot-symbol bell">🪙</span></div><div class="slot-cell"><span class="slot-symbol seven">💰</span></div></div>
+              </div>
+              <div class="slot-line-overlay" id="golddigger-line-overlay" aria-hidden="true"></div>
+              <div class="slot-paylines" id="golddigger-paylines">
+                <div class="slot-payline active"></div><div class="slot-payline"></div><div class="slot-payline"></div>
+              </div>
+            </div>
+          </div>
+          <div class="mini-stats">
+            <div class="mini-stat"><div class="k">Lines</div><div class="v" id="golddigger-lines-stat">1</div></div>
+            <div class="mini-stat"><div class="k">Spin Cost</div><div class="v" id="golddigger-cost">$100</div></div>
+            <div class="mini-stat"><div class="k">Jackpot Hit</div><div class="v">5 Trophies</div></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px">
+            <div style="font-weight:800;letter-spacing:.5px">Betting</div>
+            <div style="color:var(--muted);font-size:12px" id="golddigger-limits">1 Line $100 - 3 Lines $1,000</div>
+          </div>
+          <div class="control-result" id="golddigger-result"></div>
+          <div class="dice-slider-row">
+            <div class="row"><div>Paylines</div><div id="golddigger-lines-label" class="pillstat">1 Line</div></div>
+            <select class="slot-select" id="golddigger-lines" aria-label="Gold Digger paylines">
+              <option value="1">Play 1 Line - $100</option>
+              <option value="3">Play 3 Lines - $1,000</option>
+            </select>
+          </div>
+          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+            <button class="btn" id="golddigger-spin">Spin</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- DICE -->
     <section id="view-dice" class="view" aria-label="Dice Game">
       <div class="hero">
@@ -2152,6 +2529,91 @@
       selected: -1,
       message: 'Set a bet and start the shuffle.',
       resolved: false,
+      animating: false,
+      shuffleToken: 0
+    },
+
+    /* MaryJane Slots */
+    maryjane: {
+      minBet: 10,
+      maxBet: 1000,
+      bet: 10,
+      lines: 1,
+      phase: 'betting',
+      reels: [
+        ['P CHIP','7','BAR'],
+        ['DIAMOND','CHERRY','BELL'],
+        ['7','WILD','P CHIP'],
+        ['BAR','CHERRY','DIAMOND'],
+        ['BELL','7','BONUS']
+      ],
+      lastWin: 0,
+      message: 'Choose lines and spin.',
+      resolved: false,
+      animating: false
+    },
+
+    /* Angel Eyes Slots */
+    angeleyes: {
+      minBet: 1000,
+      maxBet: 4500,
+      bet: 1000,
+      lines: 1,
+      phase: 'betting',
+      reels: [
+        ['DIAMOND','EYE','HALO'],
+        ['SPARKLE','DIAMOND','STAR'],
+        ['STAR','EYE','DOVE']
+      ],
+      lastWin: 0,
+      message: 'Choose lines and spin.',
+      resolved: false,
+      animating: false
+    },
+
+    /* Dont Blink Slots */
+    dontblink: {
+      minBet: 500,
+      maxBet: 4000,
+      bet: 500,
+      lines: 1,
+      phase: 'betting',
+      reels: [
+        ['EYE','7','CHERRY'],
+        ['BELL','BAR','DIAMOND'],
+        ['HOURGLASS','EYE','7'],
+        ['CHERRY','BELL','BAR'],
+        ['DIAMOND','7','HOURGLASS']
+      ],
+      jackpot: 250000,
+      jackpotStartedAt: 0,
+      jackpotNote: 'Climbing',
+      lastWin: 0,
+      message: 'Choose lines and spin.',
+      resolved: false,
+      animating: false
+    },
+
+    /* Gold Digger Slots */
+    golddigger: {
+      minBet: 100,
+      maxBet: 1000,
+      bet: 100,
+      lines: 1,
+      phase: 'betting',
+      reels: [
+        ['PICK','COIN','ROCK'],
+        ['STONE','GEM','PICK'],
+        ['COIN','BAG','TROPHY'],
+        ['ROCK','STONE','GEM'],
+        ['TROPHY','COIN','BAG']
+      ],
+      jackpot: 100000,
+      jackpotStartedAt: 0,
+      jackpotNote: 'Slow climb',
+      lastWin: 0,
+      message: 'Choose lines and spin.',
+      resolved: false,
       animating: false
     },
 
@@ -2198,6 +2660,10 @@
   const vPlinko = document.getElementById('view-plinko');
   const vPump = document.getElementById('view-pump');
   const vCups = document.getElementById('view-cups');
+  const vMaryJane = document.getElementById('view-maryjane');
+  const vAngelEyes = document.getElementById('view-angeleyes');
+  const vDontBlink = document.getElementById('view-dontblink');
+  const vGoldDigger = document.getElementById('view-golddigger');
   const vCoinFlip = document.getElementById('view-coinflip');
   const vDice = document.getElementById('view-dice');
 
@@ -2226,15 +2692,15 @@
 
   const notice = document.getElementById('notice');
   let noticeTimer = null;
-  function notify(message){
-    if (!notice || notice.classList.contains('show')) return;
+  function notify(message, duration = 1600, replace = false){
+    if (!notice || (notice.classList.contains('show') && !replace)) return;
     notice.textContent = message;
     notice.classList.add('show');
     clearTimeout(noticeTimer);
     noticeTimer = setTimeout(() => {
       notice.classList.remove('show');
       noticeTimer = null;
-    }, 1600);
+    }, duration);
   }
 
   let clickAudioCtx = null;
@@ -2308,7 +2774,7 @@
   function soundKindFor(target){
     if (target.closest('#age-yes')) return 'enter';
     if (target.closest('#control-float')) return 'float';
-    if (target.closest('[data-play-game],.chip,.pick,#bj-chips,#crash-chips,#mines-chips,#roulette-chips,#chicken-chips,#bread-chips,#plinko-chips,#pump-chips,#cups-chips,#coin-chips,#dice-chips,#deal-now,#hit,#stand,#double,#new-round,#crash-start,#crash-cashout,#mines-start,#mines-cashout,#roulette-spin,#chicken-start,#chicken-step,#chicken-cashout,#bread-start,#bread-pull,#bread-cashout,#plinko-drop,#pump-start,#pump-action,#pump-cashout,#cups-start,#cups-next-round,#cups-cashout,.cup,#coin-start,#coin-flip,#coin-cashout,#dice-roll')) return 'bet';
+    if (target.closest('[data-play-game],.chip,.pick,#bj-chips,#crash-chips,#mines-chips,#roulette-chips,#chicken-chips,#bread-chips,#plinko-chips,#pump-chips,#cups-chips,#coin-chips,#dice-chips,#deal-now,#hit,#stand,#double,#new-round,#crash-start,#crash-cashout,#mines-start,#mines-cashout,#roulette-spin,#chicken-start,#chicken-step,#chicken-cashout,#bread-start,#bread-pull,#bread-cashout,#plinko-drop,#pump-start,#pump-action,#pump-cashout,#cups-start,#cups-next-round,#cups-cashout,.cup,#maryjane-spin,#angeleyes-spin,#dontblink-spin,#golddigger-spin,#coin-start,#coin-flip,#coin-cashout,#dice-roll')) return 'bet';
     return 'ui';
   }
   document.addEventListener('pointerdown', (e) => {
@@ -2328,6 +2794,10 @@
   const backToLobby9 = document.getElementById('back-to-lobby-9');
   const backToLobby10 = document.getElementById('back-to-lobby-10');
   const backToLobby11 = document.getElementById('back-to-lobby-11');
+  const backToLobby12 = document.getElementById('back-to-lobby-12');
+  const backToLobby13 = document.getElementById('back-to-lobby-13');
+  const backToLobby14 = document.getElementById('back-to-lobby-14');
+  const backToLobby15 = document.getElementById('back-to-lobby-15');
   const toBlackjack = document.getElementById('to-blackjack');
   const toCrash = document.getElementById('to-crash');
   const toMines = document.getElementById('to-mines');
@@ -2338,6 +2808,10 @@
   const toDice2 = document.getElementById('to-dice-2');
   const toPlinko2 = document.getElementById('to-plinko-2');
   const toPump2 = document.getElementById('to-pump-2');
+  const toCups2 = document.getElementById('to-cups-2');
+  const toMaryJane = document.getElementById('to-maryjane');
+  const toAngelEyes = document.getElementById('to-angeleyes');
+  const toDontBlink = document.getElementById('to-dontblink');
   const refreshLobby = document.getElementById('refresh-lobby');
   const navHeader = document.querySelector('header.nav');
   const lobbyGameSearch = document.getElementById('lobby-game-search');
@@ -2367,6 +2841,10 @@
     vPlinko.classList.toggle('show', view === 'plinko');
     vPump.classList.toggle('show', view === 'pump');
     vCups.classList.toggle('show', view === 'cups');
+    vMaryJane.classList.toggle('show', view === 'maryjane');
+    vAngelEyes.classList.toggle('show', view === 'angeleyes');
+    vDontBlink.classList.toggle('show', view === 'dontblink');
+    vGoldDigger.classList.toggle('show', view === 'golddigger');
     vCoinFlip.classList.toggle('show', view === 'coinflip');
     vDice.classList.toggle('show', view === 'dice');
     tabCasino.classList.toggle('active', view !== 'splash');
@@ -2381,11 +2859,15 @@
       resetPlinkoRound(true);
       resetPumpRound(true);
       resetCupsRound(true);
+      resetMaryJaneRound(true);
+      resetAngelEyesRound(true);
+      resetDontBlinkRound(true);
+      resetGoldDiggerRound(true);
       resetCoinRound(true);
       resetDiceRound(true);
       state.highStakes = false;
     }
-    if (view === 'blackjack' || view === 'crash' || view === 'mines' || view === 'roulette' || view === 'chicken' || view === 'bread' || view === 'plinko' || view === 'pump' || view === 'cups' || view === 'coinflip' || view === 'dice') {
+    if (view === 'blackjack' || view === 'crash' || view === 'mines' || view === 'roulette' || view === 'chicken' || view === 'bread' || view === 'plinko' || view === 'pump' || view === 'cups' || view === 'maryjane' || view === 'angeleyes' || view === 'dontblink' || view === 'golddigger' || view === 'coinflip' || view === 'dice') {
       window.scrollTo({top:0, behavior:'smooth'});
     }
     if (view === 'crash') {
@@ -2413,6 +2895,20 @@
     }
     if (view === 'cups') {
       updateCupsUI();
+    }
+    if (view === 'maryjane') {
+      updateMaryJaneUI();
+    }
+    if (view === 'angeleyes') {
+      updateAngelEyesUI();
+    }
+    if (view === 'dontblink') {
+      enterDontBlinkJackpot();
+      updateDontBlinkUI();
+    }
+    if (view === 'golddigger') {
+      enterGoldDiggerJackpot();
+      updateGoldDiggerUI();
     }
     if (view === 'coinflip') {
       updateCoinUI();
@@ -2457,6 +2953,24 @@
   const highLimits = () => ({ min:25000, max:Math.max(25000, state.bankroll) });
   function applyGameLimits(game, high = false){
     state.highStakes = high;
+    if (game === 'angeleyes' && !high) {
+      state.angeleyes.minBet = 1000;
+      state.angeleyes.maxBet = 4500;
+      state.angeleyes.bet = angelEyesCostFor(state.angeleyes.lines);
+      return;
+    }
+    if (game === 'dontblink' && !high) {
+      state.dontblink.minBet = 500;
+      state.dontblink.maxBet = 4000;
+      state.dontblink.bet = dontBlinkCostFor(state.dontblink.lines);
+      return;
+    }
+    if (game === 'golddigger' && !high) {
+      state.golddigger.minBet = 100;
+      state.golddigger.maxBet = 1000;
+      state.golddigger.bet = goldDiggerCostFor(state.golddigger.lines);
+      return;
+    }
     const limits = high ? highLimits() : normalLimits;
     const target = game === 'blackjack' ? state : state[game];
     if (!target) return;
@@ -2471,7 +2985,7 @@
     high = high === true;
     splash.style.display='none';
     if (!isAgeVerified()) { openAgeGate(); return; }
-    const min = high ? highLimits().min : normalLimits.min;
+    const min = game === 'angeleyes' && !high ? 1000 : (game === 'dontblink' && !high ? 500 : (game === 'golddigger' && !high ? 100 : (high ? highLimits().min : normalLimits.min)));
     if (state.bankroll < min) {
       openChipGate({high, min});
       return;
@@ -2479,6 +2993,79 @@
     applyGameLimits(game, high);
     show(view);
   }
+  const BROKE_TABLE_MESSAGE = 'You lost all your chips to the casino. You cannot afford to sit at any more tables right now.';
+  const wagerGameViews = new Set(['blackjack','crash','mines','roulette','chicken','bread','plinko','pump','cups','maryjane','angeleyes','dontblink','golddigger','coinflip','dice']);
+  let enforcingTableMinimum = false;
+  let tableMinimumKickTimer = null;
+  let tableMinimumKickView = '';
+  function currentTableState(){
+    if (state.view === 'blackjack') return state;
+    return state[state.view] || null;
+  }
+  function hasActiveWagerInCurrentGame(){
+    const view = state.view;
+    const S = currentTableState();
+    if (!S) return false;
+    if (view === 'blackjack') return state.animating || !['betting','waiting'].includes(state.phase);
+    if (view === 'crash') return ['countdown','flying','settle','crashed'].includes(S.phase);
+    if (view === 'mines') return ['playing','crashed','cashed'].includes(S.phase);
+    if (view === 'roulette') return S.phase === 'spinning' || S.animating;
+    if (view === 'chicken') return ['playing','crashed'].includes(S.phase);
+    if (view === 'bread') return S.phase === 'playing' || S.animating;
+    if (view === 'plinko') return S.animating || S.autoDropping;
+    if (view === 'pump') return S.phase === 'playing' || S.animating;
+    if (view === 'cups') return ['preview','shuffling','picking','playing'].includes(S.phase) || S.animating;
+    if (view === 'maryjane') return S.phase === 'spinning' || S.animating;
+    if (view === 'angeleyes') return S.phase === 'spinning' || S.animating;
+    if (view === 'dontblink') return S.phase === 'spinning' || S.animating;
+    if (view === 'golddigger') return S.phase === 'spinning' || S.animating;
+    if (view === 'coinflip') return S.phase === 'playing' || S.animating;
+    if (view === 'dice') return S.phase === 'rolling' || S.animating;
+    return false;
+  }
+  function enforceTableMinimum(){
+    if (enforcingTableMinimum || !wagerGameViews.has(state.view)) return;
+    const S = currentTableState();
+    const min = Math.max(1, S?.minBet || normalLimits.min);
+    const shouldKick = state.bankroll < min && !hasActiveWagerInCurrentGame();
+    if (!shouldKick) {
+      if (tableMinimumKickTimer) {
+        clearTimeout(tableMinimumKickTimer);
+        tableMinimumKickTimer = null;
+        tableMinimumKickView = '';
+      }
+      return;
+    }
+    if (tableMinimumKickTimer && tableMinimumKickView === state.view) return;
+    if (tableMinimumKickTimer) clearTimeout(tableMinimumKickTimer);
+    tableMinimumKickView = state.view;
+    tableMinimumKickTimer = setTimeout(() => {
+      tableMinimumKickTimer = null;
+      if (!wagerGameViews.has(state.view)) return;
+      const current = currentTableState();
+      const currentMin = Math.max(1, current?.minBet || normalLimits.min);
+      if (state.bankroll >= currentMin || hasActiveWagerInCurrentGame()) return;
+      enforcingTableMinimum = true;
+      closeGameSearch();
+      closeChipGate();
+      show('lobby');
+      setTimeout(() => {
+        if (state.view !== 'lobby') return;
+        openChipGate({
+          min: currentMin,
+          title: 'Out of Chips',
+          copy: BROKE_TABLE_MESSAGE,
+          shortText: `${fmt(Math.max(0, currentMin - state.bankroll))} short of the table minimum`
+        });
+        setTimeout(() => {
+          if (state.view === 'lobby') closeChipGate();
+        }, 5000);
+      }, 260);
+      enforcingTableMinimum = false;
+      tableMinimumKickView = '';
+    }, 6000);
+  }
+  setInterval(enforceTableMinimum, 400);
   const goBJ = (high = false) => enterGame('blackjack', 'blackjack', high);
   const goCrash = (high = false) => enterGame('crash', 'crash', high);
   const goMines = (high = false) => enterGame('mines', 'mines', high);
@@ -2488,9 +3075,13 @@
   const goPlinko = (high = false) => enterGame('plinko', 'plinko', high);
   const goPump = (high = false) => enterGame('pump', 'pump', high);
   const goCups = (high = false) => enterGame('cups', 'cups', high);
+  const goMaryJane = (high = false) => enterGame('maryjane', 'maryjane', high);
+  const goAngelEyes = (high = false) => enterGame('angeleyes', 'angeleyes', high);
+  const goDontBlink = (high = false) => enterGame('dontblink', 'dontblink', high);
+  const goGoldDigger = (high = false) => enterGame('golddigger', 'golddigger', high);
   const goCoinFlip = (high = false) => enterGame('coinflip', 'coinflip', high);
   const goDice = (high = false) => enterGame('dice', 'dice', high);
-  const gameLaunchers = {blackjack:goBJ, crash:goCrash, mines:goMines, roulette:goRoulette, chicken:goChicken, bread:goBread, plinko:goPlinko, pump:goPump, cups:goCups, coinflip:goCoinFlip, dice:goDice};
+  const gameLaunchers = {blackjack:goBJ, crash:goCrash, mines:goMines, roulette:goRoulette, chicken:goChicken, bread:goBread, plinko:goPlinko, pump:goPump, cups:goCups, maryjane:goMaryJane, angeleyes:goAngelEyes, dontblink:goDontBlink, golddigger:goGoldDigger, coinflip:goCoinFlip, dice:goDice};
   const searchableGames = [
     {key:'blackjack', name:'Blackjack', count:'trend-blackjack'},
     {key:'crash', name:'Crash', count:'trend-crash'},
@@ -2502,7 +3093,11 @@
     {key:'bread', name:'Russian Roulette', aliases:'roulette revolver bullet', count:'original-bread'},
     {key:'plinko', name:'Plinko', count:'original-plinko'},
     {key:'pump', name:'Pump', aliases:'balloon inflate pop', count:'original-pump'},
-    {key:'cups', name:'Cups', aliases:'shell three cup ball shuffle', count:'original-cups'}
+    {key:'cups', name:'Cups', aliases:'shell three cup ball shuffle', count:'original-cups'},
+    {key:'maryjane', name:'MaryJane', aliases:'slot slots reels paylines jackpot', count:'slot-maryjane'},
+    {key:'angeleyes', name:'Angel Eyes', aliases:'angel eyes slot slots reels diamond gems jackpot', count:'slot-angeleyes'},
+    {key:'dontblink', name:'Dont Blink', aliases:'slot slots reels paylines progressive jackpot eye eyes blink', count:'slot-dontblink'},
+    {key:'golddigger', name:'Gold Digger', aliases:'gold digger slot slots reels paylines progressive jackpot mine mining', count:'slot-golddigger'}
   ];
   function updateSearchPanelTop(){
     if (!navHeader) return;
@@ -2592,6 +3187,10 @@
   backToLobby9.addEventListener('click', ()=> show('lobby'));
   backToLobby10.addEventListener('click', ()=> show('lobby'));
   backToLobby11.addEventListener('click', ()=> show('lobby'));
+  backToLobby12.addEventListener('click', ()=> show('lobby'));
+  backToLobby13.addEventListener('click', ()=> show('lobby'));
+  backToLobby14.addEventListener('click', ()=> show('lobby'));
+  backToLobby15.addEventListener('click', ()=> show('lobby'));
   toBlackjack.addEventListener('click', () => goBJ(false));
   toCrash.addEventListener('click', () => goCrash(false));
   toMines.addEventListener('click', () => goMines(false));
@@ -2602,6 +3201,10 @@
   toDice2.addEventListener('click', () => goDice(false));
   toPlinko2.addEventListener('click', () => goPlinko(false));
   toPump2.addEventListener('click', () => goPump(false));
+  toCups2.addEventListener('click', () => goCups(false));
+  toMaryJane.addEventListener('click', () => goMaryJane(false));
+  toAngelEyes.addEventListener('click', () => goAngelEyes(false));
+  toDontBlink.addEventListener('click', () => goDontBlink(false));
   document.querySelectorAll('[data-play-game],[data-game-link]').forEach(el => {
     el.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-play-game]');
@@ -2636,6 +3239,10 @@
     plinko: document.getElementById('plinko-result'),
     pump: document.getElementById('pump-result'),
     cups: document.getElementById('cups-result'),
+    maryjane: document.getElementById('maryjane-result'),
+    angeleyes: document.getElementById('angeleyes-result'),
+    dontblink: document.getElementById('dontblink-result'),
+    golddigger: document.getElementById('golddigger-result'),
     coinflip: document.getElementById('coin-result'),
     dice: document.getElementById('dice-result')
   };
@@ -2759,15 +3366,15 @@
     profileSettingsModal.classList.remove('show');
     setTimeout(() => profileSettingsWrap.style.display = 'none', 150);
   }
-  function openChipGate({high = false, min = 10} = {}){
+  function openChipGate({high = false, min = 10, title = '', copy = '', shortText = ''} = {}){
     closeProfileMenu();
     const short = Math.max(0, min - state.bankroll);
     chipGateModal.classList.toggle('high-gate', high);
-    chipGateTitle.textContent = high ? 'High Stakes Denied' : 'Not Enough Chips';
-    chipGateCopy.textContent = high
+    chipGateTitle.textContent = title || (high ? 'High Stakes Denied' : 'Not Enough Chips');
+    chipGateCopy.textContent = copy || (high
       ? "You do not have enough chips to step into High Stakes. Come back when you are ready to lose thousands chasing millions."
-      : 'You do not have enough chips to place bets. You should probably top up before jumping back in.';
-    chipGateShort.textContent = `${fmt(short)} short`;
+      : 'You do not have enough chips to place bets. You should probably top up before jumping back in.');
+    chipGateShort.textContent = shortText || `${fmt(short)} short`;
     chipGateWrap.style.display = 'flex';
     requestAnimationFrame(() => chipGateModal.classList.add('show'));
   }
@@ -2803,6 +3410,10 @@
     plinko: 'Plinko',
     pump: 'Pump',
     cups: 'Cups',
+    maryjane: 'MaryJane',
+    angeleyes: 'Angel Eyes',
+    dontblink: 'Dont Blink',
+    golddigger: 'Gold Digger',
     coinflip: 'Coin Flip',
     dice: 'Dice'
   };
@@ -2816,6 +3427,10 @@
     plinko: state.plinko?.bet,
     pump: state.pump?.bet,
     cups: state.cups?.bet,
+    maryjane: state.maryjane?.bet,
+    angeleyes: state.angeleyes?.bet,
+    dontblink: state.dontblink?.bet,
+    golddigger: state.golddigger?.bet,
     coinflip: state.coinflip?.bet,
     dice: state.dice?.bet
   }[game] || 0);
@@ -2946,7 +3561,7 @@
     msg.textContent=`Processing ${fmt(amt)}…`; animateShopBarTo(55, 1000); await sleep(1000);
     msg.textContent='Crediting chips…'; animateShopBarTo(100, 2500); await sleep(2500);
 
-    state.bankroll += amt; updateUI(); updateCrashUI(); updateMinesUI(); updateRouletteUI(); updateChickenUI(); updateBreadUI(); updatePlinkoUI(); updateDiceUI(); saveBalance(state.bankroll);
+    state.bankroll += amt; updateUI(); updateCrashUI(); updateMinesUI(); updateRouletteUI(); updateChickenUI(); updateBreadUI(); updatePlinkoUI(); updatePumpUI(); updateCupsUI(); updateMaryJaneUI(); updateCoinUI(); updateDiceUI(); saveBalance(state.bankroll);
 
     check.style.display='grid'; credited.textContent = fmt(amt); thank.style.display='block'; msg.textContent='';
     await sleep(900); closeShop();
@@ -3062,7 +3677,7 @@
       state.exodus   = Math.max(0, state.exodus - amt);
       state.bankroll = Math.max(0, state.bankroll + amt);
       saveExodus(state.exodus); saveBalance(state.bankroll);
-      updateUI(); updateCrashUI(); updateMinesUI(); updateRouletteUI(); updateChickenUI(); updateBreadUI(); updatePlinkoUI(); updateDiceUI(); refreshWalletStats();
+      updateUI(); updateCrashUI(); updateMinesUI(); updateRouletteUI(); updateChickenUI(); updateBreadUI(); updatePlinkoUI(); updatePumpUI(); updateCupsUI(); updateMaryJaneUI(); updateCoinUI(); updateDiceUI(); refreshWalletStats();
 
       walletCheck.style.display='grid';
       walletDone.textContent = `Deposit complete: ${fmt(amt)} moved from Exodus to Casino.`;
@@ -3076,7 +3691,7 @@
       state.bankroll = Math.max(0, state.bankroll - amt);
       state.exodus   = Math.max(0, state.exodus + amt);
       saveBalance(state.bankroll); saveExodus(state.exodus);
-      updateUI(); updateCrashUI(); updateMinesUI(); updateRouletteUI(); updateChickenUI(); updateBreadUI(); updatePlinkoUI(); updateDiceUI(); refreshWalletStats();
+      updateUI(); updateCrashUI(); updateMinesUI(); updateRouletteUI(); updateChickenUI(); updateBreadUI(); updatePlinkoUI(); updatePumpUI(); updateCupsUI(); updateMaryJaneUI(); updateCoinUI(); updateDiceUI(); refreshWalletStats();
 
       walletCheck.style.display='grid';
       walletDone.textContent = `Withdrawal complete: ${fmt(amt)} deposited to your Exodus account.`;
@@ -4999,6 +5614,7 @@
     const rows = S.rows;
     const mults = plinkoMultipliers();
     if (bet < S.minBet || bet > state.bankroll) return;
+    S.animating = true;
     state.bankroll -= bet;
     saveBalance(state.bankroll);
     S.phase = 'betting';
@@ -5045,6 +5661,7 @@
     setTimeout(() => bucket?.classList.remove('hit'), 520);
     playOutcomeSound(profit >= 0 ? 'win' : 'loss');
     recordWagerResult('plinko', S.message, { bet, paid, net: profit });
+    S.animating = false;
     updatePlinkoUI();
     setTimeout(() => ball.remove(), 650);
   }
@@ -5221,9 +5838,10 @@
     const S = state.cups;
     cupsRow.classList.toggle('shuffling', S.phase === 'shuffling');
     cupsRow.querySelectorAll('.cup').forEach((cup, index) => {
-      const reveal = S.phase === 'waiting' || S.phase === 'playing';
+      const reveal = S.phase === 'preview' || S.phase === 'waiting' || S.phase === 'playing';
       const pickedWrong = reveal && S.selected === index && S.selected !== S.ballIndex;
       cup.disabled = S.phase !== 'picking' || S.animating;
+      cup.classList.toggle('has-ball', index === S.ballIndex);
       cup.classList.toggle('reveal', reveal && (index === S.ballIndex || S.selected === index));
       cup.classList.toggle('win', reveal && index === S.ballIndex);
       cup.classList.toggle('lose', pickedWrong);
@@ -5263,20 +5881,31 @@
     S.message = 'Set a bet and start the shuffle.';
     S.resolved = false;
     S.animating = false;
+    S.shuffleToken += 1;
     cupsRow?.classList.remove('shuffling');
     clearControlResult('cups');
     if (!silent) updateCupsUI();
   }
-  async function cupsShuffle(){
+  async function cupsShuffle(showPreview = false){
     const S = state.cups;
-    S.phase = 'shuffling';
-    S.animating = true;
-    S.selected = -1;
+    const token = ++S.shuffleToken;
     S.ballIndex = Math.floor(Math.random() * 3);
-    S.message = 'Watch the cups...';
+    S.selected = -1;
+    S.animating = true;
+    S.resolved = false;
     clearControlResult('cups');
+    if (showPreview) {
+      S.phase = 'preview';
+      S.message = 'Ball revealed. Memorize its cup.';
+      updateCupsUI();
+      await sleep(3500);
+      if (token !== S.shuffleToken) return;
+    }
+    S.phase = 'shuffling';
+    S.message = 'Watch the cups...';
     updateCupsUI();
-    await sleep(820);
+    await sleep(1120);
+    if (token !== S.shuffleToken) return;
     S.phase = 'picking';
     S.animating = false;
     S.message = 'Pick the cup hiding the ball.';
@@ -5296,7 +5925,7 @@
     S.round = 0;
     S.multiplier = 1.00;
     S.resolved = false;
-    cupsShuffle();
+    cupsShuffle(true);
   });
   cupsNextRound.addEventListener('click', () => {
     const S = state.cups;
@@ -5338,6 +5967,976 @@
     showControlResult('cups', S.message);
     updateCupsUI();
   });
+
+  /* ======================
+     MARYJANE SLOTS
+     ====================== */
+  const maryJaneReels = document.getElementById('maryjane-reels');
+  const maryJaneLines = document.getElementById('maryjane-lines');
+  const maryJaneLinesLabel = document.getElementById('maryjane-lines-label');
+  const maryJaneLinesStat = document.getElementById('maryjane-lines-stat');
+  const maryJaneCost = document.getElementById('maryjane-cost');
+  const maryJaneWin = document.getElementById('maryjane-win');
+  const maryJaneStatus = document.getElementById('maryjane-status');
+  const maryJaneLimits = document.getElementById('maryjane-limits');
+  const maryJaneSpin = document.getElementById('maryjane-spin');
+  const maryJanePaylines = document.getElementById('maryjane-paylines');
+  const maryJaneMarquee = document.getElementById('maryjane-marquee');
+  const maryJaneLineOverlay = document.getElementById('maryjane-line-overlay');
+  const MARYJANE_LINE_COSTS = {1:10, 3:100, 5:250, 7:500, 9:1000};
+  const MARYJANE_SYMBOLS = [
+    ['CHERRY', 26], ['BELL', 22], ['P CHIP', 18], ['DIAMOND', 14], ['BAR', 10], ['7', 7], ['WILD', 2], ['BONUS', 1]
+  ];
+  const MARYJANE_PAYS = {
+    CHERRY: [1.5, 4, 10],
+    BELL: [2, 5, 15],
+    'P CHIP': [3, 10, 40],
+    DIAMOND: [25, 150, 1000],
+    BAR: [12, 60, 500],
+    '7': [18, 100, 750],
+    WILD: [30, 200, 1200]
+  };
+  const MARYJANE_PAYLINES = [
+    [1,1,1,1,1],
+    [0,0,0,0,0],
+    [2,2,2,2,2],
+    [0,1,2,1,0],
+    [2,1,0,1,2],
+    [0,0,1,2,2],
+    [2,2,1,0,0],
+    [1,0,0,0,1],
+    [1,2,2,2,1]
+  ];
+  const MARYJANE_LINE_COLORS = ['#f5d76e','#40dc8f','#ff665c','#65b8ff','#d690ff','#ff9c45','#ffffff','#82f2e7','#ff7ab7'];
+  function maryJaneCostFor(lines = state.maryjane.lines){
+    return MARYJANE_LINE_COSTS[Number(lines)] || 10;
+  }
+  function randomMaryJaneSymbol(){
+    const total = MARYJANE_SYMBOLS.reduce((sum, row) => sum + row[1], 0);
+    let roll = Math.random() * total;
+    for (const [symbol, weight] of MARYJANE_SYMBOLS) {
+      roll -= weight;
+      if (roll <= 0) return symbol;
+    }
+    return 'CHERRY';
+  }
+  function randomMaryJaneReels(){
+    return Array.from({length:5}, () => Array.from({length:3}, randomMaryJaneSymbol));
+  }
+  function renderMaryJaneLineOverlay(show = false){
+    const lines = Number(state.maryjane.lines);
+    const paths = MARYJANE_PAYLINES.slice(0, lines).map((rows, index) => {
+      const points = rows.map((row, reel) => {
+        const x = 10 + reel * 20;
+        const y = 16.67 + row * 33.33;
+        return `${x},${y}`;
+      }).join(' ');
+      const labelY = 16.67 + rows[0] * 33.33;
+      const color = MARYJANE_LINE_COLORS[index % MARYJANE_LINE_COLORS.length];
+      const labelX = 4 + (index % 2) * 4;
+      return `<path d="M ${points.split(' ').join(' L ')}" stroke="${color}"></path><g class="line-badge"><circle cx="${labelX}" cy="${labelY}" r="4.5" fill="${color}" stroke="#fff" stroke-width="1.2"></circle><text x="${labelX}" y="${labelY}">${index + 1}</text></g>`;
+    }).join('');
+    maryJaneLineOverlay.innerHTML = `<svg viewBox="0 0 100 100" preserveAspectRatio="none">${paths}</svg>`;
+    maryJaneLineOverlay.classList.toggle('show', show && lines > 0);
+  }
+  function showMaryJaneLineOverlay(){
+    renderMaryJaneLineOverlay(true);
+  }
+  function hideMaryJaneLineOverlay(){
+    maryJaneLineOverlay.classList.remove('show');
+  }
+  function maryJaneSymbolMarkup(symbol){
+    const map = {
+      '7': ['seven', '7'],
+      CHERRY: ['cherry', '🍒'],
+      DIAMOND: ['diamond', '◆'],
+      BELL: ['bell', '🔔'],
+      BAR: ['bar', 'BAR'],
+      'P CHIP': ['chip', 'P'],
+      WILD: ['wild', '★'],
+      BONUS: ['bonus', '$']
+    };
+    const [cls, label] = map[symbol] || ['cherry', symbol];
+    return `<span class="slot-symbol ${cls}">${label}</span>`;
+  }
+  function renderMaryJaneReels(winCells = new Set()){
+    const S = state.maryjane;
+    maryJaneReels.innerHTML = S.reels.map((reel, reelIndex) => `
+      <div class="slot-reel">
+        ${reel.map((symbol, rowIndex) => {
+          const classes = ['slot-cell'];
+          if (symbol === 'WILD') classes.push('wild');
+          if (symbol === 'BONUS' || symbol === '7') classes.push('jackpot');
+          if (winCells.has(`${reelIndex}-${rowIndex}`)) classes.push('win');
+          return `<div class="${classes.join(' ')}">${maryJaneSymbolMarkup(symbol)}</div>`;
+        }).join('')}
+      </div>
+    `).join('');
+    maryJaneReels.classList.toggle('spinning', S.animating);
+  }
+  function evaluateMaryJane(){
+    const S = state.maryjane;
+    const lines = Number(S.lines);
+    const cost = maryJaneCostFor(lines);
+    const lineBet = cost / lines;
+    const winCells = new Set();
+    let paid = 0;
+    let best = '';
+    for (let lineIndex = 0; lineIndex < lines; lineIndex++) {
+      const rows = MARYJANE_PAYLINES[lineIndex];
+      const line = rows.map((row, reel) => S.reels[reel][row]);
+      const base = line.find(symbol => symbol !== 'WILD' && symbol !== 'BONUS') || 'WILD';
+      if (base === 'BONUS') continue;
+      let count = 0;
+      for (const symbol of line) {
+        if (symbol === base || symbol === 'WILD') count++;
+        else break;
+      }
+      if (count >= 3 && MARYJANE_PAYS[base]) {
+        const mult = MARYJANE_PAYS[base][count - 3];
+        const linePaid = Math.floor(lineBet * mult);
+        paid += linePaid;
+        for (let reel = 0; reel < count; reel++) winCells.add(`${reel}-${rows[reel]}`);
+        if (!best || linePaid > 0) best = `${count} ${base} on line ${lineIndex + 1}`;
+      }
+    }
+    const bonusCount = S.reels.flat().filter(symbol => symbol === 'BONUS').length;
+    if (bonusCount >= 3) {
+      const scatterMult = bonusCount === 3 ? 10 : bonusCount === 4 ? 100 : 1000;
+      paid += cost * scatterMult;
+      S.reels.forEach((reel, reelIndex) => reel.forEach((symbol, rowIndex) => {
+        if (symbol === 'BONUS') winCells.add(`${reelIndex}-${rowIndex}`);
+      }));
+      best = `${bonusCount} BONUS scatter`;
+    }
+    const fiveSevenLine = Array.from({length:lines}, (_, i) => MARYJANE_PAYLINES[i]).some(rows =>
+      rows.every((row, reel) => ['7','WILD'].includes(S.reels[reel][row]))
+    );
+    if (fiveSevenLine && paid < cost * 1500) {
+      paid += cost * 1500;
+      best = 'five 7 jackpot';
+    }
+    return {paid, winCells, best};
+  }
+  function updateMaryJaneUI(){
+    const S = state.maryjane;
+    const cost = maryJaneCostFor(S.lines);
+    S.bet = cost;
+    elBalance.textContent = fmt(state.bankroll);
+    maryJaneLines.value = String(S.lines);
+    maryJaneLinesLabel.textContent = `${S.lines} Line${S.lines === 1 ? '' : 's'}`;
+    maryJaneLinesStat.textContent = String(S.lines);
+    maryJaneCost.textContent = fmt(cost);
+    maryJaneWin.textContent = fmt(S.lastWin);
+    maryJaneStatus.textContent = S.resolved ? 'Round complete.' : S.message;
+    maryJaneLimits.textContent = `Min ${fmt(S.minBet)} - Max ${fmt(S.maxBet)}`;
+    maryJaneSpin.disabled = S.animating || cost > state.bankroll;
+    maryJaneMarquee.textContent = S.animating ? 'Spinning' : (S.lastWin > 0 ? 'Winner' : 'Ready');
+    maryJanePaylines.querySelectorAll('.slot-payline').forEach((line, index) => {
+      line.classList.toggle('active', index < S.lines);
+    });
+    if (maryJaneLineOverlay.classList.contains('show')) renderMaryJaneLineOverlay(true);
+    renderMaryJaneReels();
+  }
+  function resetMaryJaneRound(silent = false){
+    const S = state.maryjane;
+    S.lines = 1;
+    S.bet = maryJaneCostFor(1);
+    S.phase = 'betting';
+    S.lastWin = 0;
+    S.message = 'Choose lines and spin.';
+    S.resolved = false;
+    S.animating = false;
+    clearControlResult('maryjane');
+    if (!silent) updateMaryJaneUI();
+  }
+  maryJaneLines.addEventListener('change', () => {
+    const S = state.maryjane;
+    if (S.animating) return;
+    S.lines = Number(maryJaneLines.value);
+    S.resolved = false;
+    S.message = `${S.lines} line${S.lines === 1 ? '' : 's'} armed. Spin cost ${fmt(maryJaneCostFor(S.lines))}.`;
+    updateMaryJaneUI();
+    showMaryJaneLineOverlay();
+  });
+  maryJaneLines.addEventListener('focus', showMaryJaneLineOverlay);
+  maryJaneLines.addEventListener('click', showMaryJaneLineOverlay);
+  maryJaneLines.addEventListener('blur', () => {
+    if (!state.maryjane.animating) setTimeout(hideMaryJaneLineOverlay, 1600);
+  });
+  maryJaneSpin.addEventListener('click', async () => {
+    const S = state.maryjane;
+    const cost = maryJaneCostFor(S.lines);
+    if (S.animating || cost > state.bankroll) return;
+    hideMaryJaneLineOverlay();
+    state.bankroll -= cost;
+    saveBalance(state.bankroll);
+    S.bet = cost;
+    S.phase = 'spinning';
+    S.animating = true;
+    S.resolved = false;
+    S.lastWin = 0;
+    S.message = 'Reels spinning...';
+    clearControlResult('maryjane');
+    updateMaryJaneUI();
+    const tick = setInterval(() => {
+      S.reels = randomMaryJaneReels();
+      renderMaryJaneReels();
+    }, 90);
+    await sleep(1500);
+    clearInterval(tick);
+    S.reels = randomMaryJaneReels();
+    if (state.addictMode && Math.random() < 0.35) {
+      const rows = MARYJANE_PAYLINES[0];
+      ['7','7','7'].forEach((symbol, reel) => S.reels[reel][rows[reel]] = symbol);
+    }
+    const result = evaluateMaryJane();
+    S.lastWin = result.paid;
+    if (result.paid > 0) {
+      const profit = result.paid - cost;
+      state.bankroll += result.paid;
+      S.message = `${result.best}. Paid ${fmt(result.paid)} total. ${profit >= 0 ? 'Profit' : 'Net'} ${profit >= 0 ? fmt(profit) : '-' + fmt(Math.abs(profit))}.`;
+      showControlResult('maryjane', S.message);
+    } else {
+      S.message = `No line hit. You lost ${fmt(cost)}.`;
+      showControlResult('maryjane', S.message);
+    }
+    saveBalance(state.bankroll);
+    S.phase = 'betting';
+    S.animating = false;
+    S.resolved = true;
+    updateMaryJaneUI();
+    renderMaryJaneReels(result.winCells);
+  });
+
+  /* ======================
+     ANGEL EYES SLOTS
+     ====================== */
+  const angelEyesReels = document.getElementById('angeleyes-reels');
+  const angelEyesLines = document.getElementById('angeleyes-lines');
+  const angelEyesLinesLabel = document.getElementById('angeleyes-lines-label');
+  const angelEyesLinesStat = document.getElementById('angeleyes-lines-stat');
+  const angelEyesCost = document.getElementById('angeleyes-cost');
+  const angelEyesWin = document.getElementById('angeleyes-win');
+  const angelEyesStatus = document.getElementById('angeleyes-status');
+  const angelEyesSpin = document.getElementById('angeleyes-spin');
+  const angelEyesPaylines = document.getElementById('angeleyes-paylines');
+  const angelEyesMarquee = document.getElementById('angeleyes-marquee');
+  const angelEyesLineOverlay = document.getElementById('angeleyes-line-overlay');
+  const ANGEL_EYES_LINE_COSTS = {1:1000, 3:4500};
+  const ANGEL_EYES_SYMBOLS = [
+    ['STAR', 28], ['SPARKLE', 24], ['DOVE', 18], ['HALO', 14], ['EYE', 10], ['DIAMOND', 6]
+  ];
+  const ANGEL_EYES_PAYS = {
+    STAR: 2,
+    SPARKLE: 3,
+    DOVE: 8,
+    HALO: 25,
+    EYE: 150,
+    DIAMOND: 1000
+  };
+  const ANGEL_EYES_PAYLINES = [
+    [1,1,1],
+    [0,0,0],
+    [2,2,2]
+  ];
+  const ANGEL_EYES_LINE_COLORS = ['#f5d76e','#82f2e7','#ff7ab7'];
+  function angelEyesCostFor(lines = state.angeleyes.lines){
+    return ANGEL_EYES_LINE_COSTS[Number(lines)] || 1000;
+  }
+  function randomAngelEyesSymbol(){
+    const total = ANGEL_EYES_SYMBOLS.reduce((sum, row) => sum + row[1], 0);
+    let roll = Math.random() * total;
+    for (const [symbol, weight] of ANGEL_EYES_SYMBOLS) {
+      roll -= weight;
+      if (roll <= 0) return symbol;
+    }
+    return 'STAR';
+  }
+  function randomAngelEyesReels(){
+    return Array.from({length:3}, () => Array.from({length:3}, randomAngelEyesSymbol));
+  }
+  function renderAngelEyesLineOverlay(show = false){
+    const lines = Number(state.angeleyes.lines);
+    const paths = ANGEL_EYES_PAYLINES.slice(0, lines).map((rows, index) => {
+      const points = rows.map((row, reel) => {
+        const x = 16.67 + reel * 33.33;
+        const y = 16.67 + row * 33.33;
+        return `${x},${y}`;
+      }).join(' ');
+      const labelY = 16.67 + rows[0] * 33.33;
+      const color = ANGEL_EYES_LINE_COLORS[index % ANGEL_EYES_LINE_COLORS.length];
+      return `<path d="M ${points.split(' ').join(' L ')}" stroke="${color}"></path><g class="line-badge"><circle cx="6" cy="${labelY}" r="4.5" fill="${color}" stroke="#fff" stroke-width="1.2"></circle><text x="6" y="${labelY}">${index + 1}</text></g>`;
+    }).join('');
+    angelEyesLineOverlay.innerHTML = `<svg viewBox="0 0 100 100" preserveAspectRatio="none">${paths}</svg>`;
+    angelEyesLineOverlay.classList.toggle('show', show && lines > 0);
+  }
+  function hideAngelEyesLineOverlay(){
+    angelEyesLineOverlay.classList.remove('show');
+  }
+  function angelEyesSymbolMarkup(symbol){
+    const map = {
+      DIAMOND: ['diamond', '💎'],
+      EYE: ['wild', '👁'],
+      HALO: ['seven', '😇'],
+      DOVE: ['chip', '🕊'],
+      SPARKLE: ['bonus', '✨'],
+      STAR: ['bell', '⭐']
+    };
+    const [cls, label] = map[symbol] || ['bell', symbol];
+    return `<span class="slot-symbol ${cls}">${label}</span>`;
+  }
+  function renderAngelEyesReels(winCells = new Set()){
+    const S = state.angeleyes;
+    angelEyesReels.innerHTML = S.reels.map((reel, reelIndex) => `
+      <div class="slot-reel">
+        ${reel.map((symbol, rowIndex) => {
+          const classes = ['slot-cell'];
+          if (symbol === 'DIAMOND' || symbol === 'EYE') classes.push('jackpot');
+          if (winCells.has(`${reelIndex}-${rowIndex}`)) classes.push('win');
+          return `<div class="${classes.join(' ')}">${angelEyesSymbolMarkup(symbol)}</div>`;
+        }).join('')}
+      </div>
+    `).join('');
+    angelEyesReels.classList.toggle('spinning', S.animating);
+  }
+  function evaluateAngelEyes(){
+    const S = state.angeleyes;
+    const lines = Number(S.lines);
+    const cost = angelEyesCostFor(lines);
+    const lineBet = cost / lines;
+    const winCells = new Set();
+    let paid = 0;
+    let best = '';
+    let bestPaid = 0;
+    for (let lineIndex = 0; lineIndex < lines; lineIndex++) {
+      const rows = ANGEL_EYES_PAYLINES[lineIndex];
+      const line = rows.map((row, reel) => S.reels[reel][row]);
+      if (!line.every(symbol => symbol === line[0])) continue;
+      const symbol = line[0];
+      const mult = ANGEL_EYES_PAYS[symbol] || 0;
+      const linePaid = Math.floor(lineBet * mult);
+      paid += linePaid;
+      for (let reel = 0; reel < 3; reel++) winCells.add(`${reel}-${rows[reel]}`);
+      if (linePaid >= bestPaid) {
+        bestPaid = linePaid;
+        best = `${symbol.toLowerCase()} line ${lineIndex + 1}`;
+      }
+    }
+    return {paid, winCells, best};
+  }
+  function updateAngelEyesUI(){
+    const S = state.angeleyes;
+    const cost = angelEyesCostFor(S.lines);
+    S.bet = cost;
+    elBalance.textContent = fmt(state.bankroll);
+    angelEyesLines.value = String(S.lines);
+    angelEyesLinesLabel.textContent = `${S.lines} Line${S.lines === 1 ? '' : 's'}`;
+    angelEyesLinesStat.textContent = String(S.lines);
+    angelEyesCost.textContent = fmt(cost);
+    angelEyesWin.textContent = fmt(S.lastWin);
+    angelEyesStatus.textContent = S.resolved ? 'Round complete.' : S.message;
+    angelEyesSpin.disabled = S.animating || cost > state.bankroll;
+    angelEyesMarquee.textContent = S.animating ? 'Spinning' : (S.lastWin >= cost * 1000 ? 'Jackpot' : S.lastWin > 0 ? 'Winner' : 'Ready');
+    angelEyesPaylines.querySelectorAll('.slot-payline').forEach((line, index) => {
+      line.classList.toggle('active', index < S.lines);
+    });
+    if (angelEyesLineOverlay.classList.contains('show')) renderAngelEyesLineOverlay(true);
+    renderAngelEyesReels();
+  }
+  function resetAngelEyesRound(silent = false){
+    const S = state.angeleyes;
+    S.lines = 1;
+    S.bet = angelEyesCostFor(1);
+    S.phase = 'betting';
+    S.lastWin = 0;
+    S.message = 'Choose lines and spin.';
+    S.resolved = false;
+    S.animating = false;
+    clearControlResult('angeleyes');
+    hideAngelEyesLineOverlay();
+    if (!silent) updateAngelEyesUI();
+  }
+  angelEyesLines.addEventListener('change', () => {
+    const S = state.angeleyes;
+    if (S.animating) return;
+    S.lines = Number(angelEyesLines.value);
+    S.resolved = false;
+    S.message = `${S.lines} line${S.lines === 1 ? '' : 's'} armed. Spin cost ${fmt(angelEyesCostFor(S.lines))}.`;
+    updateAngelEyesUI();
+    renderAngelEyesLineOverlay(true);
+  });
+  angelEyesSpin.addEventListener('click', async () => {
+    const S = state.angeleyes;
+    const cost = angelEyesCostFor(S.lines);
+    if (S.animating || cost > state.bankroll) return;
+    state.bankroll -= cost;
+    saveBalance(state.bankroll);
+    S.bet = cost;
+    S.phase = 'spinning';
+    S.animating = true;
+    S.resolved = false;
+    S.lastWin = 0;
+    S.message = 'Eyes turning...';
+    clearControlResult('angeleyes');
+    updateAngelEyesUI();
+    hideAngelEyesLineOverlay();
+    const tick = setInterval(() => {
+      S.reels = randomAngelEyesReels();
+      renderAngelEyesReels();
+    }, 80);
+    await sleep(1250);
+    clearInterval(tick);
+    S.reels = randomAngelEyesReels();
+    const result = evaluateAngelEyes();
+    S.lastWin = result.paid;
+    if (result.paid > 0) {
+      const net = result.paid - cost;
+      state.bankroll += result.paid;
+      S.message = `${result.best}. Paid ${fmt(result.paid)} total. ${net >= 0 ? 'Profit' : 'Net'} ${net >= 0 ? fmt(net) : '-' + fmt(Math.abs(net))}.`;
+    } else {
+      S.message = `No match. You lost ${fmt(cost)}.`;
+    }
+    showControlResult('angeleyes', S.message);
+    saveBalance(state.bankroll);
+    S.phase = 'betting';
+    S.animating = false;
+    S.resolved = true;
+    updateAngelEyesUI();
+    renderAngelEyesReels(result.winCells);
+  });
+
+  /* ======================
+     DONT BLINK SLOTS
+     ====================== */
+  const dontBlinkReels = document.getElementById('dontblink-reels');
+  const dontBlinkLines = document.getElementById('dontblink-lines');
+  const dontBlinkLinesLabel = document.getElementById('dontblink-lines-label');
+  const dontBlinkLinesStat = document.getElementById('dontblink-lines-stat');
+  const dontBlinkCost = document.getElementById('dontblink-cost');
+  const dontBlinkWin = document.getElementById('dontblink-win');
+  const dontBlinkStatus = document.getElementById('dontblink-status');
+  const dontBlinkSpin = document.getElementById('dontblink-spin');
+  const dontBlinkPaylines = document.getElementById('dontblink-paylines');
+  const dontBlinkMarquee = document.getElementById('dontblink-marquee');
+  const dontBlinkLineOverlay = document.getElementById('dontblink-line-overlay');
+  const dontBlinkJackpot = document.getElementById('dontblink-jackpot');
+  const dontBlinkJackpotNote = document.getElementById('dontblink-jackpot-note');
+  const DONT_BLINK_LINE_COSTS = {1:500, 3:2000, 5:4000};
+  const DONT_BLINK_SYMBOLS = [
+    ['CHERRY', 28], ['BELL', 23], ['BAR', 18], ['DIAMOND', 14], ['7', 10], ['HOURGLASS', 5], ['EYE', 2]
+  ];
+  const DONT_BLINK_PAYS = {
+    CHERRY: [2, 6, 18],
+    BELL: [3, 9, 28],
+    BAR: [5, 18, 70],
+    DIAMOND: [8, 45, 220],
+    '7': [12, 80, 500],
+    HOURGLASS: [25, 150, 900],
+    EYE: [50, 300, 0]
+  };
+  const DONT_BLINK_PAYLINES = [
+    [1,1,1,1,1],
+    [0,0,0,0,0],
+    [2,2,2,2,2],
+    [0,1,2,1,0],
+    [2,1,0,1,2]
+  ];
+  const DONT_BLINK_LINE_COLORS = ['#f5d76e','#82f2e7','#ff7ab7','#40dc8f','#ff665c'];
+  function dontBlinkCostFor(lines = state.dontblink.lines){
+    return DONT_BLINK_LINE_COSTS[Number(lines)] || 500;
+  }
+  function randomDontBlinkSymbol(){
+    const total = DONT_BLINK_SYMBOLS.reduce((sum, row) => sum + row[1], 0);
+    let roll = Math.random() * total;
+    for (const [symbol, weight] of DONT_BLINK_SYMBOLS) {
+      roll -= weight;
+      if (roll <= 0) return symbol;
+    }
+    return 'CHERRY';
+  }
+  function randomDontBlinkReels(){
+    return Array.from({length:5}, () => Array.from({length:3}, randomDontBlinkSymbol));
+  }
+  function enterDontBlinkJackpot(){
+    const S = state.dontblink;
+    if (!S.jackpotStartedAt) S.jackpotStartedAt = Date.now();
+    if (!S.jackpot || S.jackpot < 250000) S.jackpot = 250000 + Math.floor(Math.random() * 22000);
+  }
+  function resetDontBlinkJackpot(note = 'Someone else hit it'){
+    const S = state.dontblink;
+    S.jackpot = 250000 + Math.floor(Math.random() * 35000);
+    S.jackpotStartedAt = Date.now();
+    S.jackpotNote = note;
+  }
+  function tickDontBlinkJackpot(){
+    const S = state.dontblink;
+    if (state.view !== 'dontblink' || !dontBlinkJackpot) return;
+    enterDontBlinkJackpot();
+    const seconds = Math.max(0, (Date.now() - S.jackpotStartedAt) / 1000);
+    const speed = 1 + Math.min(7, seconds / 35);
+    S.jackpot = Math.min(1000000, S.jackpot + Math.floor((650 + Math.random() * 2600) * speed));
+    if (!S.animating && S.jackpot > 820000) {
+      const resetChance = S.jackpot > 975000 ? 0.28 : S.jackpot > 930000 ? 0.14 : 0.055;
+      if (Math.random() < resetChance) resetDontBlinkJackpot('Remote jackpot claimed');
+      else S.jackpotNote = 'Climbing fast';
+    } else if (!S.animating) {
+      S.jackpotNote = 'Climbing';
+    }
+    updateDontBlinkJackpotUI();
+  }
+  function updateDontBlinkJackpotUI(){
+    const S = state.dontblink;
+    if (dontBlinkJackpot) dontBlinkJackpot.textContent = fmt(S.jackpot);
+    if (dontBlinkJackpotNote) dontBlinkJackpotNote.textContent = S.jackpotNote || 'Climbing';
+  }
+  function renderDontBlinkLineOverlay(show = false){
+    const lines = Number(state.dontblink.lines);
+    const paths = DONT_BLINK_PAYLINES.slice(0, lines).map((rows, index) => {
+      const points = rows.map((row, reel) => {
+        const x = 10 + reel * 20;
+        const y = 16.67 + row * 33.33;
+        return `${x},${y}`;
+      }).join(' ');
+      const labelY = 16.67 + rows[0] * 33.33;
+      const color = DONT_BLINK_LINE_COLORS[index % DONT_BLINK_LINE_COLORS.length];
+      const labelX = 4 + (index % 2) * 4;
+      return `<path d="M ${points.split(' ').join(' L ')}" stroke="${color}"></path><g class="line-badge"><circle cx="${labelX}" cy="${labelY}" r="4.5" fill="${color}" stroke="#fff" stroke-width="1.2"></circle><text x="${labelX}" y="${labelY}">${index + 1}</text></g>`;
+    }).join('');
+    dontBlinkLineOverlay.innerHTML = `<svg viewBox="0 0 100 100" preserveAspectRatio="none">${paths}</svg>`;
+    dontBlinkLineOverlay.classList.toggle('show', show && lines > 0);
+  }
+  function hideDontBlinkLineOverlay(){
+    dontBlinkLineOverlay.classList.remove('show');
+  }
+  function dontBlinkSymbolMarkup(symbol){
+    const map = {
+      EYE: ['wild', '👁'],
+      HOURGLASS: ['bonus', '⏳'],
+      '7': ['seven', '7'],
+      DIAMOND: ['diamond', '💎'],
+      BAR: ['bar', 'BAR'],
+      BELL: ['bell', '🔔'],
+      CHERRY: ['cherry', '🍒']
+    };
+    const [cls, label] = map[symbol] || ['cherry', symbol];
+    return `<span class="slot-symbol ${cls}">${label}</span>`;
+  }
+  function renderDontBlinkReels(winCells = new Set()){
+    const S = state.dontblink;
+    dontBlinkReels.innerHTML = S.reels.map((reel, reelIndex) => `
+      <div class="slot-reel">
+        ${reel.map((symbol, rowIndex) => {
+          const classes = ['slot-cell'];
+          if (symbol === 'EYE' || symbol === 'HOURGLASS' || symbol === '7') classes.push('jackpot');
+          if (winCells.has(`${reelIndex}-${rowIndex}`)) classes.push('win');
+          return `<div class="${classes.join(' ')}">${dontBlinkSymbolMarkup(symbol)}</div>`;
+        }).join('')}
+      </div>
+    `).join('');
+    dontBlinkReels.classList.toggle('spinning', S.animating);
+  }
+  function evaluateDontBlink(){
+    const S = state.dontblink;
+    const lines = Number(S.lines);
+    const cost = dontBlinkCostFor(lines);
+    const lineBet = cost / lines;
+    const winCells = new Set();
+    let paid = 0;
+    let best = '';
+    let bestPaid = 0;
+    let jackpotHit = false;
+    for (let lineIndex = 0; lineIndex < lines; lineIndex++) {
+      const rows = DONT_BLINK_PAYLINES[lineIndex];
+      const line = rows.map((row, reel) => S.reels[reel][row]);
+      const base = line[0];
+      let count = 1;
+      for (let i = 1; i < line.length; i++) {
+        if (line[i] === base) count++;
+        else break;
+      }
+      if (count < 3 || !DONT_BLINK_PAYS[base]) continue;
+      let linePaid = 0;
+      if (base === 'EYE' && count === 5) {
+        linePaid = Math.floor(S.jackpot);
+        jackpotHit = true;
+      } else {
+        linePaid = Math.floor(lineBet * DONT_BLINK_PAYS[base][count - 3]);
+      }
+      paid += linePaid;
+      for (let reel = 0; reel < count; reel++) winCells.add(`${reel}-${rows[reel]}`);
+      if (linePaid >= bestPaid) {
+        bestPaid = linePaid;
+        best = base === 'EYE' && count === 5 ? `Progressive jackpot on line ${lineIndex + 1}` : `${count} ${base} on line ${lineIndex + 1}`;
+      }
+    }
+    return {paid, winCells, best, jackpotHit};
+  }
+  function updateDontBlinkUI(){
+    const S = state.dontblink;
+    const cost = dontBlinkCostFor(S.lines);
+    S.bet = cost;
+    elBalance.textContent = fmt(state.bankroll);
+    dontBlinkLines.value = String(S.lines);
+    dontBlinkLinesLabel.textContent = `${S.lines} Line${S.lines === 1 ? '' : 's'}`;
+    dontBlinkLinesStat.textContent = String(S.lines);
+    dontBlinkCost.textContent = fmt(cost);
+    dontBlinkWin.textContent = fmt(S.lastWin);
+    dontBlinkStatus.textContent = S.resolved ? 'Round complete.' : S.message;
+    dontBlinkSpin.disabled = S.animating || cost > state.bankroll;
+    dontBlinkMarquee.textContent = S.animating ? 'Spinning' : (S.lastWin >= S.jackpot ? 'Jackpot' : S.lastWin > 0 ? 'Winner' : 'Ready');
+    dontBlinkPaylines.querySelectorAll('.slot-payline').forEach((line, index) => {
+      line.classList.toggle('active', index < S.lines);
+    });
+    updateDontBlinkJackpotUI();
+    if (dontBlinkLineOverlay.classList.contains('show')) renderDontBlinkLineOverlay(true);
+    renderDontBlinkReels();
+  }
+  function resetDontBlinkRound(silent = false){
+    const S = state.dontblink;
+    S.lines = 1;
+    S.bet = dontBlinkCostFor(1);
+    S.phase = 'betting';
+    S.lastWin = 0;
+    S.message = 'Choose lines and spin.';
+    S.resolved = false;
+    S.animating = false;
+    clearControlResult('dontblink');
+    hideDontBlinkLineOverlay();
+    if (!silent) updateDontBlinkUI();
+  }
+  dontBlinkLines.addEventListener('change', () => {
+    const S = state.dontblink;
+    if (S.animating) return;
+    S.lines = Number(dontBlinkLines.value);
+    S.resolved = false;
+    S.message = `${S.lines} line${S.lines === 1 ? '' : 's'} armed. Spin cost ${fmt(dontBlinkCostFor(S.lines))}.`;
+    updateDontBlinkUI();
+    renderDontBlinkLineOverlay(true);
+  });
+  dontBlinkSpin.addEventListener('click', async () => {
+    const S = state.dontblink;
+    const cost = dontBlinkCostFor(S.lines);
+    if (S.animating || cost > state.bankroll) return;
+    enterDontBlinkJackpot();
+    S.jackpot = Math.min(1000000, S.jackpot + Math.floor(cost * (0.05 + Math.random() * 0.18)));
+    state.bankroll -= cost;
+    saveBalance(state.bankroll);
+    S.bet = cost;
+    S.phase = 'spinning';
+    S.animating = true;
+    S.resolved = false;
+    S.lastWin = 0;
+    S.message = 'Reels spinning...';
+    clearControlResult('dontblink');
+    updateDontBlinkUI();
+    hideDontBlinkLineOverlay();
+    const tick = setInterval(() => {
+      S.reels = randomDontBlinkReels();
+      renderDontBlinkReels();
+    }, 85);
+    await sleep(1450);
+    clearInterval(tick);
+    S.reels = randomDontBlinkReels();
+    const result = evaluateDontBlink();
+    S.lastWin = result.paid;
+    if (result.paid > 0) {
+      const net = result.paid - cost;
+      state.bankroll += result.paid;
+      S.message = `${result.best}. Paid ${fmt(result.paid)} total. ${net >= 0 ? 'Profit' : 'Net'} ${net >= 0 ? fmt(net) : '-' + fmt(Math.abs(net))}.`;
+      if (result.jackpotHit) resetDontBlinkJackpot('Jackpot reset');
+    } else {
+      S.message = `No line hit. You lost ${fmt(cost)}.`;
+    }
+    showControlResult('dontblink', S.message);
+    saveBalance(state.bankroll);
+    S.phase = 'betting';
+    S.animating = false;
+    S.resolved = true;
+    updateDontBlinkUI();
+    renderDontBlinkReels(result.winCells);
+  });
+  setInterval(tickDontBlinkJackpot, 4500);
+
+  /* ======================
+     GOLD DIGGER SLOTS
+     ====================== */
+  const goldDiggerReels = document.getElementById('golddigger-reels');
+  const goldDiggerLines = document.getElementById('golddigger-lines');
+  const goldDiggerLinesLabel = document.getElementById('golddigger-lines-label');
+  const goldDiggerLinesStat = document.getElementById('golddigger-lines-stat');
+  const goldDiggerCost = document.getElementById('golddigger-cost');
+  const goldDiggerWin = document.getElementById('golddigger-win');
+  const goldDiggerStatus = document.getElementById('golddigger-status');
+  const goldDiggerSpin = document.getElementById('golddigger-spin');
+  const goldDiggerPaylines = document.getElementById('golddigger-paylines');
+  const goldDiggerMarquee = document.getElementById('golddigger-marquee');
+  const goldDiggerLineOverlay = document.getElementById('golddigger-line-overlay');
+  const goldDiggerJackpot = document.getElementById('golddigger-jackpot');
+  const goldDiggerJackpotNote = document.getElementById('golddigger-jackpot-note');
+  const GOLD_DIGGER_LINE_COSTS = {1:100, 3:1000};
+  const GOLD_DIGGER_SYMBOLS = ['ROCK','STONE','COIN','PICK','GEM','BAG','TROPHY'];
+  const GOLD_DIGGER_PAYLINES = [
+    [1,1,1,1,1],
+    [0,0,0,0,0],
+    [2,2,2,2,2]
+  ];
+  const GOLD_DIGGER_LINE_COLORS = ['#f5d76e','#82f2e7','#ff9c45'];
+  const GOLD_DIGGER_PAYS = {
+    COIN: [1.2, 2.5, 8],
+    PICK: [1.5, 4, 16],
+    GEM: [2, 8, 35],
+    BAG: [4, 25, 140],
+    TROPHY: [8, 60, 0]
+  };
+  function goldDiggerCostFor(lines = state.golddigger.lines){
+    return GOLD_DIGGER_LINE_COSTS[Number(lines)] || 100;
+  }
+  function enterGoldDiggerJackpot(){
+    const S = state.golddigger;
+    if (!S.jackpotStartedAt) S.jackpotStartedAt = Date.now();
+    if (!S.jackpot || S.jackpot < 100000) S.jackpot = 100000 + Math.floor(Math.random() * 12000);
+  }
+  function resetGoldDiggerJackpot(note = 'Another miner struck gold'){
+    const S = state.golddigger;
+    S.jackpot = 100000 + Math.floor(Math.random() * 18000);
+    S.jackpotStartedAt = Date.now();
+    S.jackpotNote = note;
+  }
+  function tickGoldDiggerJackpot(){
+    const S = state.golddigger;
+    if (state.view !== 'golddigger' || !goldDiggerJackpot) return;
+    enterGoldDiggerJackpot();
+    const seconds = Math.max(0, (Date.now() - S.jackpotStartedAt) / 1000);
+    const speed = 1 + Math.min(3, seconds / 110);
+    S.jackpot = Math.min(650000, S.jackpot + Math.floor((80 + Math.random() * 420) * speed));
+    if (!S.animating && S.jackpot > 575000) {
+      if (Math.random() < (S.jackpot > 630000 ? 0.16 : 0.055)) resetGoldDiggerJackpot('Remote vein claimed');
+      else S.jackpotNote = 'Heavy vein';
+    } else if (!S.animating) {
+      S.jackpotNote = 'Slow climb';
+    }
+    updateGoldDiggerJackpotUI();
+  }
+  function updateGoldDiggerJackpotUI(){
+    const S = state.golddigger;
+    if (goldDiggerJackpot) goldDiggerJackpot.textContent = fmt(S.jackpot);
+    if (goldDiggerJackpotNote) goldDiggerJackpotNote.textContent = S.jackpotNote || 'Slow climb';
+  }
+  function randomGoldDiggerSymbol(){
+    const weights = [['ROCK',30],['STONE',25],['COIN',18],['PICK',13],['GEM',8],['BAG',4],['TROPHY',2]];
+    const total = weights.reduce((sum, row) => sum + row[1], 0);
+    let roll = Math.random() * total;
+    for (const [symbol, weight] of weights) {
+      roll -= weight;
+      if (roll <= 0) return symbol;
+    }
+    return 'ROCK';
+  }
+  function randomGoldDiggerReels(){
+    return Array.from({length:5}, () => Array.from({length:3}, randomGoldDiggerSymbol));
+  }
+  function buildGoldDiggerOutcome(){
+    const S = state.golddigger;
+    const lines = Number(S.lines);
+    const reels = randomGoldDiggerReels();
+    const roll = Math.random();
+    const jackpotChance = lines === 3 ? 0.0022 : 0.00025;
+    const winChance = lines === 3 ? 0.15 : 0.25;
+    const activeLine = GOLD_DIGGER_PAYLINES[Math.floor(Math.random() * lines)];
+    if (roll < jackpotChance) {
+      activeLine.forEach((row, reel) => reels[reel][row] = 'TROPHY');
+      return reels;
+    }
+    if (roll < winChance) {
+      const pool = lines === 3
+        ? ['COIN','COIN','PICK','GEM','BAG']
+        : ['COIN','COIN','COIN','PICK','GEM'];
+      const symbol = pool[Math.floor(Math.random() * pool.length)];
+      const count = Math.random() < 0.78 ? 3 : (Math.random() < 0.86 ? 4 : 5);
+      for (let reel = 0; reel < count; reel++) reels[reel][activeLine[reel]] = symbol;
+      if (count < 5) {
+        const blockers = GOLD_DIGGER_SYMBOLS.filter(item => item !== symbol && item !== 'TROPHY');
+        reels[count][activeLine[count]] = blockers[Math.floor(Math.random() * blockers.length)];
+      }
+      return reels;
+    }
+    GOLD_DIGGER_PAYLINES.slice(0, lines).forEach(rows => {
+      for (let reel = 2; reel < 5; reel++) {
+        if (reels[reel][rows[reel]] === reels[0][rows[0]] && reels[reel][rows[reel]] === reels[1][rows[1]]) {
+          reels[reel][rows[reel]] = reels[reel][rows[reel]] === 'ROCK' ? 'STONE' : 'ROCK';
+        }
+      }
+    });
+    return reels;
+  }
+  function renderGoldDiggerLineOverlay(show = false){
+    const lines = Number(state.golddigger.lines);
+    const paths = GOLD_DIGGER_PAYLINES.slice(0, lines).map((rows, index) => {
+      const points = rows.map((row, reel) => {
+        const x = 10 + reel * 20;
+        const y = 16.67 + row * 33.33;
+        return `${x},${y}`;
+      }).join(' ');
+      const labelY = 16.67 + rows[0] * 33.33;
+      const color = GOLD_DIGGER_LINE_COLORS[index % GOLD_DIGGER_LINE_COLORS.length];
+      const labelX = 4 + (index % 2) * 4;
+      return `<path d="M ${points.split(' ').join(' L ')}" stroke="${color}"></path><g class="line-badge"><circle cx="${labelX}" cy="${labelY}" r="4.5" fill="${color}" stroke="#fff" stroke-width="1.2"></circle><text x="${labelX}" y="${labelY}">${index + 1}</text></g>`;
+    }).join('');
+    goldDiggerLineOverlay.innerHTML = `<svg viewBox="0 0 100 100" preserveAspectRatio="none">${paths}</svg>`;
+    goldDiggerLineOverlay.classList.toggle('show', show && lines > 0);
+  }
+  function hideGoldDiggerLineOverlay(){
+    goldDiggerLineOverlay.classList.remove('show');
+  }
+  function goldDiggerSymbolMarkup(symbol){
+    const map = {
+      ROCK: ['bar', 'ROCK'],
+      STONE: ['cherry', '🪨'],
+      COIN: ['bell', '🪙'],
+      PICK: ['bonus', '⛏️'],
+      GEM: ['diamond', '💎'],
+      BAG: ['seven', '💰'],
+      TROPHY: ['wild', '🏆']
+    };
+    const [cls, label] = map[symbol] || ['bar', symbol];
+    return `<span class="slot-symbol ${cls}">${label}</span>`;
+  }
+  function renderGoldDiggerReels(winCells = new Set()){
+    const S = state.golddigger;
+    goldDiggerReels.innerHTML = S.reels.map((reel, reelIndex) => `
+      <div class="slot-reel">
+        ${reel.map((symbol, rowIndex) => {
+          const classes = ['slot-cell'];
+          if (symbol === 'TROPHY' || symbol === 'BAG') classes.push('jackpot');
+          if (winCells.has(`${reelIndex}-${rowIndex}`)) classes.push('win');
+          return `<div class="${classes.join(' ')}">${goldDiggerSymbolMarkup(symbol)}</div>`;
+        }).join('')}
+      </div>
+    `).join('');
+    goldDiggerReels.classList.toggle('spinning', S.animating);
+  }
+  function evaluateGoldDigger(){
+    const S = state.golddigger;
+    const lines = Number(S.lines);
+    const cost = goldDiggerCostFor(lines);
+    const lineBet = cost / lines;
+    const winCells = new Set();
+    let paid = 0;
+    let best = '';
+    let bestPaid = 0;
+    let jackpotHit = false;
+    for (let lineIndex = 0; lineIndex < lines; lineIndex++) {
+      const rows = GOLD_DIGGER_PAYLINES[lineIndex];
+      const line = rows.map((row, reel) => S.reels[reel][row]);
+      const base = line[0];
+      let count = 1;
+      for (let i = 1; i < line.length; i++) {
+        if (line[i] === base) count++;
+        else break;
+      }
+      if (count < 3 || !GOLD_DIGGER_PAYS[base]) continue;
+      let linePaid = 0;
+      if (base === 'TROPHY' && count === 5) {
+        linePaid = Math.floor(S.jackpot);
+        jackpotHit = true;
+      } else {
+        linePaid = Math.floor(lineBet * GOLD_DIGGER_PAYS[base][count - 3]);
+      }
+      paid += linePaid;
+      for (let reel = 0; reel < count; reel++) winCells.add(`${reel}-${rows[reel]}`);
+      if (linePaid >= bestPaid) {
+        bestPaid = linePaid;
+        best = base === 'TROPHY' && count === 5 ? `Gold vein jackpot on line ${lineIndex + 1}` : `${count} ${base} on line ${lineIndex + 1}`;
+      }
+    }
+    return {paid, winCells, best, jackpotHit};
+  }
+  function updateGoldDiggerUI(){
+    const S = state.golddigger;
+    const cost = goldDiggerCostFor(S.lines);
+    S.bet = cost;
+    elBalance.textContent = fmt(state.bankroll);
+    goldDiggerLines.value = String(S.lines);
+    goldDiggerLinesLabel.textContent = `${S.lines} Line${S.lines === 1 ? '' : 's'}`;
+    goldDiggerLinesStat.textContent = String(S.lines);
+    goldDiggerCost.textContent = fmt(cost);
+    goldDiggerWin.textContent = fmt(S.lastWin);
+    goldDiggerStatus.textContent = S.resolved ? 'Round complete.' : S.message;
+    goldDiggerSpin.disabled = S.animating || cost > state.bankroll;
+    goldDiggerMarquee.textContent = S.animating ? 'Digging' : (S.lastWin >= S.jackpot ? 'Jackpot' : S.lastWin > 0 ? 'Pay Dirt' : 'Ready');
+    goldDiggerPaylines.querySelectorAll('.slot-payline').forEach((line, index) => {
+      line.classList.toggle('active', index < S.lines);
+    });
+    updateGoldDiggerJackpotUI();
+    if (goldDiggerLineOverlay.classList.contains('show')) renderGoldDiggerLineOverlay(true);
+    renderGoldDiggerReels();
+  }
+  function resetGoldDiggerRound(silent = false){
+    const S = state.golddigger;
+    S.lines = 1;
+    S.bet = goldDiggerCostFor(1);
+    S.phase = 'betting';
+    S.lastWin = 0;
+    S.message = 'Choose lines and spin.';
+    S.resolved = false;
+    S.animating = false;
+    clearControlResult('golddigger');
+    hideGoldDiggerLineOverlay();
+    if (!silent) updateGoldDiggerUI();
+  }
+  goldDiggerLines.addEventListener('change', () => {
+    const S = state.golddigger;
+    if (S.animating) return;
+    S.lines = Number(goldDiggerLines.value);
+    S.resolved = false;
+    S.message = `${S.lines} line${S.lines === 1 ? '' : 's'} armed. Spin cost ${fmt(goldDiggerCostFor(S.lines))}.`;
+    updateGoldDiggerUI();
+    renderGoldDiggerLineOverlay(true);
+  });
+  goldDiggerSpin.addEventListener('click', async () => {
+    const S = state.golddigger;
+    const cost = goldDiggerCostFor(S.lines);
+    if (S.animating || cost > state.bankroll) return;
+    enterGoldDiggerJackpot();
+    S.jackpot = Math.min(650000, S.jackpot + Math.floor(cost * (0.01 + Math.random() * 0.04)));
+    state.bankroll -= cost;
+    saveBalance(state.bankroll);
+    S.bet = cost;
+    S.phase = 'spinning';
+    S.animating = true;
+    S.resolved = false;
+    S.lastWin = 0;
+    S.message = 'Digging...';
+    clearControlResult('golddigger');
+    updateGoldDiggerUI();
+    hideGoldDiggerLineOverlay();
+    const tick = setInterval(() => {
+      S.reels = randomGoldDiggerReels();
+      renderGoldDiggerReels();
+    }, 90);
+    await sleep(1300);
+    clearInterval(tick);
+    S.reels = buildGoldDiggerOutcome();
+    const result = evaluateGoldDigger();
+    S.lastWin = result.paid;
+    if (result.paid > 0) {
+      const net = result.paid - cost;
+      state.bankroll += result.paid;
+      S.message = `${result.best}. Paid ${fmt(result.paid)} total. ${net >= 0 ? 'Profit' : 'Net'} ${net >= 0 ? fmt(net) : '-' + fmt(Math.abs(net))}.`;
+      if (result.jackpotHit) resetGoldDiggerJackpot('Jackpot reset');
+    } else {
+      S.message = `No pay dirt. You lost ${fmt(cost)}.`;
+    }
+    showControlResult('golddigger', S.message);
+    saveBalance(state.bankroll);
+    S.phase = 'betting';
+    S.animating = false;
+    S.resolved = true;
+    updateGoldDiggerUI();
+    renderGoldDiggerReels(result.winCells);
+  });
+  setInterval(tickGoldDiggerJackpot, 9000);
 
   /* ======================
      COIN FLIP
@@ -5672,13 +7271,13 @@
   }
 
   /* ====== LOBBY LIVE DATA ====== */
-  const liveGames = ['Blackjack','Crash','Mines','Roulette','Chicken','Russian Roulette','Plinko','Pump','Cups','Coin Flip','Dice'];
+  const liveGames = ['Blackjack','Crash','Mines','Roulette','Chicken','Russian Roulette','Plinko','Pump','Cups','MaryJane','Coin Flip','Dice'];
   const liveUsers = ['vaultedAce','minted','chipstorm','neonroll','luckybyte','cashline','orbit_77','plutusmax','bluefelt','riskmode','stacked','fastlane'];
   const liveCountRanges = {
     'hs-blackjack':[360,1200], 'hs-dice':[240,980], 'hs-crash':[520,1200], 'hs-mines':[300,1060], 'hs-roulette':[180,820], 'hs-coinflip':[210,900],
     'trend-blackjack':[5200,8000], 'trend-crash':[6100,8000], 'trend-mines':[4300,7200], 'trend-chicken':[4000,6800],
     'recent-bread':[900,3000], 'recent-plinko':[1200,3000], 'recent-dice':[858,2800], 'recent-chicken':[1600,3200],
-    'original-roulette':[900,3000], 'original-dice':[858,2600], 'original-coinflip':[900,2800], 'original-bread':[858,2400], 'original-plinko':[1200,3000], 'original-pump':[900,2900], 'original-cups':[858,2700],
+    'original-roulette':[900,3000], 'original-dice':[858,2600], 'original-coinflip':[900,2800], 'original-bread':[858,2400], 'original-plinko':[1200,3000], 'original-pump':[900,2900], 'original-cups':[858,2700], 'slot-maryjane':[700,2400],
     'original-roulette-hidden':[900,3000], 'original-dice-hidden':[858,2600], 'original-coinflip-hidden':[900,2800], 'original-bread-hidden':[858,2400], 'original-plinko-hidden':[1200,3000]
   };
   const randomLiveCount = ([min, max]) => Math.floor(min + Math.random() * (max - min + 1));
@@ -5731,7 +7330,7 @@
   /* ====== MOBILE CONTROL DOCK ====== */
   const controlFloat = document.getElementById('control-float');
   const dockTargets = () => Array.from(document.querySelectorAll(
-    '#view-blackjack .controls, #view-crash .crash-wrap > .panel, #view-mines .mines-wrap > .panel, #view-roulette .roulette-wrap > .panel, #view-chicken .chicken-wrap > .panel, #view-bread .bread-wrap > .panel, #view-plinko .plinko-wrap > .panel, #view-pump .pump-wrap > .panel, #view-cups .cups-wrap > .panel, #view-coinflip .coin-wrap > .panel, #view-dice .dice-wrap > .panel'
+    '#view-blackjack .controls, #view-crash .crash-wrap > .panel, #view-mines .mines-wrap > .panel, #view-roulette .roulette-wrap > .panel, #view-chicken .chicken-wrap > .panel, #view-bread .bread-wrap > .panel, #view-plinko .plinko-wrap > .panel, #view-pump .pump-wrap > .panel, #view-cups .cups-wrap > .panel, #view-maryjane .slot-wrap > .panel, #view-angeleyes .slot-wrap > .panel, #view-dontblink .slot-wrap > .panel, #view-golddigger .slot-wrap > .panel, #view-coinflip .coin-wrap > .panel, #view-dice .dice-wrap > .panel'
   ));
 
   function initControlDocks(){
@@ -5756,6 +7355,10 @@
       plinko: '#view-plinko .plinko-board',
       pump: '#view-pump .pump-board',
       cups: '#view-cups .cups-board',
+      maryjane: '#view-maryjane .slot-board',
+      angeleyes: '#view-angeleyes .slot-board',
+      dontblink: '#view-dontblink .slot-board',
+      golddigger: '#view-golddigger .slot-board',
       coinflip: '#view-coinflip .coin-board',
       dice: '#view-dice .dice-board'
     };
@@ -5925,6 +7528,7 @@
     resetPlinkoRound(true);
     resetPumpRound(true);
     resetCupsRound(true);
+    resetMaryJaneRound(true);
     resetCoinRound(true);
     resetDiceRound(true);
     updateCrashUI();
@@ -5936,6 +7540,7 @@
     updatePlinkoUI();
     updatePumpUI();
     updateCupsUI();
+    updateMaryJaneUI();
     updateCoinUI();
     updateDiceUI();
     initControlDocks();
